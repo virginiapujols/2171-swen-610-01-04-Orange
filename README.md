@@ -5,7 +5,7 @@ An online Checkers game system built in Java 8 and Spark, a web microframework.
 ## Team
 
 - Dalal, Niharika
-- Di Stasi, Andrew
+- DiStasi, Andrew
 - Kesari, Ashok Sudheer
 - Pujols, Virginia
 
