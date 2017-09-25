@@ -7,7 +7,7 @@ An online Checkers game system built in Java 8 and Spark, a web microframework.
 - Dalal, Niharika
 - DiStasi, Andrew
 - Kesari, Ashok Sudheer
-- Pujols, Virginia
+- Pujols, Virginia A.
 
 
 
