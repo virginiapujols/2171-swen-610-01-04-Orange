@@ -15,11 +15,11 @@
             </div>
 
             <div class="body">
-                <p>Welcome to the world of online Checkers.</p>
+                <h3>Enter a Username to Log in</h3>
+                <form id="signin" action="/login" method="POST">
+                    <input type="text" name="username" />
+                </form>
             </div>
-
-
-
         </div>
     </body>
 </html>
