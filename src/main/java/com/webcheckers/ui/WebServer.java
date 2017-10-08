@@ -1,7 +1,11 @@
 package com.webcheckers.ui;
 
 import static spark.Spark.*;
+
+import com.webcheckers.appl.GameCenter;
 import spark.TemplateEngine;
+
+import java.util.Objects;
 
 
 /**
@@ -53,6 +57,7 @@ public class WebServer {
   //
 
   private final TemplateEngine templateEngine;
+  private final GameCenter gameCenter;
 
   //
   // Constructor
@@ -61,12 +66,17 @@ public class WebServer {
   /**
    * The constructor for the Web Server.
    *
-   * @param templateEngine
+   * @param _gameCenter
+   *    The gameCenter {@link GameCenter} to mangage sessions & states
+   * @param _templateEngine
    *    The default {@link TemplateEngine} to render views.
    */
-  public WebServer(
-      final TemplateEngine templateEngine) {
-    this.templateEngine = templateEngine;
+  public WebServer(final GameCenter _gameCenter, final TemplateEngine _templateEngine) {
+    Objects.requireNonNull(_gameCenter, "gameCenter must not be null");
+    Objects.requireNonNull(_templateEngine, "templateEngine must not be null");
+
+    this.gameCenter = _gameCenter;
+    this.templateEngine = _templateEngine;
   }
 
   //
