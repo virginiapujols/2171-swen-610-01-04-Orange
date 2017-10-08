@@ -2,7 +2,9 @@ package com.webcheckers.ui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import com.webcheckers.appl.GameCenter;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -17,6 +19,27 @@ import com.webcheckers.model.Player;
  * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
  */
 public class PostLoginRoute implements TemplateViewRoute {
+
+    // Attributes
+    private final GameCenter gameCenter;
+
+    //
+    // Constructor
+    //
+
+    /**
+     * The constructor for the {@code POST /Login} route handler.
+     *
+     * @param gameCenter
+     *    The {@link GameCenter} for the application.
+     */
+    PostLoginRoute(final GameCenter gameCenter) {
+        // validation
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
+        //
+
+        this.gameCenter = gameCenter;
+    }
 
     @Override
     public ModelAndView handle(Request request, Response response) {
