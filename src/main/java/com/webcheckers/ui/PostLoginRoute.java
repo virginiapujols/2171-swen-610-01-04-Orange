@@ -46,6 +46,12 @@ public class PostLoginRoute implements TemplateViewRoute {
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Login!");
 
+        gameCenter.addUsername("Andy");
+        gameCenter.addUsername("Ashok");
+        gameCenter.addUsername("CheckersFan1334");
+
+        vm.put("usernames", gameCenter.getUsernames());
+
         // start building the View-Model, retrieve the requested username, and attempt to create the Player object
         final Session session = request.session();
         final String reqUsername = request.queryParams("username");

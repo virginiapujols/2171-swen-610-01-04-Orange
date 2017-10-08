@@ -16,6 +16,18 @@
 
             <div class="body">
                 <p>Welcome to the world of online Checkers.</p>
+
+                <p>Click a username to challenge them to a game!</p>
+                <ul>
+                    <#list usernames as u>
+                        <#if u != username>
+                            <li>
+                                <a href="/startGame?username=${u}">
+                                ${u}
+                                </a></li>
+                        </#if>
+                    </#list>
+                </ul>
             </div>
 
 

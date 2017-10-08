@@ -2,6 +2,7 @@ package com.webcheckers.appl;
 
 import spark.Session;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -14,7 +15,7 @@ import com.webcheckers.model.Player;
  */
 public class GameCenter {
     // Attributes
-    private List<String> usernames;
+    private List<String> usernames = new ArrayList<String>();
 
     //
     // Public methods

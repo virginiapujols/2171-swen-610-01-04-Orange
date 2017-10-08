@@ -40,6 +40,14 @@ public class GetHomeRoute implements TemplateViewRoute {
   public ModelAndView handle(Request request, Response response) {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
+
+    gameCenter.addUsername("Andy");
+    gameCenter.addUsername("Ashok");
+    gameCenter.addUsername("CheckersFan1334");
+
+    vm.put("username", "Andy");
+    vm.put("usernames", gameCenter.getUsernames());
+
     return new ModelAndView(vm , "home.ftl");
   }
 
