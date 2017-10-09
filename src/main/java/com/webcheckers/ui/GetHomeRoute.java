@@ -17,6 +17,9 @@ import spark.TemplateViewRoute;
  */
 public class GetHomeRoute implements TemplateViewRoute {
 
+    // Constants
+    static final String VIEW_NAME = "home.ftl";
+
     // Attributes
     private final GameCenter gameCenter;
 
@@ -40,7 +43,7 @@ public class GetHomeRoute implements TemplateViewRoute {
   public ModelAndView handle(Request request, Response response) {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
-    return new ModelAndView(vm , "home.ftl");
+    return new ModelAndView(vm , VIEW_NAME);
   }
 
 }
