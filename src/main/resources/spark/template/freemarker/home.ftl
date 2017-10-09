@@ -11,7 +11,6 @@
             <h1>Web Checkers</h1>
 
             <div class="navigation">
-                <a href="/">My home</a>
                 <a href="/login">Login</a>
             </div>
 
