@@ -11,14 +11,13 @@
             <h1>Web Checkers</h1>
 
             <div class="navigation">
-                <a href="/">my home</a>
+                <a href="/">My home</a>
+                <a href="/login">Login</a>
             </div>
 
             <div class="body">
                 <p>Welcome to the world of online Checkers.</p>
             </div>
-
-
 
         </div>
     </body>
