@@ -33,6 +33,7 @@ public class GetLogoutRoute implements TemplateViewRoute{
         vm.put("title", "Login!");
 
         // start building the View-Model, retrieve the requested username, and attempt to create the Player object
+        // Removing a player from the player list.
         final Session session = request.session();
         final Player currentPlayer = session.attribute("loggedPlayer");
         ArrayList<Player> onlinePlayers = session.attribute(PostLoginRoute.ONLINE_PLAYERS_ATTR);

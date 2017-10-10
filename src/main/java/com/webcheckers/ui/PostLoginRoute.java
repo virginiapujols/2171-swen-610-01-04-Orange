@@ -62,17 +62,19 @@ public class PostLoginRoute implements TemplateViewRoute {
         final String reqUsername = request.queryParams(USERNAME_PARAM);
         final Player player = new Player(reqUsername);
 
+        //Creating a list of players to store the signed-in players.
         ArrayList<Player> onlinePlayers = session.attribute(ONLINE_PLAYERS_ATTR);
         if (onlinePlayers == null) {
             onlinePlayers = new ArrayList<>();
         }
 
+        //Validating usernames.
         if (onlinePlayers.contains(player)) {
             return error(vm, USER_EXIST_MESSAGE);
         } else {
             onlinePlayers.add(player);
         }
-
+        //Adding players to the Player list
         session.attribute(ONLINE_PLAYERS_ATTR, onlinePlayers);
         vm.put("loggedPlayer", player);
         return new ModelAndView(vm , GetHomeRoute.VIEW_NAME);

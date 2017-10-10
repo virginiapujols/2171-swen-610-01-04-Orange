@@ -10,6 +10,7 @@
 
             <h1>Web Checkers</h1>
 
+            <!-- Links for Login and Logout >
             <div class="navigation">
             <#if loggedPlayer??>
                 <a href="/logout">Logout</a>
