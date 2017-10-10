@@ -74,7 +74,7 @@ public class PostLoginRoute implements TemplateViewRoute {
         }
 
         session.attribute(ONLINE_PLAYERS_ATTR, onlinePlayers);
-
+        vm.put("loggedPlayer", player);
         return new ModelAndView(vm , GetHomeRoute.VIEW_NAME);
     }
 }

@@ -42,7 +42,8 @@ public class GetHomeRoute implements TemplateViewRoute {
   @Override
   public ModelAndView handle(Request request, Response response) {
     Map<String, Object> vm = new HashMap<>();
-    vm.put("title", "Welcome!");
+      vm.put("title", "Welcome!");
+      vm.put("loggedPlayer", null);
     return new ModelAndView(vm , VIEW_NAME);
   }
 

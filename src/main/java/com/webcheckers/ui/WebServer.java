@@ -135,6 +135,9 @@ public class WebServer {
     get(LOGIN_URL, new GetLoginRoute(), templateEngine);
 
     post(LOGIN_URL, new PostLoginRoute(gameCenter), templateEngine);
+
+    get("/logout", new GetLogoutRoute(gameCenter), templateEngine);
+
   }
 
 }

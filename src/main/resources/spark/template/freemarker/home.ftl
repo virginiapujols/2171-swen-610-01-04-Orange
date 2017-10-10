@@ -11,12 +11,17 @@
             <h1>Web Checkers</h1>
 
             <div class="navigation">
+            <#if loggedPlayer??>
+                <a href="/logout">Logout</a>
+            <#else>
                 <a href="/login">Login</a>
+            </#if>
             </div>
 
             <div class="body">
                 <p>Welcome to the world of online Checkers.</p>
             </div>
+
 
         </div>
     </body>
