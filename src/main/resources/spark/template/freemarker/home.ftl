@@ -17,17 +17,19 @@
             <div class="body">
                 <p>Welcome to the world of online Checkers.</p>
 
-                <p>Click a username to challenge them to a game!</p>
-                <ul>
-                    <#list usernames as u>
-                        <#if u != username>
-                            <li>
-                                <a href="/startGame?username=${u}">
-                                ${u}
-                                </a></li>
-                        </#if>
-                    </#list>
-                </ul>
+                <#if username??>
+                    <p>Click a username to challenge them to a game!</p>
+                    <ul>
+                        <#list usernames as u>
+                            <#if u != username>
+                                <li>
+                                    <a href="/startGame?challengedplayer=${u}">
+                                    ${u}
+                                    </a></li>
+                            </#if>
+                        </#list>
+                    </ul>
+                </#if>
             </div>
 
 

@@ -15,6 +15,14 @@
             </div>
 
             <div class="body">
+                <#if message??>
+                    <div id="message" class="${messageType}">${message}</div>
+                <#else>
+                    <div id="message" class="info" style="display:none">
+                        <!-- keep here for Client-side messages -->
+                    </div>
+                </#if>
+
                 <h3>Enter a Username to Log in</h3>
                 <form id="signin" action="/login" method="POST">
                     <input type="text" name="username" />

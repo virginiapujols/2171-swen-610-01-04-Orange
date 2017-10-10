@@ -13,6 +13,8 @@ import spark.TemplateViewRoute;
 
 import com.webcheckers.model.Player;
 
+import static spark.Spark.halt;
+
 /**
  * The Web Controller for the Login page.
  *
@@ -46,17 +48,28 @@ public class PostLoginRoute implements TemplateViewRoute {
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Login!");
 
-        gameCenter.addUsername("Andy");
-        gameCenter.addUsername("Ashok");
-        gameCenter.addUsername("CheckersFan1334");
+        //TESTING
+        //gameCenter.addPlayer(request.session(),"Andy");
+        //gameCenter.addPlayer(request.session(), "Ashok");
+        //gameCenter.addPlayer(request.session(),"CheckersFan1334");
+        //
 
-        vm.put("usernames", gameCenter.getUsernames());
+        String username = request.queryParams("username");
+        if(gameCenter.usernameTaken(username)) {
+            vm.put("message", "That username is already taken");
+            vm.put("messageType", "error");
+        } else {
+            gameCenter.addPlayer(request.session(), username);
+            request.session().attribute("username", username);
+            vm.put("username", username);
 
-        // start building the View-Model, retrieve the requested username, and attempt to create the Player object
-        final Session session = request.session();
-        final String reqUsername = request.queryParams("username");
-        final Player player = new Player(reqUsername);
+            //vm.put("usernames", gameCenter.getUsernames());
 
-        return new ModelAndView(vm , "home.ftl");
+            response.redirect("/");
+            halt();
+            //return new ModelAndView(vm , "home.ftl");
+        }
+
+        return new ModelAndView(vm , "login.ftl");
     }
 }
