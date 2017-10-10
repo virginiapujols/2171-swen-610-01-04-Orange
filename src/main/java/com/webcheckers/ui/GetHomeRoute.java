@@ -10,6 +10,8 @@ import spark.Request;
 import spark.Response;
 import spark.TemplateViewRoute;
 
+import static spark.Spark.halt;
+
 /**
  * The Web Controller for the Home page.
  *
@@ -42,9 +44,20 @@ public class GetHomeRoute implements TemplateViewRoute {
   @Override
   public ModelAndView handle(Request request, Response response) {
     Map<String, Object> vm = new HashMap<>();
-      vm.put("title", "Welcome!");
-      vm.put("loggedPlayer", null);
-    return new ModelAndView(vm , VIEW_NAME);
-  }
+    vm.put("title", "Welcome!");
 
+    if(gameCenter.isInGame(request.session().attribute("username"))) {
+        response.redirect("/game");
+        halt();
+        return null;
+    }
+
+    vm.put("usernames", gameCenter.getAvailablePlayers());
+
+    if(request.session().attribute("username") != null) {
+        vm.put("username", request.session().attribute("username"));
+    }
+
+    return new ModelAndView(vm , "home.ftl");
+  }
 }

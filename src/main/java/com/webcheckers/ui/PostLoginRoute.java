@@ -11,6 +11,8 @@ import spark.TemplateViewRoute;
 
 import com.webcheckers.model.Player;
 
+import static spark.Spark.halt;
+
 /**
  * The Web Controller for the Login page.
  *
@@ -60,23 +62,18 @@ public class PostLoginRoute implements TemplateViewRoute {
         // start building the View-Model, retrieve the requested username, and attempt to create the Player object
         final Session session = request.session();
         final String reqUsername = request.queryParams(USERNAME_PARAM);
-        final Player player = new Player(reqUsername);
 
-        //Creating a list of players to store the signed-in players.
-        ArrayList<Player> onlinePlayers = session.attribute(ONLINE_PLAYERS_ATTR);
-        if (onlinePlayers == null) {
-            onlinePlayers = new ArrayList<>();
-        }
-
-        //Validating usernames.
-        if (onlinePlayers.contains(player)) {
+        if(gameCenter.usernameTaken(reqUsername)) {
             return error(vm, USER_EXIST_MESSAGE);
         } else {
-            onlinePlayers.add(player);
+            gameCenter.addPlayer(request.session(), reqUsername);
+            request.session().attribute("username", reqUsername);
+            vm.put("username", reqUsername);
+            response.redirect("/");
+            halt();
         }
-        //Adding players to the Player list
-        session.attribute(ONLINE_PLAYERS_ATTR, onlinePlayers);
-        vm.put("loggedPlayer", player);
+
+        vm.put("username", reqUsername);
         return new ModelAndView(vm , GetHomeRoute.VIEW_NAME);
     }
 }

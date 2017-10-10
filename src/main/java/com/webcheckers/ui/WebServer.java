@@ -51,6 +51,8 @@ public class WebServer {
    */
   public static final String HOME_URL = "/";
   public static final String LOGIN_URL = "/login";
+  public static final String STARTGAME_URL = "/startGame";
+  public static final String GAME_URL = "/game";
 
   //
   // Attributes
@@ -138,6 +140,9 @@ public class WebServer {
 
     get("/logout", new GetLogoutRoute(gameCenter), templateEngine);
 
+    get(STARTGAME_URL, new GetStartGameRoute(gameCenter), templateEngine);
+
+    get(GAME_URL, new GetGameRoute(gameCenter), templateEngine);
   }
 
 }
