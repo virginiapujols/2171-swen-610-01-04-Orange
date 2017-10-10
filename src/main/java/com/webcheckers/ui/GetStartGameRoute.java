@@ -4,10 +4,7 @@ import java.util.*;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.TemplateViewRoute;
+import spark.*;
 
 import static spark.Spark.halt;
 
@@ -17,19 +14,17 @@ import static spark.Spark.halt;
  * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
  */
 public class GetStartGameRoute implements TemplateViewRoute {
+    //Constants
+    static final String CHALLENGED = "challengedplayer";
+    static final String VIEW_NAME = "game.ftl";
 
     // Attributes
     private final GameCenter gameCenter;
 
-    //
-    // Constructor
-    //
-
     /**
      * The constructor for the {@code GET /startGame} route handler.
      *
-     * @param gameCenter
-     *    The {@link GameCenter} for the application.
+     * @param gameCenter The {@link GameCenter} for the application.
      */
     GetStartGameRoute(final GameCenter gameCenter) {
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
@@ -42,25 +37,27 @@ public class GetStartGameRoute implements TemplateViewRoute {
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Play a game!");
 
-        String player1 =  request.session().attribute("username");
-        String player2 = request.queryParams("challengedplayer");
+        //Get challenging player from session data & challenged player from query parameters
+        final Session session = request.session();
+        String player1 =  session.attribute(PostLoginRoute.USERNAME_PARAM);
+        String player2 = request.queryParams(CHALLENGED);
 
-        if(gameCenter.isInGame(player2)) {
-            response.redirect("/");
+        if(gameCenter.isInGame(player2)) { //If the challenged player is in a game, redirect the challenger to the home page
+            response.redirect(WebServer.HOME_URL);
             halt();
             return null;
-        } else {
+        } else { //If both players are available, start a game and populate the view model
             Game game = gameCenter.startGame(player1, player2);
 
-            vm.put("playerName", player1);
-            vm.put("playerColor", "red");
-            vm.put("isMyTurn", true);
-            vm.put("opponentName", player2);
-            vm.put("opponentColor", "white");
-            vm.put("currentPlayer", true);
-            vm.put("board", game.getBoard());
+            vm.put(GetGameRoute.PLAYER_NAME, player1);
+            vm.put(GetGameRoute.PLAYER_COLOR, GetGameRoute.RED);
+            vm.put(GetGameRoute.MY_TURN, true);
+            vm.put(GetGameRoute.OPP_NAME, player2);
+            vm.put(GetGameRoute.OPP_COLOR, GetGameRoute.WHITE);
+            vm.put(GetGameRoute.CURR_PLAYER, true);
+            vm.put(GetGameRoute.GAME_BOARD, game.getBoard());
 
-            return new ModelAndView(vm, "game.ftl");
+            return new ModelAndView(vm, VIEW_NAME);
         }
     }
 

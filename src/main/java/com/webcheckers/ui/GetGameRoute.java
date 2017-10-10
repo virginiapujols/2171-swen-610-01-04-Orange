@@ -4,10 +4,7 @@ import java.util.*;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.TemplateViewRoute;
+import spark.*;
 
 import static spark.Spark.halt;
 
@@ -18,18 +15,24 @@ import static spark.Spark.halt;
  */
 public class GetGameRoute implements TemplateViewRoute {
 
+    //Constants
+    static final String PLAYER_NAME = "playerName";
+    static final String PLAYER_COLOR = "playerColor";
+    static final String MY_TURN = "isMyTurn";
+    static final String OPP_NAME = "opponentName";
+    static final String OPP_COLOR = "opponentColor";
+    static final String CURR_PLAYER = "currentPlayer";
+    static final String GAME_BOARD = "board";
+    static final String RED = "red";
+    static final String WHITE = "white";
+    static final String VIEW_NAME = "game.ftl";
+
     // Attributes
     private final GameCenter gameCenter;
 
-    //
-    // Constructor
-    //
-
     /**
-     * The constructor for the {@code GET /startGame} route handler.
-     *
-     * @param gameCenter
-     *    The {@link GameCenter} for the application.
+     * The constructor for the {@code GET /startGame} route handler
+     * @param gameCenter The {@link GameCenter} for the application.
      */
     GetGameRoute(final GameCenter gameCenter) {
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
@@ -42,31 +45,32 @@ public class GetGameRoute implements TemplateViewRoute {
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Play a game!");
 
-        Game game = gameCenter.getGame(request.session().attribute("username"));
+        //Get the session and get any game that the user (from the session data) is in
+        final Session session = request.session();
+        Game game = gameCenter.getGame(session.attribute(PostLoginRoute.USERNAME_PARAM));
 
-        if(game != null) {
-            if(game.getPlayer1().getUsername().equals(request.session().attribute("username"))) {
-                vm.put("playerName", game.getPlayer1().getUsername());
-                vm.put("playerColor", "red");
-                vm.put("isMyTurn", true);
-                vm.put("opponentName", game.getPlayer2().getUsername());
-                vm.put("opponentColor", "white");
-                vm.put("currentPlayer", true);
-                vm.put("board", game.getBoard());
-            } else {
-                vm.put("opponentName", game.getPlayer1().getUsername());
-                vm.put("opponentColor", "red");
-                vm.put("isMyTurn", false);
-                vm.put("playerName", game.getPlayer2().getUsername());
-                vm.put("playerColor", "white");
-                vm.put("currentPlayer", false);
-                vm.put("board", game.getBoard());
+        if(game != null) { //If they are in game:
+            if(game.getPlayer1().getUsername().equals(session.attribute(PostLoginRoute.USERNAME_PARAM))) { //Check if they're player 1 & populate the ViewModel
+                vm.put(PLAYER_NAME, game.getPlayer1().getUsername());
+                vm.put(PLAYER_COLOR, RED);
+                vm.put(MY_TURN, true);
+                vm.put(OPP_NAME, game.getPlayer2().getUsername());
+                vm.put(OPP_COLOR, WHITE);
+                vm.put(CURR_PLAYER, true);
+                vm.put(GAME_BOARD, game.getBoard());
+            } else { //Check if they're player 2 & populate the ViewModel
+                vm.put(PLAYER_NAME, game.getPlayer2().getUsername());
+                vm.put(PLAYER_COLOR, WHITE);
+                vm.put(MY_TURN, false);
+                vm.put(OPP_NAME, game.getPlayer1().getUsername());
+                vm.put(OPP_COLOR, RED);
+                vm.put(CURR_PLAYER, false);
+                vm.put(GAME_BOARD, game.getBoard());
             }
 
-            return new ModelAndView(vm , "game.ftl");
-        } else {
-            System.out.println("NO GAME");
-            response.redirect("/");
+            return new ModelAndView(vm , VIEW_NAME);
+        } else { //If there is no game for that player, redirect them to the home page
+            response.redirect(WebServer.HOME_URL);
             halt();
             return null;
         }

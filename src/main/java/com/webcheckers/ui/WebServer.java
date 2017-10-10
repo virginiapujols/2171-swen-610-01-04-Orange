@@ -53,6 +53,7 @@ public class WebServer {
   public static final String LOGIN_URL = "/login";
   public static final String STARTGAME_URL = "/startGame";
   public static final String GAME_URL = "/game";
+  public static final String LOGOUT_URL = "/logout";
 
   //
   // Attributes
@@ -134,14 +135,19 @@ public class WebServer {
     // Shows the Checkers game Home page.
     get(HOME_URL, new GetHomeRoute(gameCenter), templateEngine);
 
+    //Shows the Application Login Page
     get(LOGIN_URL, new GetLoginRoute(), templateEngine);
 
+    //Accepts inputted Username
     post(LOGIN_URL, new PostLoginRoute(gameCenter), templateEngine);
 
-    get("/logout", new GetLogoutRoute(gameCenter), templateEngine);
+    //Logs user out & returns to home
+    get(LOGOUT_URL, new GetLogoutRoute(gameCenter), templateEngine);
 
+    //Lets a user challenge another user and start a game
     get(STARTGAME_URL, new GetStartGameRoute(gameCenter), templateEngine);
 
+    //Displays a game for any users currently in a game
     get(GAME_URL, new GetGameRoute(gameCenter), templateEngine);
   }
 

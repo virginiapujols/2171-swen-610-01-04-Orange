@@ -22,7 +22,6 @@ public class PostLoginRoute implements TemplateViewRoute {
 
     // Constants
     static final String USERNAME_PARAM = "username";
-    static final String ONLINE_PLAYERS_ATTR = "players";
     static final String MESSAGE_ATTR = "message";
     static final String MESSAGE_TYPE_ATTR = "messageType";
     static final String ERROR_TYPE = "error";
@@ -67,13 +66,13 @@ public class PostLoginRoute implements TemplateViewRoute {
             return error(vm, USER_EXIST_MESSAGE);
         } else {
             gameCenter.addPlayer(request.session(), reqUsername);
-            request.session().attribute("username", reqUsername);
-            vm.put("username", reqUsername);
+            session.attribute(USERNAME_PARAM, reqUsername);
+            vm.put(USERNAME_PARAM, reqUsername);
             response.redirect("/");
             halt();
         }
 
-        vm.put("username", reqUsername);
+        vm.put(USERNAME_PARAM, reqUsername);
         return new ModelAndView(vm , GetHomeRoute.VIEW_NAME);
     }
 }
