@@ -44,4 +44,34 @@ public class GameCenter {
 
         return game;
     }
+
+    public boolean isInGame(String _username) {
+        for(Game game : games) {
+            if(game.getPlayer1().getUsername().equals(_username) || game.getPlayer2().getUsername().equals(_username)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Game getGame(String _username) {
+        for(Game game : games) {
+            if(game.getPlayer1().getUsername().equals(_username) || game.getPlayer2().getUsername().equals(_username)) {
+                return game;
+            }
+        }
+
+        return null;
+    }
+
+    public List<String> getAvailablePlayers() {
+        List<String> available = new ArrayList<>();
+        for(String username : players.keySet()) {
+            if(!isInGame(username))
+                available.add(username);
+        }
+
+        return available;
+    }
 }

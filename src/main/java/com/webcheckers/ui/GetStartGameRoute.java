@@ -9,6 +9,8 @@ import spark.Request;
 import spark.Response;
 import spark.TemplateViewRoute;
 
+import static spark.Spark.halt;
+
 /**
  * The Web Controller for the Home page.
  *
@@ -42,18 +44,24 @@ public class GetStartGameRoute implements TemplateViewRoute {
 
         String player1 =  request.session().attribute("username");
         String player2 = request.queryParams("challengedplayer");
-        Game game = gameCenter.startGame(player1, player2);
 
-        vm.put("playerName", player1);
-        vm.put("playerColor", "red");
-        vm.put("isMyTurn", true);
-        vm.put("opponentName", player2);
-        vm.put("opponentColor", "white");
-        vm.put("currentPlayer", true);
-        vm.put("board", game.getBoard());
+        if(gameCenter.isInGame(player2)) {
+            response.redirect("/");
+            halt();
+            return null;
+        } else {
+            Game game = gameCenter.startGame(player1, player2);
 
+            vm.put("playerName", player1);
+            vm.put("playerColor", "red");
+            vm.put("isMyTurn", true);
+            vm.put("opponentName", player2);
+            vm.put("opponentColor", "white");
+            vm.put("currentPlayer", true);
+            vm.put("board", game.getBoard());
 
-        return new ModelAndView(vm , "game.ftl");
+            return new ModelAndView(vm, "game.ftl");
+        }
     }
 
 }

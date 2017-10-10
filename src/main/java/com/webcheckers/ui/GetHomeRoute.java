@@ -10,6 +10,8 @@ import spark.Request;
 import spark.Response;
 import spark.TemplateViewRoute;
 
+import static spark.Spark.halt;
+
 /**
  * The Web Controller for the Home page.
  *
@@ -41,13 +43,13 @@ public class GetHomeRoute implements TemplateViewRoute {
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
 
-    //TESTING
-    //gameCenter.addPlayer(request.session(), "Andy");
-    //gameCenter.addPlayer(request.session(), "Ashok");
-    //gameCenter.addPlayer(request.session(), "CheckersFan1334");
-    //
+    if(gameCenter.isInGame(request.session().attribute("username"))) {
+        response.redirect("/game");
+        halt();
+        return null;
+    }
 
-    vm.put("usernames", gameCenter.getUsernames());
+    vm.put("usernames", gameCenter.getAvailablePlayers());
 
     if(request.session().attribute("username") != null) {
         vm.put("username", request.session().attribute("username"));
