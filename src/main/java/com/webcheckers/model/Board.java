@@ -9,19 +9,27 @@ import java.util.function.Consumer;
 public class Board implements Iterable<Row>{
 
     private List<Row> rows;
-
+    
+    
+    /**
+     * This is the constructor for the "Board" class.
+     */
     public Board() {
         rows = new ArrayList<>();
         for(int i=0; i<=7; i++) {
             rows.add(new Row(i));
         }
     }
-
+   
+    /**
+     * This function updates the board after moves
+     * @return the updated board
+     */
     public Board updateBoard() {
         Board board = new Board();
         return board;
     }
-
+    
     @Override
     public Iterator<Row> iterator() {
         return rows.iterator();
