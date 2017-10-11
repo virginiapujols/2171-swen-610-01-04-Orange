@@ -56,19 +56,36 @@ public class Row implements Iterable<Space>{
     public Spliterator<Space> spliterator() {
         return null;
     }
-
+    
+    /**
+     * This is the accessor for the Index
+     * @return the value of the index (specifies the row position)
+     */
     public int getIndex() {
         return this.index;
     }
-
+    
+    /**
+     * this is the mutator for the Index
+     * @param _index sets the index value
+     */
+    
     public void setIndex(int _index) {
         this.index = _index;
     }
-
+    
+    /**
+     * This function is the accessor for Spaces
+     * @return the spaces value
+     */
     public List<Space> getSpaces() {
         return this.spaces;
     }
-
+    
+    /**
+     * This function is the mutator for spaces
+     * @param _spaces sets the value of spaces
+     */
     public void setSpaces(List<Space> _spaces) {
         this.spaces = _spaces;
     }
