@@ -15,23 +15,41 @@ public class Player {
     public Player(String _username) {
         this.username = _username;
     }
-
+    
+    /**
+     * This function denotes a player logging in
+     * @param _username this is the username of the player
+     * @return a Boolean "true" or "false"
+     */
     public boolean login(String _username) {
         return true;
     }
-
+    
+    /**
+     * This function logs the player out of the game
+     */
     public void logOut() {
 
     }
-
+    
+    /**
+     * This function challenges another user to a game
+     * @param _username
+     */
     public void challengeUser(String _username) {
 
     }
 
+    /**
+     * This function accepts a challenge
+     */
     public void acceptChallenge() {
 
     }
-
+    
+    /**
+     * This function declines a challenges
+     */
     public void declineChallenge() {
 
     }
