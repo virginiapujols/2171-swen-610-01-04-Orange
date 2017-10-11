@@ -68,6 +68,7 @@ public class Player {
      * Accessor for the isPlaying boolean
      * @return isPlaying Whether or not the user is currently playing a game
      */
+
     public boolean getIsPlaying() {
         return this.isPlaying;
     }

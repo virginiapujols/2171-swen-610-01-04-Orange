@@ -17,7 +17,7 @@ public class Piece {
      /**
      * This function denotes the transformation of a "plain" piece to a "king" piece
      */
-    public void bceomeKing(){}
+    public void becomeKing(){}
 
     /**
      * This function denotes if the piece is captured or not

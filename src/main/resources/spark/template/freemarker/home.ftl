@@ -12,7 +12,7 @@
 
             <!-- Links for Login and Logout -->
             <div class="navigation">
-            <#if loggedPlayer??>
+            <#if username??>
                 <a href="/logout">Logout</a>
             <#else>
                 <a href="/login">Login</a>
