@@ -1,3 +1,4 @@
+
 package com.webcheckers.model;
 
 import java.util.ArrayList;
@@ -10,6 +11,10 @@ public class Row implements Iterable<Space>{
     private List<Space> spaces;
     private int index;
 
+    /**
+     * This function is the constructor for the row class
+     * @param yCoord this is they Y co-ordinate of the row
+     */
     public Row(int yCoord) {
         spaces = new ArrayList<>();
         this.index = yCoord;
