@@ -19,13 +19,6 @@ public class Piece {
      */
     public void bceomeKing(){}
 
-     /**
-     * This function denotes if the move is a forward move or not
-     * @param _posY this is the Y co-ordinate of the piece
-     * @returns a Boolean "true" or "false"
-     */
-    public boolean isMoveForward(int _posY){return true;}
-
     /**
      * This function denotes if the piece is captured or not
      * @param _posX this is the X co-ordinate of the piece
