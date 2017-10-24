@@ -1,6 +1,7 @@
 # Web Checkers Home
 
-Welcome to the Web Checkers Project!
+Welcome to the Web Checkers Project! An online Checkers game system built in Java 8 and using Spark, a web microframework.
+
 
 ## Team
 
