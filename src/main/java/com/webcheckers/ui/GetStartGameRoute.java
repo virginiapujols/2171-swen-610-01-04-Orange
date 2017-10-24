@@ -15,8 +15,8 @@ import static spark.Spark.halt;
  */
 public class GetStartGameRoute implements TemplateViewRoute {
     //Constants
-    static final String CHALLENGED = "challengedplayer";
-    static final String VIEW_NAME = "game.ftl";
+    public static final String CHALLENGED = "challengedplayer";
+    public static final String VIEW_NAME = "game.ftl";
 
     // Attributes
     private final GameCenter gameCenter;
@@ -26,7 +26,7 @@ public class GetStartGameRoute implements TemplateViewRoute {
      *
      * @param gameCenter The {@link GameCenter} for the application.
      */
-    GetStartGameRoute(final GameCenter gameCenter) {
+    public GetStartGameRoute(final GameCenter gameCenter) {
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
 
         this.gameCenter = gameCenter;
@@ -42,7 +42,7 @@ public class GetStartGameRoute implements TemplateViewRoute {
         String player1 =  session.attribute(PostLoginRoute.USERNAME_PARAM);
         String player2 = request.queryParams(CHALLENGED);
 
-        if(gameCenter.isInGame(player2)) { //If the challenged player is in a game, redirect the challenger to the home page
+        if(gameCenter.isInGame(player2) || player2 == null) { //If the challenged player is in a game, redirect the challenger to the home page
             response.redirect(WebServer.HOME_URL);
             halt();
             return null;

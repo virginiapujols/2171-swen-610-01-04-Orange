@@ -16,16 +16,16 @@ import static spark.Spark.halt;
 public class GetGameRoute implements TemplateViewRoute {
 
     //Constants
-    static final String PLAYER_NAME = "playerName";
-    static final String PLAYER_COLOR = "playerColor";
-    static final String MY_TURN = "isMyTurn";
-    static final String OPP_NAME = "opponentName";
-    static final String OPP_COLOR = "opponentColor";
-    static final String CURR_PLAYER = "currentPlayer";
-    static final String GAME_BOARD = "board";
-    static final String RED = "red";
-    static final String WHITE = "white";
-    static final String VIEW_NAME = "game.ftl";
+    public static final String PLAYER_NAME = "playerName";
+    public static final String PLAYER_COLOR = "playerColor";
+    public static final String MY_TURN = "isMyTurn";
+    public static final String OPP_NAME = "opponentName";
+    public static final String OPP_COLOR = "opponentColor";
+    public static final String CURR_PLAYER = "currentPlayer";
+    public static final String GAME_BOARD = "board";
+    public static final String RED = "red";
+    public static final String WHITE = "white";
+    public static final String VIEW_NAME = "game.ftl";
 
     // Attributes
     private final GameCenter gameCenter;

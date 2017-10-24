@@ -116,4 +116,13 @@ public class Game{
     public void setTurn(int _turn) {
         this.turn = _turn;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Game) {
+            Game current = (Game)obj;
+            return (current.player1.getUsername() == ((Game) obj).player1.getUsername() && current.player2.getUsername() == ((Game) obj).player2.getUsername());
+        }
+        return false;
+    }
 }
