@@ -27,10 +27,9 @@ public class GetStartGameRouteTest {
 
     //Attributes
     private Request request;
-    private Session session;
     private Response response;
-    private Session p1Session = mock(Session.class);
-    private Session p2Session = mock(Session.class);
+    private Session p1Session;
+    private Session p2Session;
     private GameCenter gameCenter = new GameCenter();
     /**
      * The component under test(CuT)
@@ -43,8 +42,10 @@ public class GetStartGameRouteTest {
     @Before
     public void setup() {
         request = mock(Request.class);
-        session = mock(Session.class);
-        when(request.session()).thenReturn(session);
+        p1Session = mock(Session.class);
+        p2Session = mock(Session.class);
+        when(request.session()).thenReturn(p1Session);
+        when(request.session()).thenReturn(p2Session);
 
         response = mock(Response.class);
     }
