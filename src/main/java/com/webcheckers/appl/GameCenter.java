@@ -25,9 +25,9 @@ public class GameCenter {
      * Returns a keyset of the players playlist (this is a unique list of Usernames registered with the application)
      * @return players.keySet() Every username that has been registered with the application
      */
-    public Set<String> getUsernames() {
+    /*public Set<String> getUsernames() {
         return players.keySet();
-    }
+    }*/
 
     /**
      * Method to add a Player to the application and set the "player" value for that user's session
