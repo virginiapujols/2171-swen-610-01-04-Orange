@@ -14,6 +14,9 @@ import java.util.Map;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit Test for GetStartGameRoute
+ */
 public class GetStartGameRouteTest {
     //Constants
     private static final String CHALLENGED = "challengedplayer";
@@ -34,6 +37,9 @@ public class GetStartGameRouteTest {
      */
     private GetStartGameRoute CuT = new GetStartGameRoute(gameCenter);
 
+    /**
+     * Setup() method to configure request, session, & response info
+     */
     @Before
     public void setup() {
         request = mock(Request.class);
@@ -43,31 +49,46 @@ public class GetStartGameRouteTest {
         response = mock(Response.class);
     }
 
+    /**
+     * Test for handle() when a challenged player is already in a game
+     * Expected result is HaltException called from halt()
+     */
     @Test(expected = spark.HaltException.class)
     public void test_playerInGame() {
+        //Set Mock Objects
+        when(p1Session.attribute(USERNAME)).thenReturn(USERNAME1);
+        when(request.session()).thenReturn(p1Session);
+        when(request.queryParams(CHALLENGED)).thenReturn(USERNAME2);
+
+        //Create Players & Start Game
         gameCenter.addPlayer(p1Session, USERNAME1);
         gameCenter.addPlayer(p2Session, USERNAME2);
         gameCenter.startGame(USERNAME1, USERNAME2);
 
-        when(p1Session.attribute(USERNAME)).thenReturn(USERNAME1);
-        when(request.session()).thenReturn(p1Session);
-        when(request.queryParams(CHALLENGED)).thenReturn(USERNAME2);
-
+        //Call handle()
         CuT = new GetStartGameRoute(gameCenter);
         final ModelAndView result = CuT.handle(request, response);
     }
 
+    /**
+     * Test for handle() when challenged player is not in a game
+     */
     @Test
     public void test_playerNotInGame() {
-        gameCenter.addPlayer(p1Session, USERNAME1);
-        gameCenter.addPlayer(p2Session, USERNAME2);
-
+        //Set Mock Objects
         when(p1Session.attribute(USERNAME)).thenReturn(USERNAME1);
         when(request.session()).thenReturn(p1Session);
         when(request.queryParams(CHALLENGED)).thenReturn(USERNAME2);
 
+        //Add players
+        gameCenter.addPlayer(p1Session, USERNAME1);
+        gameCenter.addPlayer(p2Session, USERNAME2);
+
+        //Call handle()
         CuT = new GetStartGameRoute(gameCenter);
         final ModelAndView result = CuT.handle(request, response);
+
+        //-----TESTING-----
 
         //Result is not null
         assertNotNull(result);
@@ -90,8 +111,13 @@ public class GetStartGameRouteTest {
         assertEquals(VIEW_NAME, GetStartGameRoute.VIEW_NAME);
     }
 
+    /**
+     * Unit Test to handle no player object being set
+     * Should result in halt() being called
+     */
     @Test(expected = spark.HaltException.class)
     public void test_noPlayers() {
+        //Call handle without setting any mock session data
         final ModelAndView result = CuT.handle(request, response);
     }
 }
