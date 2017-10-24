@@ -41,9 +41,13 @@ public class PostLoginRoute implements TemplateViewRoute {
     PostLoginRoute(final GameCenter gameCenter) {
         // validation
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
+
         this.gameCenter = gameCenter;
     }
 
+    public GameCenter getGameCenter(){
+        return this.gameCenter;
+    }
     //
     // Private methods
     //
@@ -69,7 +73,7 @@ public class PostLoginRoute implements TemplateViewRoute {
             session.attribute(USERNAME_PARAM, reqUsername);
             vm.put(USERNAME_PARAM, reqUsername);
             response.redirect("/");
-            halt();
+//            halt();
         }
 
         vm.put(USERNAME_PARAM, reqUsername);
