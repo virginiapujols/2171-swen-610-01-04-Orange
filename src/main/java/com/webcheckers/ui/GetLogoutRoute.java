@@ -16,7 +16,7 @@ public class GetLogoutRoute implements TemplateViewRoute{
     private final GameCenter gameCenter;
 
     /**
-     * The constructor for the {@code POST /Logout} route handler.
+     * The constructor for the {@code GET /Logout} route handler.
      *
      * @param gameCenter
      *    The {@link GameCenter} for the application.
