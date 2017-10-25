@@ -1,3 +1,5 @@
+package com.webcheckers.appl;
+
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
