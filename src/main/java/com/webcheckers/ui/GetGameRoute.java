@@ -50,7 +50,8 @@ public class GetGameRoute implements TemplateViewRoute {
         Game game = gameCenter.getGame(session.attribute(PostLoginRoute.USERNAME_PARAM));
 
         if(game != null) { //If they are in game:
-            if(game.getPlayer1().getUsername().equals(session.attribute(PostLoginRoute.USERNAME_PARAM))) { //Check if they're player 1 & populate the ViewModel
+            if(game.getPlayer1().getUsername()
+                    .equals(session.attribute(PostLoginRoute.USERNAME_PARAM))) { //Check if they're player 1 & populate the ViewModel
                 vm.put(PLAYER_NAME, game.getPlayer1().getUsername());
                 vm.put(PLAYER_COLOR, RED);
                 vm.put(MY_TURN, true);
