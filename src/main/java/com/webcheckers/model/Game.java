@@ -117,6 +117,18 @@ public class Game{
         this.turn = _turn;
     }
 
+    public int changeTurn() {
+        this.turn = (this.turn == 0) ? 1 : 0;
+
+        return this.turn;
+    }
+
+    public boolean isMyTurn(String _username) {
+        int t = (player1.getUsername().equals(_username)) ? 0 : 1;
+
+        return t == this.turn;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Game) {

@@ -42,6 +42,11 @@ public class Row implements Iterable<Space>{
         }
     }
 
+    public Row(List<Space> _spaces, int yCoord) {
+        this.spaces = _spaces;
+        this.index = yCoord;
+    }
+
     @Override
     public Iterator<Space> iterator() {
         return spaces.iterator();
@@ -88,5 +93,15 @@ public class Row implements Iterable<Space>{
      */
     public void setSpaces(List<Space> _spaces) {
         this.spaces = _spaces;
+    }
+
+    public Row flipRow() {
+        List<Space> cells = new ArrayList<>();
+
+        for (int i = spaces.size()-1; i >= 0; i--) {
+            cells.add(spaces.get(i));
+        }
+
+        return new Row(cells, this.index);
     }
 }

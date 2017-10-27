@@ -149,6 +149,12 @@ public class WebServer {
 
     //Displays a game for any users currently in a game
     get(GAME_URL, new GetGameRoute(gameCenter), templateEngine);
+
+    //Posts a Move to validate whether or not it is legal
+    post("/validateMove", new PostValidateMoveRoute(gameCenter), JsonUtils.json());
+
+    //Posts a Move to submit a User's turn
+    post("submitTurn", new PostSubmitTurnRoute(gameCenter), JsonUtils.json());
   }
 
 }

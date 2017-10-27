@@ -23,17 +23,22 @@
                 <p>Welcome to the world of online Checkers.</p>
 
                 <#if username??>
-                    <p>Click a username to challenge them to a game!</p>
-                    <ul>
-                        <#list usernames as u>
-                            <#if u != username>
-                                <li>
-                                    <a href="/startGame?challengedplayer=${u}">
-                                    ${u}
-                                    </a></li>
-                            </#if>
-                        </#list>
-                    </ul>
+                    <#if usernames??>
+                        <p>Click a username to challenge them to a game!</p>
+                        <ul>
+                            <#list usernames as u>
+                                <#if u != username>
+                                    <li>
+                                        <a href="/startGame?challengedplayer=${u}">
+                                        ${u}
+                                        </a>
+                                    </li>
+                                </#if>
+                            </#list>
+                        </ul>
+                    <#else>
+                         <p>No other users are currently available for a game</p>
+                    </#if>
                 </#if>
             </div>
 

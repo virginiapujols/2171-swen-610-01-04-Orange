@@ -29,7 +29,15 @@ public class Board implements Iterable<Row>{
         Board board = new Board();
         return board;
     }
-    
+
+    public List<Row> getRows() {
+        return this.rows;
+    }
+
+    public void setRows(List<Row> _rows) {
+        this.rows = _rows;
+    }
+
     @Override
     public Iterator<Row> iterator() {
         return rows.iterator();
