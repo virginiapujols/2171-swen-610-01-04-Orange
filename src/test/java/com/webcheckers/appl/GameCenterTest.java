@@ -1,6 +1,5 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import org.junit.Test;
@@ -90,7 +89,7 @@ public class GameCenterTest {
 
         //Assert List of players is not null and that the "p1" username is taken
         assertNotNull(CuT.getAvailablePlayers());
-        assertTrue(CuT.usernameTaken(P1_USERNAME));
+        assertTrue(CuT.isUsernameTaken(P1_USERNAME));
     }
 
     /**

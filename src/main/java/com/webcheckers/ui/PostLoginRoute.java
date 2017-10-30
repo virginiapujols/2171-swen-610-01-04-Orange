@@ -9,8 +9,6 @@ import spark.Response;
 import spark.Session;
 import spark.TemplateViewRoute;
 
-import com.webcheckers.model.Player;
-
 import static spark.Spark.halt;
 
 /**
@@ -66,7 +64,7 @@ public class PostLoginRoute implements TemplateViewRoute {
         final Session session = request.session();
         final String reqUsername = request.queryParams(USERNAME_PARAM);
 
-        if(gameCenter.usernameTaken(reqUsername)) {
+        if(gameCenter.isUsernameTaken(reqUsername)) {
             return error(vm, USER_EXIST_MESSAGE);
         } else {
             gameCenter.addPlayer(request.session(), reqUsername);

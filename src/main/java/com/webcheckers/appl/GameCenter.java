@@ -45,7 +45,7 @@ public class GameCenter {
      * @param username The requested username to be validated
      * @return Boolean indicating if the username is in the Dictionary of usernames/players
      */
-    public boolean usernameTaken(String username) {
+    public boolean isUsernameTaken(String username) {
         return players.keySet().contains(username);
     }
 

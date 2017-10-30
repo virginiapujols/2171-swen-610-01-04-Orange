@@ -48,7 +48,7 @@ public class PostLoginRouteTest {
         // Creating mock method calls
         when(request.session()).thenReturn(session);
         when(request.queryParams(USERNAME_PARAM)).thenReturn(testName);
-        when(gameCenter.usernameTaken(testName)).thenReturn(true);
+        when(gameCenter.isUsernameTaken(testName)).thenReturn(true);
 
         //Executing the error function
         PostLoginRoute testPostLoginRoute = new PostLoginRoute(gameCenter);
@@ -70,7 +70,7 @@ public class PostLoginRouteTest {
         PostLoginRoute test = new PostLoginRoute(gameCenter);
         String reqUsername = "niharika";
 
-        when(gameCenter.usernameTaken(reqUsername)).thenReturn(false);
+        when(gameCenter.isUsernameTaken(reqUsername)).thenReturn(false);
 
         Session session = mock(Session.class);
         Request request = mock(Request.class);

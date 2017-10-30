@@ -2,10 +2,42 @@ package com.webcheckers.model;
 
 public class Move {
 
-    private int startX;
-    private int startY;
-    private int endX;
-    private int endY;
+    private int startRow;
+    private int startCell;
+    private int endRow;
+    private int endCell;
+
+    public int getStartRow() {
+        return startRow;
+    }
+
+    public void setStartRow(int startRow) {
+        this.startRow = startRow;
+    }
+
+    public int getStartCell() {
+        return startCell;
+    }
+
+    public void setStartCell(int startCell) {
+        this.startCell = startCell;
+    }
+
+    public int getEndRow() {
+        return endRow;
+    }
+
+    public void setEndRow(int endRow) {
+        this.endRow = endRow;
+    }
+
+    public int getEndCell() {
+        return endCell;
+    }
+
+    public void setEndCell(int endCell) {
+        this.endCell = endCell;
+    }
 
     /**
      * This is the function that moves a piece to the required co-ordinates.
@@ -47,6 +79,9 @@ public class Move {
         return true;
     }
 
+    public boolean isValidMoveForward() {
+        return (endCell == (startCell + 1) && (endRow == (startRow-1) || endRow == (startRow+1)));
+    }
 }
 
 
