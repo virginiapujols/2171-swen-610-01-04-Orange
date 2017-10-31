@@ -38,6 +38,19 @@ public class Board implements Iterable<Row>{
         this.rows = _rows;
     }
 
+    public void movePiece(Move move) {
+        int startRow = move.getStart().getRow();
+        int startCell = move.getStart().getCell();
+        int endRow = move.getEnd().getRow();
+        int endCell = move.getEnd().getCell();
+
+        Space startSpace = rows.get(startRow).getSpaces().get(startCell);
+        Space endSpace = rows.get(endRow).getSpaces().get(endCell);
+        Piece piece = startSpace.getPiece();
+        startSpace.setPiece(null);
+        endSpace.setPiece(piece);
+    }
+
     @Override
     public Iterator<Row> iterator() {
         return rows.iterator();

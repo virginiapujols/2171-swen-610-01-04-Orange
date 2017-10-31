@@ -29,8 +29,8 @@ public class PostValidateMoveRoute implements Route {
         System.out.println(data);
 
         Move move = JsonUtils.fromJson(data, Move.class);
-
-        System.out.println("Move?");
+        System.out.println(move.toString());
+        board.movePiece(move);
 
         Message message = new Message("info", "Hooray!");
 
