@@ -32,7 +32,7 @@ public class PostValidateMoveRoute implements Route {
         System.out.println(move.toString());
         board.movePiece(move);
 
-        Message message = new Message("info", "Hooray!");
+        Message message = new Message("Hooray!", "info");
 
         return message;
     }
