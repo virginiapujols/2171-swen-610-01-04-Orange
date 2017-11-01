@@ -39,7 +39,7 @@ public class Board implements Iterable<Row>{
         this.rows = _rows;
     }
 
-    public boolean isDidMove() {
+    public boolean didMove() {
         return didMove;
     }
 
