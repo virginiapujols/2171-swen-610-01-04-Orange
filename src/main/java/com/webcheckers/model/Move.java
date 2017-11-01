@@ -2,50 +2,25 @@ package com.webcheckers.model;
 
 public class Move {
 
-    private int startRow;
-    private int startCell;
-    private int endRow;
-    private int endCell;
+    /*private int startX;
+    private int startY;
+    private int endX;
+    private int endY;*/
 
-    public int getStartRow() {
-        return startRow;
+    private Coordinate start;
+    private Coordinate end;
+
+    public Move(Coordinate _start, Coordinate _end) {
+        this.start = _start;
+        this.end = _end;
     }
 
-    public void setStartRow(int startRow) {
-        this.startRow = startRow;
+    public Coordinate getStart() {
+        return start;
     }
 
-    public int getStartCell() {
-        return startCell;
-    }
-
-    public void setStartCell(int startCell) {
-        this.startCell = startCell;
-    }
-
-    public int getEndRow() {
-        return endRow;
-    }
-
-    public void setEndRow(int endRow) {
-        this.endRow = endRow;
-    }
-
-    public int getEndCell() {
-        return endCell;
-    }
-
-    public void setEndCell(int endCell) {
-        this.endCell = endCell;
-    }
-
-    /**
-     * This is the function that moves a piece to the required co-ordinates.
-     * @param _posX this is the X co-ordinate
-     * @param _posY this is the Y co-ordinate
-     */
-    public void movePiece(int _posX, int _posY){
-
+    public Coordinate getEnd() {
+        return end;
     }
 
     /**
@@ -79,8 +54,8 @@ public class Move {
         return true;
     }
 
-    public boolean isValidMoveForward() {
-        return (endCell == (startCell + 1) && (endRow == (startRow-1) || endRow == (startRow+1)));
+    public String toString() {
+        return "Move: (Initial - R: " + start.getRow() + ", C: " + start.getCell() + ", Ending - R: " + end.getRow() + ", C: " + end.getCell() + ")";
     }
 }
 
