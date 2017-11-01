@@ -9,8 +9,9 @@ import java.util.function.Consumer;
 public class Board implements Iterable<Row>{
 
     private List<Row> rows;
-    
-    
+    private boolean didMove;
+
+
     /**
      * This is the constructor for the "Board" class.
      */
@@ -36,6 +37,14 @@ public class Board implements Iterable<Row>{
 
     public void setRows(List<Row> _rows) {
         this.rows = _rows;
+    }
+
+    public boolean isDidMove() {
+        return didMove;
+    }
+
+    public void setDidMove(boolean didMove) {
+        this.didMove = didMove;
     }
 
     public void movePiece(Move move) {

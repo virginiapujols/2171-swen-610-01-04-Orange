@@ -32,15 +32,13 @@ public class Move {
     }
 
     /**
-     * This funtion is one which verifies if the move is forward or not
-     * @param _posY is the Y co-ordinate that is being checked
+     * This function is one which verifies if the move is forward or not
      * @return
      */
+    public boolean isValidMoveForward() {
 
-
-    public boolean isMoveForward(int _posY){
-
-        return true;
+        return (end.getCell() == start.getCell() + 1
+                && (end.getRow() == start.getRow() + 1 || end.getRow() == start.getRow() - 1));
     }
 
     /**

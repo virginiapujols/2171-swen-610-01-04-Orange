@@ -7,7 +7,7 @@ public class Game{
     private Player player2;
     private boolean isOver;
     int turn;
-    
+
     /**
      * This is the constructor for the Game class
      * @param _player1 is the first player
@@ -43,7 +43,7 @@ public class Game{
     public Board getBoard() {
         return board;
     }
-    
+
     /**
      * This is the accessor of player1
      * @return the player1
@@ -119,7 +119,7 @@ public class Game{
 
     public int changeTurn() {
         this.turn = (this.turn == 0) ? 1 : 0;
-
+        this.board.setDidMove(false);
         return this.turn;
     }
 

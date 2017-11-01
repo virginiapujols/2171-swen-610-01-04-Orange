@@ -24,15 +24,19 @@ public class PostValidateMoveRoute implements Route {
     public Object handle(Request request, Response response) {
         Game game = gameCenter.getGame(request.session().attribute("username"));
         Board board = game.getBoard();
-
         String data = request.body();
-        System.out.println(data);
 
+        Message message;
         Move move = JsonUtils.fromJson(data, Move.class);
-        System.out.println(move.toString());
-        board.movePiece(move);
 
-        Message message = new Message("info", "Hooray!");
+        if (move.isValidMoveForward() && !board.isDidMove()) {
+            System.out.println(move.toString());
+            board.movePiece(move);
+            message = new Message("Valid Move", "info");
+            board.setDidMove(true);
+        } else {
+            message = new Message("Invalid Move", "error");
+        }
 
         return message;
     }
