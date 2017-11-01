@@ -26,16 +26,11 @@ public class PostValidateMoveRoute implements Route {
         Board board = game.getBoard();
         String data = request.body();
 
-        Message message;
         Move move = JsonUtils.fromJson(data, Move.class);
 
-        if (move.isValidMoveForward() && !board.didMove()) {
-            System.out.println(move.toString());
+        Message message = board.validateMove(move);
+        if(!message.getType().equals("error")) {
             board.movePiece(move);
-            message = new Message("Valid Move", "info");
-            board.setDidMove(true);
-        } else {
-            message = new Message("Invalid Move", "error");
         }
 
         return message;
