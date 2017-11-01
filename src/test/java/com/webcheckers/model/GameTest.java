@@ -61,7 +61,7 @@ public class GameTest {
     @Test
     public void testEquals() throws Exception{
         Player _player1 = mock(Player.class);
-        Player _player2 = mock(Player.class);;
+        Player _player2 = mock(Player.class);
         Game test = new Game(_player1, _player2);
         assertEquals(_player1, test.getPlayer1());
         assertEquals(_player2, test.getPlayer2());
