@@ -66,4 +66,33 @@ public class GameTest {
         assertEquals(_player1, test.getPlayer1());
         assertEquals(_player2, test.getPlayer2());
     }
+    @Test
+    public void testChangeTurn1(){
+        Player _player1 = mock(Player.class);
+        Player _player2 = mock(Player.class);
+        Game test =  new Game(_player1, _player2);
+        test.setTurn(1);
+        //System.out.println(test.changeTurn());
+        assertEquals(1, test.changeTurn());
+        //assertEquals(0, test.changeTurn());
+    }
+    @Test
+    public void testChangeTurn0(){
+        Player _player1 = mock(Player.class);
+        Player _player2 = mock(Player.class);
+        Game test =  new Game(_player1, _player2);
+        //test.setTurn(1);
+        //System.out.println(test.changeTurn());
+        //assertEquals(1, test.changeTurn());
+        assertEquals(0, test.changeTurn());
+    }
+    @Test
+    public void testIsMyTurn(){
+        Player _player1 = mock(Player.class);
+        Player _player2 = mock(Player.class);
+        Game test =  new Game(_player1, _player2);
+        String _username = "niharika";
+        when(_player1.getUsername()).thenReturn(_username);
+        assertTrue(test.isMyTurn(_username));
+    }
 }
