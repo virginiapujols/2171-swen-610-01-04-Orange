@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Game{
 
     private Board board;
@@ -7,6 +10,7 @@ public class Game{
     private Player player2;
     private boolean isOver;
     int turn;
+    private List<Move> moves = new ArrayList<Move>();
 
     /**
      * This is the constructor for the Game class
@@ -120,13 +124,46 @@ public class Game{
     public int changeTurn() {
         this.turn = (this.turn == 0) ? 1 : 0;
         this.board.setDidMove(false);
+        moves.clear();
         return this.turn;
     }
 
+    /**
+     * Method to check if it is a given user's turn
+     * @param _username The username of the user we are checking for
+     * @return A boolean: true if it's that user's turn, false if it isn't
+     */
     public boolean isMyTurn(String _username) {
+        //Int showing player number based on a comparison between the inputted username & player 1's username
         int t = (player1.getUsername().equals(_username)) ? 0 : 1;
 
         return t == this.turn;
+    }
+
+    /**
+     * Method to add a Move to the list of Moves completed on this turn
+     * @param move The move that was just completed
+     */
+    public void addMoveToList(Move move) {
+        moves.add(move);
+    }
+
+    /**
+     * Method to undo one move when the user clicks "Backup one move"
+     * @return A Message indicating if the undo was successful or not
+     */
+    public Message backupMove() {
+        if(moves.size() > 0) { //Only undo a move if there are moves to be undone
+            int lastMovePosition = moves.size() - 1;
+            Move moveToUndo = moves.get(lastMovePosition);
+            moves.remove(lastMovePosition);
+
+            board.undoMove(moveToUndo);
+
+            return new Message("Move has been undone!", "info");
+        } else {
+            return new Message("No moves have been made!", "error");
+        }
     }
 
     @Override

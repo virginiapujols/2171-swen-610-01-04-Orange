@@ -30,6 +30,7 @@ public class PostValidateMoveRoute implements Route {
 
         Message message = board.validateMove(move);
         if(!message.getType().equals("error")) {
+            game.addMoveToList(move);
             board.movePiece(move);
         }
 

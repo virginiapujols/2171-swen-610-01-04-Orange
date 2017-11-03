@@ -155,6 +155,9 @@ public class WebServer {
 
     //Posts a Move to submit a User's turn
     post("submitTurn", new PostSubmitTurnRoute(gameCenter), JsonUtils.json());
+
+    //Post to undo a single move
+    post("backupMove", new PostBackupMoveRoute(gameCenter), JsonUtils.json());
   }
 
 }
