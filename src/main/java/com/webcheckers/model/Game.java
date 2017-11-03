@@ -124,6 +124,7 @@ public class Game{
     public int changeTurn() {
         this.turn = (this.turn == 0) ? 1 : 0;
         this.board.setDidMove(false);
+        this.board.setDidJump(false);
         moves.clear();
         return this.turn;
     }

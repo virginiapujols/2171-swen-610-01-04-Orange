@@ -11,6 +11,7 @@ import java.util.Objects;
 public class PostCheckTurnRoute implements Route {
     //Attributes
     private final GameCenter gameCenter;
+    private Game game;
 
     PostCheckTurnRoute(final GameCenter gameCenter) {
         // validation
@@ -23,7 +24,11 @@ public class PostCheckTurnRoute implements Route {
     @Override
     public Object handle(Request request, Response response)  {
         final String currentUsername = request.session().attribute(PostLoginRoute.USERNAME_PARAM);
+        game = gameCenter.getGame(currentUsername);
 
-        return gameCenter.getGame(currentUsername).isMyTurn(currentUsername);
+        if(game != null)
+            return game.isMyTurn(currentUsername);
+        else
+            return false;
     }
 }

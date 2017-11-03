@@ -10,6 +10,7 @@ public class Board implements Iterable<Row>{
 
     private List<Row> rows;
     private boolean didMove = false;
+    private boolean didJump = false;
 
 
     /**
@@ -64,55 +65,75 @@ public class Board implements Iterable<Row>{
     }
 
     /**
-     * Method to take a piece from the starting location in a move and place it at the ending location
-     * @param move A Data Object showing the starting & ending locations of a Piece when it is moved
+     * Accessor for didJump attribute
+     * @return didJump Whether or not the user has jumped
      */
-    public void movePiece(Move move) {
-        //Get starting & ending coordinates
-        int startRow = move.getStart().getRow();
-        int startCell = move.getStart().getCell();
-        int endRow = move.getEnd().getRow();
-        int endCell = move.getEnd().getCell();
+    public boolean getDidJump() {
+        return didJump;
+    }
 
+    /**
+     * Mutator for didJump attribute
+     * @param _didJump Whether or not the user has jumped
+     */
+    public void setDidJump(boolean _didJump) {
+        this.didMove = _didJump;
+    }
+
+    /**
+     * Method to take a piece from the starting location in a move and place it at the ending location
+     * @param _move A Data Object showing the starting & ending locations of a Piece when it is moved
+     */
+    public void movePiece(Move _move) {
         //Get starting and ending spaces & piece (using coordinates)
-        Space startSpace = rows.get(startRow).getSpaces().get(startCell);
-        Space endSpace = rows.get(endRow).getSpaces().get(endCell);
+        Space startSpace = getSpaceByCoordinate(_move.getStart());
+        Space endSpace = getSpaceByCoordinate(_move.getEnd());
         Piece piece = startSpace.getPiece();
 
         //Empty the starting space, put the piece in the end space, & signify that the user has moved
         startSpace.setPiece(null);
         endSpace.setPiece(piece);
         didMove = true;
+
+        if(_move.getRowsMoved() == 2) {
+            didJump = true;
+            Coordinate jumpedCoordinate = _move.getJumpedCoordinate();
+            Space jumpedSpace = getSpaceByCoordinate(jumpedCoordinate);
+            jumpedSpace.removeCapturedPiece();
+        }
     }
 
     /**
      * A method to validate if a move is a legal move or not: illegal moves are prevented from occuring
-     * @param move The move that is being made
+     * @param _move The move that is being made
      * @return A message with text and type "info" it's a valid move or type "error" if it's an invalid move
      */
-    public Message validateMove(Move move) {
-        int startRow = move.getStart().getRow();
-        int startCell = move.getStart().getCell();
-        int endRow = move.getEnd().getRow();
-        int endCell = move.getEnd().getCell();
-
-        Space startSpace = rows.get(startRow).getSpaces().get(startCell);
-        Space endSpace = rows.get(endRow).getSpaces().get(endCell);
+    public Message validateMove(Move _move) {
+        Space startSpace = getSpaceByCoordinate(_move.getStart());
+        Space endSpace = getSpaceByCoordinate(_move.getEnd());
         Piece piece = startSpace.getPiece();
 
-        if(!didMove) { //If the user hasn't already moved:
+        if(!didMove || (didMove && didJump)) { //If the user hasn't already moved OR has only made jumps
             if(endSpace.getPiece() == null) { //If there's already a piece in the ending space
                 if (piece.getColor().equals("RED")) { //If the piece is red (i.e. if the piece moves "up" on the board)
-                    if (endRow == startRow - 1) { //Ensure that a move is only 1 row "up"
+                    if (_move.getRowsMoved() == 1 && !_move.isMoveUp() && !didJump) { //Ensure that a move is only 1 row "up"
                         return new Message("Valid Move", "info");
+                    } else if(_move.getRowsMoved() == 2 && !_move.isMoveUp()) { //Check for a Jump, but it still has to be "up"
+                        return validateJump(_move, piece);
                     } else {
-                        return new Message("You must move 1 row forward", "error");
+                        String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
+
+                        return new Message(messageText, "error");
                     }
                 } else if (piece.getColor().equals("WHITE")) { //If the piece is white (i.e. the piece moves "down" on the board
-                    if (endRow == startRow + 1) { //Ensure that a move is only one row "down")
+                    if (_move.getRowsMoved() == 1 && _move.isMoveUp() && !didJump) { //Ensure that a move is only one row "down")
                         return new Message("Valid Move", "info");
+                    } else if(_move.getRowsMoved() == 2 && _move.isMoveUp()) { //Check for a Jump, but it still has to be "down"
+                        return validateJump(_move, piece);
                     } else {
-                        return new Message("You must move 1 row forward", "error");
+                        String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
+
+                        return new Message(messageText, "error");
                     }
                 }
             } else { //If there's a piece in the ending location, show an error message
@@ -126,24 +147,39 @@ public class Board implements Iterable<Row>{
         return new Message("Invalid Move", "error");
     }
 
+    public Message validateJump(Move _move, Piece _jumpingPiece) {
+        Coordinate jumpedCoordinate = _move.getJumpedCoordinate();
+        Space jumpedSpace = getSpaceByCoordinate(jumpedCoordinate);
+        Piece jumpedPiece = jumpedSpace.getPiece();
+
+        if(jumpedPiece != null) {
+            if(!jumpedPiece.getColor().equals(_jumpingPiece.getColor())) {
+                return new Message("Valid Move", "info");
+            } else {
+                return new Message("You cannot jump your own piece!", "error");
+            }
+        } else {
+            return new Message("You cannot jump an empty square!", "error");
+        }
+    }
+
     /**
      * Method to undo a move that has been completed on a turn that hasn't been submitted yet
-     * @param move The move to be undone
+     * @param _move The move to be undone
      */
-    public void undoMove(Move move) {
-        int startRow = move.getStart().getRow();
-        int startCell = move.getStart().getCell();
-        int endRow = move.getEnd().getRow();
-        int endCell = move.getEnd().getCell();
-
-        Space startSpace = rows.get(startRow).getSpaces().get(startCell);
-        Space endSpace = rows.get(endRow).getSpaces().get(endCell);
+    public void undoMove(Move _move) {
+        Space startSpace = getSpaceByCoordinate(_move.getStart());
+        Space endSpace = getSpaceByCoordinate(_move.getEnd());
         Piece piece = endSpace.getPiece();
 
         //Set the piece back in the starting square and empty the ending square.  Indicate that the user now hasn't completed a move this turn
         startSpace.setPiece(piece);
         endSpace.setPiece(null);
         didMove = false;
+    }
+
+    public Space getSpaceByCoordinate(Coordinate _coord) {
+        return rows.get(_coord.getRow()).getSpaces().get(_coord.getCell());
     }
 
     @Override
