@@ -158,6 +158,9 @@ public class WebServer {
 
     //Post to undo a single move
     post("backupMove", new PostBackupMoveRoute(gameCenter), JsonUtils.json());
+
+    //Post to check if it's the User's Turn
+    post("checkTurn", new PostCheckTurnRoute(gameCenter), JsonUtils.json());
   }
 
 }
