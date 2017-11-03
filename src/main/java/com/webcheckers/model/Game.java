@@ -11,6 +11,7 @@ public class Game{
     private boolean isOver;
     int turn;
     private List<Move> moves = new ArrayList<Move>();
+    private List<Piece> capturedPieces = new ArrayList<Piece>();
 
     /**
      * This is the constructor for the Game class
@@ -161,9 +162,30 @@ public class Game{
 
             board.undoMove(moveToUndo);
 
+            if(moveToUndo.getRowsMoved() == 2) {
+                int lastPieceCapturedPosition = capturedPieces.size() - 1;
+                Coordinate jumpedCoordinate = moveToUndo.getJumpedCoordinate();
+                Space jumpedSpace = board.getSpaceByCoordinate(jumpedCoordinate);
+                Piece pieceToRestore = capturedPieces.get(lastPieceCapturedPosition);
+                capturedPieces.remove(lastPieceCapturedPosition);
+                board.undoCapture(jumpedSpace, pieceToRestore, capturedPieces.size());
+            }
+
             return new Message("Move has been undone!", "info");
         } else {
             return new Message("No moves have been made!", "error");
+        }
+    }
+
+    public void removePieceIfCaptured(Move _move) {
+        if(_move.getRowsMoved() == 2) {
+            Coordinate jumpedCoordinate = _move.getJumpedCoordinate();
+            Space jumpedSpace = board.getSpaceByCoordinate(jumpedCoordinate);
+            Piece jumpedPiece = jumpedSpace.getPiece();
+
+            if(jumpedPiece != null) {
+                capturedPieces.add(jumpedPiece);
+            }
         }
     }
 

@@ -178,6 +178,14 @@ public class Board implements Iterable<Row>{
         didMove = false;
     }
 
+    public void undoCapture(Space _jumpedSpace, Piece _capturedPiece, int _stillCapturedCount) {
+        _jumpedSpace.setPiece(_capturedPiece);
+
+        if(_stillCapturedCount == 0) {
+            didJump = false;
+        }
+    }
+
     public Space getSpaceByCoordinate(Coordinate _coord) {
         return rows.get(_coord.getRow()).getSpaces().get(_coord.getCell());
     }
