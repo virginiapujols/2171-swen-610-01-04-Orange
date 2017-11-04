@@ -23,10 +23,19 @@ public class Move {
         return Math.abs(start.getRow() - end.getRow());
     }
 
+    /**
+     * A method to detect whether or not a move is "up"
+     * "Up" is defined as the ending row having a higher value than the starting row, so that is towards the red side
+     * @return Whether or not the end row is greater than the starting row
+     */
     public boolean isMoveUp() {
         return end.getRow() > start.getRow();
     }
 
+    /**
+     * A method to get the coordinate that is jumped over when a Jump occurs
+     * @return The coordinate of the jumped space
+     */
     public Coordinate getJumpedCoordinate() {
         int rowVal = (start.getRow() + end.getRow())/2;
         int cellVal = (start.getCell() + end.getCell())/2;

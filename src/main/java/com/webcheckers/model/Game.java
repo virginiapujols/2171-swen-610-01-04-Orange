@@ -30,7 +30,7 @@ public class Game{
      */
     public void startGame(){}
     
-        /**
+    /**
      * This is the function to end the game
      */
     public void endGame(){}
@@ -122,8 +122,12 @@ public class Game{
         this.turn = _turn;
     }
 
+    /**
+     * Method to change to the other player's turn when a player ends their turn
+     * @return this.turn An integer representing whose turn it is (0 = player 1, 1 = player 2)
+     */
     public int changeTurn() {
-        this.turn = (this.turn == 0) ? 1 : 0;
+        this.turn = (this.turn == 0) ? 1 : 0; //If turn = 0 (i.e. Player 1's turn is finished), set it to 1 (player 2's turn), otherwise set it to 0
         this.board.setDidMove(false);
         this.board.setDidJump(false);
         moves.clear();
@@ -162,11 +166,13 @@ public class Game{
 
             board.undoMove(moveToUndo);
 
+            //If the undone move is a jump, we need to undo the move and add the captured piece back to the board
             if(moveToUndo.getRowsMoved() == 2) {
                 int lastPieceCapturedPosition = capturedPieces.size() - 1;
                 Coordinate jumpedCoordinate = moveToUndo.getJumpedCoordinate();
                 Space jumpedSpace = board.getSpaceByCoordinate(jumpedCoordinate);
                 Piece pieceToRestore = capturedPieces.get(lastPieceCapturedPosition);
+
                 capturedPieces.remove(lastPieceCapturedPosition);
                 board.undoCapture(jumpedSpace, pieceToRestore, capturedPieces.size());
             }
@@ -177,13 +183,17 @@ public class Game{
         }
     }
 
+    /**
+     * Method to remove a piece from the game if it is captured
+     * @param _move A move that has been made and results in the capture of a piece
+     */
     public void removePieceIfCaptured(Move _move) {
-        if(_move.getRowsMoved() == 2) {
+        if(_move.getRowsMoved() == 2) { //Verify that the move was a jump
             Coordinate jumpedCoordinate = _move.getJumpedCoordinate();
             Space jumpedSpace = board.getSpaceByCoordinate(jumpedCoordinate);
             Piece jumpedPiece = jumpedSpace.getPiece();
 
-            if(jumpedPiece != null) {
+            if(jumpedPiece != null) { //If a piece was captured,
                 capturedPieces.add(jumpedPiece);
             }
         }
