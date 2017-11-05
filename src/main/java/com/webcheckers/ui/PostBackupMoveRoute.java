@@ -24,8 +24,8 @@ public class PostBackupMoveRoute implements Route {
         final String currentUsername = request.session().attribute(PostLoginRoute.USERNAME_PARAM);
         Game game = gameCenter.getGame(currentUsername);
 
-        game.backupMove();
+        return game.backupMove();
 
-        return new Message("Move undone", "info");
+        //return new Message("Move undone", "info");
     }
 }
