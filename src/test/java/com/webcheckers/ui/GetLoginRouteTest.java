@@ -16,15 +16,13 @@ public class GetLoginRouteTest {
     @Test
     public void testHandle() throws Exception {
 
-        GetLoginRoute test = new GetLoginRoute();
-
+        GetLoginRoute CuT = new GetLoginRoute();
         Request request = mock(Request.class);
         Response response = mock(Response.class);
 
-
-        ModelAndView test2 = test.handle(request, response);
-        String viewName = test2.getViewName();
-        Map<String, Object> testVm = (HashMap) test2.getModel();
+        ModelAndView result = CuT.handle(request, response);
+        String viewName = result.getViewName();
+        Map<String, Object> testVm = (HashMap) result.getModel();
         assertEquals(PostLoginRoute.VIEW_NAME,viewName);
 
     }

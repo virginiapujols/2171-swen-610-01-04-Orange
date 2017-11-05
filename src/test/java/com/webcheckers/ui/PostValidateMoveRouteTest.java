@@ -29,8 +29,7 @@ public class PostValidateMoveRouteTest {
         GameCenter gameCenter = mock(GameCenter.class);
         Game test = mock(Game.class);
         String _player1 = "niharika";
-        Board board = mock(Board.class);
-        PostValidateMoveRoute postValidateMoveRoute = new PostValidateMoveRoute(gameCenter);
+        PostValidateMoveRoute CuT = new PostValidateMoveRoute(gameCenter);
 
         when(request.body()).thenReturn("{\"start\":{\"row\":\"5\",\"cell\":\"0\"},\"end\":{\"row\":\"4\",\"cell\":\"1\"}}");
         when(request.session()).thenReturn(session);
@@ -38,7 +37,7 @@ public class PostValidateMoveRouteTest {
         when(gameCenter.getGame(request.session().attribute("username"))).thenReturn(test);
         when(test.getBoard()).thenReturn(new Board());
 
-        Message message = (Message) postValidateMoveRoute.handle(request, response);
+        Message message = (Message) CuT.handle(request, response);
 
         assertEquals("info", message.getType());
         assertEquals("Valid Move", message.getText());

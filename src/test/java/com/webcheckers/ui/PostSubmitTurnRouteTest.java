@@ -26,15 +26,14 @@ public class PostSubmitTurnRouteTest {
         Response response = mock(Response.class);
         GameCenter gameCenter = mock(GameCenter.class);
         Game test = mock(Game.class);
-        PostLoginRoute postLoginRoute = new PostLoginRoute(gameCenter);
+        PostLoginRoute CuT = new PostLoginRoute(gameCenter);
         String _player1 = "niharika";
-        String _player2 = "virginia";
 
         when(request.session()).thenReturn(session);
         when(session.attribute(PostLoginRoute.USERNAME_PARAM)).thenReturn(_player1);
         when(gameCenter.getGame(request.session().attribute(PostLoginRoute.USERNAME_PARAM))).thenReturn(test);
         when(test.changeTurn()).thenReturn(1);
 
-        assertNotNull(postLoginRoute.handle(request, response));
+        assertNotNull(CuT.handle(request, response));
     }
 }
