@@ -73,8 +73,8 @@ public class GameTest {
         Game test =  new Game(_player1, _player2);
         test.setTurn(1);
         //System.out.println(test.changeTurn());
-        assertEquals(1, test.changeTurn());
-        //assertEquals(0, test.changeTurn());
+        //assertEquals(1, test.changeTurn());
+        assertEquals(0, test.changeTurn());
     }
     @Test
     public void testChangeTurn0(){
@@ -83,9 +83,9 @@ public class GameTest {
         Game test =  new Game(_player1, _player2);
         //test.setTurn(1);
         //System.out.println(test.changeTurn());
-        //assertEquals(1, test.changeTurn());
-        assertEquals(0, test.changeTurn());
+        assertEquals(1, test.changeTurn());
     }
+
     @Test
     public void testIsMyTurn(){
         Player _player1 = mock(Player.class);

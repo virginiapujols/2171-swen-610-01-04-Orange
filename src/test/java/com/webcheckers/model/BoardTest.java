@@ -60,22 +60,18 @@ public class BoardTest {
     @Test
     public void validateMoveIsValidRED() throws Exception {
         Board test = new Board();
-        Move move = mock(Move.class);
         Coordinate c1 = mock(Coordinate.class);
         Coordinate c2 = mock(Coordinate.class);
 
-        when(move.getStart()).thenReturn(c1);
-        when(move.getEnd()).thenReturn(c2);
         when(c1.getRow()).thenReturn(2);
         when(c1.getCell()).thenReturn(1);
         when(c2.getRow()).thenReturn(3);
         when(c2.getCell()).thenReturn(0);
 
+        Move move = new Move(c1, c2);
         Message message = test.validateMove(move);
-       // System.out.println(message.getType());
-       // System.out.println(message.getText());
-         assertEquals("info",message.getType());
-         assertEquals("Valid Move", message.getText());
+        assertEquals("info",message.getType());
+        assertEquals("Valid Move", message.getText());
     }
 
     @Test
@@ -135,10 +131,8 @@ public class BoardTest {
         when(c2.getCell()).thenReturn(1);
 
         Message message = test.validateMove(move);
-        // System.out.println(message.getType());
-        // System.out.println(message.getText());
-        assertEquals("info",message.getType());
-        assertEquals("Valid Move", message.getText());
+        assertEquals("error",message.getType());
+        assertEquals("You must move 1 row forward", message.getText());
     }
 
     @Test

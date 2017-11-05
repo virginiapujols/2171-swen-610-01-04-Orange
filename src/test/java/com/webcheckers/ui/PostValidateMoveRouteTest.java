@@ -36,12 +36,12 @@ public class PostValidateMoveRouteTest {
         when(request.session()).thenReturn(session);
         when(session.attribute("username")).thenReturn(_player1);
         when(gameCenter.getGame(request.session().attribute("username"))).thenReturn(test);
-        when(test.getBoard()).thenReturn(board);
+        when(test.getBoard()).thenReturn(new Board());
 
         Message message = (Message) postValidateMoveRoute.handle(request, response);
 
         assertEquals("info", message.getType());
-        assertEquals("Hooray!", message.getText());
+        assertEquals("Valid Move", message.getText());
     }
 
 }
