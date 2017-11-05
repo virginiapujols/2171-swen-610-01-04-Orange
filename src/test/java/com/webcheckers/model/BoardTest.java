@@ -12,17 +12,14 @@ import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.when;
 
 public class BoardTest {
-    @Test
-    public void updateBoard() throws Exception {
 
-    }
+    Board CuT = new Board();
 
     @Test
     public void setRows() throws Exception {
-        Board test = new Board();
 
-        List<Row> rows = (List<Row>)test.getRows();
-        assertEquals(rows,test.getRows());
+        List<Row> rows = CuT.getRows();
+        assertEquals(rows,CuT.getRows());
     }
 
     @Test
@@ -34,13 +31,7 @@ public class BoardTest {
     }
 
     @Test
-    public void setDidMove() throws Exception {
-
-    }
-
-    @Test
     public void movePiece() throws Exception {
-        Board test= new Board();
         Move move = mock(Move.class);
         Coordinate c1 = mock(Coordinate.class);
         Coordinate c2 = mock(Coordinate.class);
@@ -51,15 +42,13 @@ public class BoardTest {
         when(c1.getCell()).thenReturn(1);
         when(c2.getRow()).thenReturn(3);
         when(c2.getCell()).thenReturn(0);
-        assertFalse(test.didMove());
-        test.movePiece(move);
-        assertTrue(test.didMove());
-
+        assertFalse(CuT.didMove());
+        CuT.movePiece(move);
+        assertTrue(CuT.didMove());
     }
 
     @Test
     public void validateMoveIsValidRED() throws Exception {
-        Board test = new Board();
         Coordinate c1 = mock(Coordinate.class);
         Coordinate c2 = mock(Coordinate.class);
 
@@ -69,14 +58,13 @@ public class BoardTest {
         when(c2.getCell()).thenReturn(0);
 
         Move move = new Move(c1, c2);
-        Message message = test.validateMove(move);
+        Message message = CuT.validateMove(move);
         assertEquals("info",message.getType());
         assertEquals("Valid Move", message.getText());
     }
 
     @Test
     public void validateMoveIsInvalidRED() throws Exception {
-        Board test = new Board();
         Move move = mock(Move.class);
         Coordinate c1 = mock(Coordinate.class);
         Coordinate c2 = mock(Coordinate.class);
@@ -88,7 +76,7 @@ public class BoardTest {
         when(c2.getRow()).thenReturn(0);
         when(c2.getCell()).thenReturn(0);
 
-        Message message = test.validateMove(move);
+        Message message = CuT.validateMove(move);
         // System.out.println(message.getType());
         // System.out.println(message.getText());
         assertEquals("error",message.getType());
@@ -97,7 +85,6 @@ public class BoardTest {
 
     @Test
     public void validateMoveIsValidWHITE() throws Exception {
-        Board test = new Board();
         Move move = mock(Move.class);
         Coordinate c1 = mock(Coordinate.class);
         Coordinate c2 = mock(Coordinate.class);
@@ -109,7 +96,7 @@ public class BoardTest {
         when(c2.getRow()).thenReturn(5);
         when(c2.getCell()).thenReturn(1);
 
-        Message message = test.validateMove(move);
+        Message message = CuT.validateMove(move);
         // System.out.println(message.getType());
         // System.out.println(message.getText());
         assertEquals("error",message.getType());
@@ -117,8 +104,7 @@ public class BoardTest {
     }
 
     @Test
-    public void validateMoveIsInValidWHITE() throws Exception {
-        Board test = new Board();
+    public void validateMoveIsInvalidWHITE() throws Exception {
         Move move = mock(Move.class);
         Coordinate c1 = mock(Coordinate.class);
         Coordinate c2 = mock(Coordinate.class);
@@ -130,16 +116,14 @@ public class BoardTest {
         when(c2.getRow()).thenReturn(4);
         when(c2.getCell()).thenReturn(1);
 
-        Message message = test.validateMove(move);
+        Message message = CuT.validateMove(move);
         assertEquals("error",message.getType());
         assertEquals("You must move 1 row forward", message.getText());
     }
 
     @Test
-    public void MoveMade(){
-        Board test = new Board();
+    public void moveMade(){
         Move move = mock(Move.class);
-        Message message = mock(Message.class);
         Coordinate c1 = mock(Coordinate.class);
         Coordinate c2 = mock(Coordinate.class);
         when(move.getStart()).thenReturn(c1);
@@ -148,24 +132,80 @@ public class BoardTest {
         when(c1.getCell()).thenReturn(0);
         when(c2.getRow()).thenReturn(4);
         when(c2.getCell()).thenReturn(1);
-        test.setDidMove(true);
+        CuT.setDidMove(true);
 
-        message =test.validateMove(move);
-        //System.out.println(message.getText());
-        //System.out.println(message.getType());
-
+        Message message = CuT.validateMove(move);
         assertEquals("error",message.getType());
         assertEquals("You have already made a move this turn",message.getText());
     }
-    public void iterator() throws Exception {
-    }
 
     @Test
-    public void forEach() throws Exception {
+    public void validateMoveIsJumpAction() {
+        Coordinate startPos = mock(Coordinate.class);
+        Coordinate endPos = mock(Coordinate.class);
+
+        when(startPos.getRow()).thenReturn(2);
+        when(startPos.getCell()).thenReturn(3);
+        when(endPos.getRow()).thenReturn(4);
+        when(endPos.getCell()).thenReturn(1);
+
+        Move move = new Move(startPos, endPos);
+        assertFalse(CuT.getDidJump());
+        CuT.movePiece(move);
+        assertTrue(CuT.getDidJump());
     }
+
+//    @Test
+//    public void validateRequiredJump() {
+//        Coordinate startPos = mock(Coordinate.class);
+//        Coordinate endPos = mock(Coordinate.class);
+//
+//        when(startPos.getRow()).thenReturn(2);
+//        when(startPos.getCell()).thenReturn(3);
+//        when(endPos.getRow()).thenReturn(3);
+//        when(endPos.getCell()).thenReturn(4);
+//
+//        Move move = new Move(startPos, endPos);
+//        CuT.setDidMove(true);
+//        assertTrue(CuT.checkForAvailableWhiteJumps());
+//
+//        Message message = CuT.validateMove(move);
+//
+//        assertEquals("error",message.getType());
+//        assertEquals("You have a jump that you must take",message.getText());
+//    }
 
     @Test
-    public void spliterator() throws Exception {
-    }
+    public void testJumpInvalid() {
+        Space space = mock(Space.class);
+        when(space.getColor()).thenReturn("black");
+        when(space.getCellIdx()).thenReturn(3);
+        when(space.getPiece()).thenReturn(new Piece("SINGLE", "RED"));
 
+        Piece jumpingPiece = mock(Piece.class);
+        when(jumpingPiece.getColor()).thenReturn("WHITE");
+        when(jumpingPiece.getType()).thenReturn("SINGLE");
+
+        Move move = mock(Move.class);
+        Coordinate startPos = mock(Coordinate.class);
+        Coordinate endPos = mock(Coordinate.class);
+        when(startPos.getRow()).thenReturn(3);
+        when(startPos.getCell()).thenReturn(4);
+        when(endPos.getRow()).thenReturn(5);
+        when(endPos.getCell()).thenReturn(2);
+
+        int rowVal = (startPos.getRow() + endPos.getRow())/2;
+        int cellVal = (startPos.getCell() + endPos.getCell())/2;
+        Coordinate jumpedCoordinate = new Coordinate(rowVal, cellVal); //cell=3, row=4
+
+        when(move.getStart()).thenReturn(startPos);
+        when(move.getEnd()).thenReturn(endPos);
+        when(move.getJumpedCoordinate()).thenReturn(jumpedCoordinate);
+        //when(CuT.getSpaceByCoordinate(jumpedCoordinate)).thenReturn(space);
+
+        Message message = CuT.validateJump(move, jumpingPiece);
+        assertEquals("error", message.getType());
+        assertEquals("You cannot jump an empty square!",message.getText());
+    }
+    
 }
