@@ -202,6 +202,11 @@ public class BoardTest {
 
     @Test
     public void testUndoCapture() {
-
+        Space jumpedSpace = mock(Space.class);
+        Piece capturedPiece = mock(Piece.class);
+        int stillCapturedCount = 0;
+        CuT.undoCapture(jumpedSpace, capturedPiece, stillCapturedCount);
+        assertEquals(jumpedSpace.getPiece(), null);
+        assertFalse(CuT.getDidJump());
     }
 }
