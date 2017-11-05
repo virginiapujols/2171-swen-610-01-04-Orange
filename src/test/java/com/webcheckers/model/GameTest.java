@@ -25,50 +25,35 @@ public class GameTest {
 
     @Test
     public void testSetBoard() throws Exception {
-        Player _player1 = mock(Player.class);
-        Player _player2 = mock(Player.class);
         Board _board = mock(Board.class);
-        Game test = new Game(_player1, _player2);
-        test.setBoard(_board);
-        assertEquals(_board,test.getBoard());
+        CuT.setBoard(_board);
+        assertEquals(_board,CuT.getBoard());
     }
 
     @Test
     public void testSetPlayer1() throws Exception {
-        Player _player1 = mock(Player.class);
-        Player _player2 = mock(Player.class);
-        Game test = new Game(_player1, _player2);
-        test.setPlayer1(_player1);
-        assertEquals(_player1, test.getPlayer1());
+        CuT.setPlayer1(_player1);
+        assertEquals(_player1, CuT.getPlayer1());
     }
 
     @Test
     public void testSetPlayer2() throws Exception {
-        Player _player1 = mock(Player.class);
-        Player _player2 = mock(Player.class);
-        Game test = new Game(_player1, _player2);
-        test.setPlayer2(_player2);
-        assertEquals(_player2, test.getPlayer2());
+        CuT.setPlayer2(_player2);
+        assertEquals(_player2, CuT.getPlayer2());
     }
 
     @Test
     public void testSetIsOver() throws Exception {
-        Player _player1 = mock(Player.class);
-        Player _player2 = mock(Player.class);
-        Game test = new Game(_player1, _player2);
         Boolean _isOver = true;
-        test.setIsOver(_isOver);
-        assertEquals(_isOver, test.getIsOver());
+        CuT.setIsOver(_isOver);
+        assertEquals(_isOver, CuT.getIsOver());
     }
 
     @Test
     public void testSetTurn() throws Exception {
-        Player _player1 = mock(Player.class);
-        Player _player2 = mock(Player.class);
         int _turn = 5;
-        Game test = new Game(_player1, _player2);
-        test.setTurn(_turn);
-        assertEquals(_turn, test.getTurn());
+        CuT.setTurn(_turn);
+        assertEquals(_turn, CuT.getTurn());
     }
 
     @Test
@@ -81,32 +66,23 @@ public class GameTest {
 
     @Test
     public void testChangeTurn1(){
-        Player _player1 = mock(Player.class);
-        Player _player2 = mock(Player.class);
-        Game test =  new Game(_player1, _player2);
-        test.setTurn(1);
+        CuT.setTurn(1);
         //System.out.println(test.changeTurn());
         //assertEquals(1, test.changeTurn());
-        assertEquals(0, test.changeTurn());
+        assertEquals(0, CuT.changeTurn());
     }
     @Test
     public void testChangeTurn0(){
-        Player _player1 = mock(Player.class);
-        Player _player2 = mock(Player.class);
-        Game test =  new Game(_player1, _player2);
         //test.setTurn(1);
         //System.out.println(test.changeTurn());
-        assertEquals(1, test.changeTurn());
+        assertEquals(1, CuT.changeTurn());
     }
 
     @Test
     public void testIsMyTurn(){
-        Player _player1 = mock(Player.class);
-        Player _player2 = mock(Player.class);
-        Game test =  new Game(_player1, _player2);
         String _username = "niharika";
         when(_player1.getUsername()).thenReturn(_username);
-        assertTrue(test.isMyTurn(_username));
+        assertTrue(CuT.isMyTurn(_username));
     }
 
     @Test
