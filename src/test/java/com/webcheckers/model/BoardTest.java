@@ -4,12 +4,11 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockingDetails;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class BoardTest {
 
@@ -155,33 +154,8 @@ public class BoardTest {
         assertTrue(CuT.getDidJump());
     }
 
-//    @Test
-//    public void validateRequiredJump() {
-//        Coordinate startPos = mock(Coordinate.class);
-//        Coordinate endPos = mock(Coordinate.class);
-//
-//        when(startPos.getRow()).thenReturn(2);
-//        when(startPos.getCell()).thenReturn(3);
-//        when(endPos.getRow()).thenReturn(3);
-//        when(endPos.getCell()).thenReturn(4);
-//
-//        Move move = new Move(startPos, endPos);
-//        CuT.setDidMove(true);
-//        assertTrue(CuT.checkForAvailableWhiteJumps());
-//
-//        Message message = CuT.validateMove(move);
-//
-//        assertEquals("error",message.getType());
-//        assertEquals("You have a jump that you must take",message.getText());
-//    }
-
     @Test
     public void testJumpInvalid() {
-        Space space = mock(Space.class);
-        when(space.getColor()).thenReturn("black");
-        when(space.getCellIdx()).thenReturn(3);
-        when(space.getPiece()).thenReturn(new Piece("SINGLE", "RED"));
-
         Piece jumpingPiece = mock(Piece.class);
         when(jumpingPiece.getColor()).thenReturn("WHITE");
         when(jumpingPiece.getType()).thenReturn("SINGLE");
@@ -196,16 +170,38 @@ public class BoardTest {
 
         int rowVal = (startPos.getRow() + endPos.getRow())/2;
         int cellVal = (startPos.getCell() + endPos.getCell())/2;
-        Coordinate jumpedCoordinate = new Coordinate(rowVal, cellVal); //cell=3, row=4
+        Coordinate jumpedCoordinate = new Coordinate(rowVal, cellVal);
 
         when(move.getStart()).thenReturn(startPos);
         when(move.getEnd()).thenReturn(endPos);
         when(move.getJumpedCoordinate()).thenReturn(jumpedCoordinate);
-        //when(CuT.getSpaceByCoordinate(jumpedCoordinate)).thenReturn(space);
 
         Message message = CuT.validateJump(move, jumpingPiece);
         assertEquals("error", message.getType());
         assertEquals("You cannot jump an empty square!",message.getText());
     }
-    
+
+    @Test
+    public void testUpdateBoard() {
+        assertNotNull(CuT.updateBoard());
+    }
+
+    @Test
+    public void testUndoMove() {
+        Coordinate startPos = mock(Coordinate.class);
+        Coordinate endPos = mock(Coordinate.class);
+        when(startPos.getRow()).thenReturn(2);
+        when(startPos.getCell()).thenReturn(3);
+        when(endPos.getRow()).thenReturn(4);
+        when(endPos.getCell()).thenReturn(1);
+
+        Move move = new Move(startPos, endPos);
+        CuT.undoMove(move);
+        assertFalse(CuT.didMove());
+    }
+
+    @Test
+    public void testUndoCapture() {
+
+    }
 }
