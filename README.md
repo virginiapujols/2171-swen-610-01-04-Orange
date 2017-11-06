@@ -22,6 +22,7 @@ An online Checkers game system built in Java 8 and Spark, a web microframework.
 2. Execute `mvn compile exec:java`
 3. Open in your browser `http://localhost:4567/`
 4. Start a game and begin playing.
+5. Note that you must open tabs in multiple browsers if you want to have two instances running on one computer
 
 ## License
 MIT License.
