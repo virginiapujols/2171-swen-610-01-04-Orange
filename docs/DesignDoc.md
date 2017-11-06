@@ -52,7 +52,7 @@ This section describes the application domain.
 ### Overview of Major Domain Areas
 Specific definitions of each domain area are available in the glossary section.  Our domain model is below, which shows the relationships between the various components of the domain.  At its core, two Players play a Game (which is made of a Board, Rows, Spaces, & Pieces) by changing the positions of Pieces with Moves.
 
-# PUT DOMAIN MODEL HERE
+![Domain Model](http://andydistasi.com/dev/610Models/610DomainModel.png)
 
 #### Player Details
 A player is a User of the Application, represented by a username, who plays games against other Players
@@ -73,8 +73,7 @@ Accessing the application brings the user to a home page.  If they are not logge
 
 Once in a game, a user is presented with a game board, an indicator of whose turn it is, and a set of 4 controls: “Backup one move,” “Submit turn,” “Reset turn,” and “Resign from game.”  Users can complete a move by clicking and dragging a piece of their color to a new (valid) square.  If the move is valid, the piece will be displayed in the new square.  If it is invalid, the piece will remain in its original square and an error message will be displayed.  After completing a valid move, the “Controls” links will be enabled.  Selecting the “Backup one move” will undo the most recent move and return the board to its previous state.  Selecting “Reset turn” will undo all moves completed on that turn.  Selecting “Submit turn” will submit that user’s turn, saving it to the game (meaning it can no longer be undone).  After a turn is submitted, the game will automatically update the other player’s board to reflect the new board state.  Clicking “Resign from game” will cause that player to forfeit and end the game, taking both players back to the home page.
 
-# PUT STATE DIAGRAM HERE
-
+![State Diagram](http://andydistasi.com/dev/610Models/610StateDiagram.png)
 
 ### Application Tier
 The application tier is comprised of the GameCenter class that manages state functionality.  It handles validating usernames, creating and removing user accounts and games, starting games between two players, and getting a list of all available players.
@@ -93,7 +92,6 @@ This section describes the detail design of The Game Model Sub-System.
 A Game Object stores the players playing, the board being played on (and piece position), who's turn it is, the moves made on that turn, and any pieces captured on that turn.  A Game object tracks the state of the game being played and implements functionality to undo moves.  The Board object referenced by the game is where all movement validation takes place (determined by standard American Checkers gameplay rules).  Valid moves cause the board object to be updated and reflected to the Users through Messages returned to them.
 
 ### Static models
-# PUT CLASS DIAGRAM HERE
-
+![State Diagram](http://andydistasi.com/dev/610Models/610ClassDiagram.png)
 ### Dynamic models
-# PUT STATE DIAGRAM HERE
+![Sequence Diagram](http://andydistasi.com/dev/610Models/610SequenceDiagram.png)
