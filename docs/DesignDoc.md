@@ -35,16 +35,16 @@ A player can begin a game of American Rules Checkers against another Player thro
   - Usernames must be unique and are not maintained when a user signs off.
 - As a Player, I want to see a list of Players I can challenge so I can challenge them to a game.
 - As a Player, I want to move pieces on my client so that I can take my turn and see the state of the game.
-  - Players can also undo moves before submitting them
+  - Players can also undo moves before submitting them.
 - As a System, I want to validate the legality of player moves and enforce American Checkers Rules so that the game can be played properly.
-- As a Player, I want to jumpo over the opponenet's piece so that I can capture it.
+- As a Player, I want to jump over the opponent's piece so that I can capture it.
 - As a Player, I want to reach the end of the board with my pieces so that they become kings and are more powerful.
-- As a Player, I want to be alerted when I have won a game so that I can know the game is over
+- As a Player, I want to be alerted when I have won a game so that I can know the game is over.
 
 ### Roadmap of Enhancements
 Time permitting, the following enhancements will be implemented:
   - A player can spectate other players' matches.
-  - A player can accept or deny another player's challenge to a game
+  - A player can accept or deny another player's challenge to a game.
 
 ## Application Domain
 This section describes the application domain.
@@ -55,10 +55,10 @@ Specific definitions of each domain area are available in the glossary section. 
 ![Domain Model](http://andydistasi.com/dev/610Models/610DomainModel.png)
 
 #### Player Details
-A player is a User of the Application, represented by a username, who plays games against other Players
+A player is a User of the Application, represented by a username, who plays games against other Players.
 
 #### Game Details
-A game is an instance of two Player's playing checkers against each other.  The game is played on a board, which is comprised of 8 Rows of 8 Squares each.  Squares contain information about their color, location, and whether or not they have a piece on them.  Some of these Squares on either side of the Board contain 1 of the Player's 12 starting pieces.  Players complete the game by making moves, moving a Piece from one starting coordinate to an ending coordinate.  Moves can only be one row forward, and msut be diagonal.  Players can also capture their opponent's pieces by jumping over them.  If a Player can make a jump, they must take it and are allowed to make multiple jumps in one turn.  A Game ends when a Player has lost all their pieces or cannot make any moves/
+A game is an instance of two Player's playing checkers against each other.  The game is played on a board, which is comprised of 8 Rows of 8 Squares each.  Squares contain information about their color, location, and whether or not they have a piece on them.  Some of these Squares on either side of the Board contain 1 of the Player's 12 starting pieces.  Players complete the game by making moves, moving a Piece from one starting coordinate to an ending coordinate.  Moves can only be one row forward, and msut be diagonal.  Players can also capture their opponent's pieces by jumping over them.  If a Player can make a jump, they must take it and are allowed to make multiple jumps in one turn.  A Game ends when a Player has lost all their pieces or cannot make any moves.
 
 
 
