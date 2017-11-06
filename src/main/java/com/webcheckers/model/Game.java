@@ -3,6 +3,9 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class to represent a Game between 2 players.  Responsible for handling game creation, ending, and tracking the state of the gaem
+ */
 public class Game{
 
     private Board board;

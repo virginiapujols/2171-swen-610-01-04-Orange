@@ -1,5 +1,9 @@
 package com.webcheckers.model;
 
+/**
+ * A class that represents a move from one location to another.  Responsible for providing information about that specific move
+ * (i.e. the move's direction, the move's magnitude, etc)
+ */
 public class Move {
 
     //Attributes

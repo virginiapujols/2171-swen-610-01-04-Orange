@@ -25,7 +25,5 @@ public class PostBackupMoveRoute implements Route {
         Game game = gameCenter.getGame(currentUsername);
 
         return game.backupMove();
-
-        //return new Message("Move undone", "info");
     }
 }

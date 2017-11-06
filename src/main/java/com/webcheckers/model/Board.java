@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
+/**
+ * A class that represents a game board.  This class enforces move logic and tracks piece locoations
+ */
 public class Board implements Iterable<Row>{
     //Class Attributes
     private List<Row> rows;
@@ -125,7 +128,7 @@ public class Board implements Iterable<Row>{
         //If they don't have any available jumps, allow them to make a move and evalute it's validity
         if(!didMove || (didMove && didJump)) { //If the user hasn't already moved OR has only made jumps
             if(endSpace.getPiece() == null) { //If there's already a piece in the ending space
-                if (piece.getColor().equals("RED")) { //If the piece is red (i.e. if the piece moves "up" on the board)
+                if (piece.getColor().equals(Piece.PIECE_RED)) { //If the piece is red (i.e. if the piece moves "up" on the board)
                     if (_move.getRowsMoved() == 1 && !_move.isMoveUp() && !didJump) { //Ensure that a move is only 1 row "up"
                         return new Message("Valid Move", "info");
                     } else if(_move.getRowsMoved() == 2 && !_move.isMoveUp()) { //Check for a Jump, but it still has to be "up"
@@ -134,7 +137,7 @@ public class Board implements Iterable<Row>{
                         String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
                         return new Message(messageText, "error");
                     }
-                } else if (piece.getColor().equals("WHITE")) { //If the piece is white (i.e. the piece moves "down" on the board
+                } else if (piece.getColor().equals(Piece.PIECE_WHITE)) { //If the piece is white (i.e. the piece moves "down" on the board
                     if (_move.getRowsMoved() == 1 && _move.isMoveUp() && !didJump) { //Ensure that a move is only one row "down"
                         return new Message("Valid Move", "info");
                     } else if(_move.getRowsMoved() == 2 && _move.isMoveUp()) { //Check for a Jump, but it still has to be "down"
@@ -228,7 +231,7 @@ public class Board implements Iterable<Row>{
                 Piece piece = space.getPiece();
 
                 //If the piece in a space isn't null & is a red piece, we check it's jumps
-                if(piece != null && piece.getColor().equals("RED")) {
+                if(piece != null && piece.getColor().equals(Piece.PIECE_RED)) {
                     if (row.getIndex() > 1) { //If the piece isn't in the last 2 rows (i.e. it wouldn't have enough space to jump)
                         if (space.getCellIdx() <= 1) { //If it's in the two left-most columns, it can only jump right, so we only check that direction
                             //Get the piece being jumped & landing space
@@ -249,7 +252,7 @@ public class Board implements Iterable<Row>{
                             Piece jumpedPiece = squareToJump.getPiece();
                             Piece landingSquarePiece = landingSquare.getPiece();
 
-                            if (jumpedPiece != null && jumpedPiece.getColor().equals("WHITE") && landingSquarePiece == null) {
+                            if (jumpedPiece != null && jumpedPiece.getColor().equals(Piece.PIECE_WHITE) && landingSquarePiece == null) {
                                 return true;
                             }
                         } else { //Otherwise it can jump left OR right, so we check both directions
@@ -264,9 +267,9 @@ public class Board implements Iterable<Row>{
                             Piece landingSquarePieceRight = landingSquareRight.getPiece();
 
                             //If either of the possible jumps can be taken, then return true
-                            if (jumpedPieceLeft != null && jumpedPieceLeft.getColor().equals("WHITE") && landingSquarePieceLeft == null) {
+                            if (jumpedPieceLeft != null && jumpedPieceLeft.getColor().equals(Piece.PIECE_WHITE) && landingSquarePieceLeft == null) {
                                 return true;
-                            } else if (jumpedPieceRight != null && jumpedPieceRight.getColor().equals("WHITE") && landingSquarePieceRight == null) {
+                            } else if (jumpedPieceRight != null && jumpedPieceRight.getColor().equals(Piece.PIECE_WHITE) && landingSquarePieceRight == null) {
                                 return true;
                             }
                         }
@@ -289,7 +292,7 @@ public class Board implements Iterable<Row>{
                 Piece piece = space.getPiece();
 
                 //If the piece in a space isn't null & is a white piece, we check it's jumps
-                if(piece != null && piece.getColor().equals("WHITE")) {
+                if(piece != null && piece.getColor().equals(Piece.PIECE_WHITE)) {
                     if (row.getIndex() < 6) { //If the piece is in the last two rows (i.e. It wouldn't have enough space to jump)
                         if (space.getCellIdx() <= 1) { //If it's the 2 leftmost columns, it can only jump right, so only check that direction
                             Space squareToJump = getSpaceByCoordinate(new Coordinate(row.getIndex() + 1, space.getCellIdx() + 1));
@@ -298,7 +301,7 @@ public class Board implements Iterable<Row>{
                             Piece jumpedPiece = squareToJump.getPiece();
                             Piece landingSquarePiece = landingSquare.getPiece();
 
-                            if (jumpedPiece != null && jumpedPiece.getColor().equals("RED") && landingSquarePiece == null) {
+                            if (jumpedPiece != null && jumpedPiece.getColor().equals(Piece.PIECE_RED) && landingSquarePiece == null) {
                                 return true;
                             }
                         } else if (space.getCellIdx() >= 6) { //If it's the 2 rightmost columns, it can only jump left, so only check that direction
@@ -308,7 +311,7 @@ public class Board implements Iterable<Row>{
                             Piece jumpedPiece = squareToJump.getPiece();
                             Piece landingSquarePiece = landingSquare.getPiece();
 
-                            if (jumpedPiece != null && jumpedPiece.getColor().equals("RED") && landingSquarePiece == null) {
+                            if (jumpedPiece != null && jumpedPiece.getColor().equals(Piece.PIECE_RED) && landingSquarePiece == null) {
                                 return true;
                             }
                         } else { //Otherwise it can jump both directions so we have to check each way
@@ -322,9 +325,9 @@ public class Board implements Iterable<Row>{
                             Piece jumpedPieceRight = squareToJumpRight.getPiece();
                             Piece landingSquarePieceRight = landingSquareRight.getPiece();
 
-                            if (jumpedPieceLeft != null && jumpedPieceLeft.getColor().equals("RED") && landingSquarePieceLeft == null) {
+                            if (jumpedPieceLeft != null && jumpedPieceLeft.getColor().equals(Piece.PIECE_RED) && landingSquarePieceLeft == null) {
                                 return true;
-                            } else if (jumpedPieceRight != null && jumpedPieceRight.getColor().equals("RED") && landingSquarePieceRight == null) {
+                            } else if (jumpedPieceRight != null && jumpedPieceRight.getColor().equals(Piece.PIECE_RED) && landingSquarePieceRight == null) {
                                 return true;
                             }
                         }

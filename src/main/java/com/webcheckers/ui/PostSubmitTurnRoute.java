@@ -24,8 +24,6 @@ public class PostSubmitTurnRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        //Message message = new Message("info", "Other player's turn!");
-        System.out.println(request.body());
         //return message;
         Game game = gameCenter.getGame(request.session().attribute(PostLoginRoute.USERNAME_PARAM));
         game.changeTurn();

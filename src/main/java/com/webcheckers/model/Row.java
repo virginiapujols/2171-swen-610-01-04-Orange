@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
+/**
+ * A class to represent one row of a Board.  This class instantiates a set of Squares with pieces in the row
+ * The class implements Iterable<Space>
+ */
 public class Row implements Iterable<Space>{
     private List<Space> spaces;
     private int index;

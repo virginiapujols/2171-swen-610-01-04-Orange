@@ -54,6 +54,10 @@ public class WebServer {
   public static final String STARTGAME_URL = "/startGame";
   public static final String GAME_URL = "/game";
   public static final String LOGOUT_URL = "/logout";
+  public static final String VALIDATE_URL = "/validateMove";
+  public static final String SUBMIT_URL = "/submitTurn";
+  public static final String BACKUP_URL = "/backupMove";
+  public static final String CHECKTURN_URL = "/checkTurn";
 
   //
   // Attributes
@@ -151,16 +155,16 @@ public class WebServer {
     get(GAME_URL, new GetGameRoute(gameCenter), templateEngine);
 
     //Posts a Move to validate whether or not it is legal
-    post("validateMove", new PostValidateMoveRoute(gameCenter), JsonUtils.json());
+    post(VALIDATE_URL, new PostValidateMoveRoute(gameCenter), JsonUtils.json());
 
     //Posts a Move to submit a User's turn
-    post("submitTurn", new PostSubmitTurnRoute(gameCenter), JsonUtils.json());
+    post(SUBMIT_URL, new PostSubmitTurnRoute(gameCenter), JsonUtils.json());
 
     //Post to undo a single move
-    post("backupMove", new PostBackupMoveRoute(gameCenter), JsonUtils.json());
+    post(BACKUP_URL, new PostBackupMoveRoute(gameCenter), JsonUtils.json());
 
     //Post to check if it's the User's Turn
-    post("checkTurn", new PostCheckTurnRoute(gameCenter), JsonUtils.json());
+    post(CHECKTURN_URL, new PostCheckTurnRoute(gameCenter), JsonUtils.json());
   }
 
 }
