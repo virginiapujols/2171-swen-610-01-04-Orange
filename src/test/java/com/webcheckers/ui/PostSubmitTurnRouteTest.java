@@ -2,6 +2,8 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Player;
+import org.junit.Before;
 import org.junit.Test;
 import spark.Request;
 import spark.Response;
@@ -10,23 +12,33 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class PostSubmitTurnRouteTest {
+
+    PostSubmitTurnRoute CuT;
+    GameCenter gameCenter = mock(GameCenter.class);
+
+    @Before
+    public void setup () {
+        Game game = new Game(new Player("niharika"), new Player("virginia"));
+        doReturn(game).when(gameCenter).getGame("niharika");
+        CuT = new PostSubmitTurnRoute(gameCenter);
+    }
+
     @Test
     public void testPostSubmitTurnRoute() throws Exception {
         try {
-            PostSubmitTurnRoute test = new PostSubmitTurnRoute(null);
+            CuT = new PostSubmitTurnRoute(null);
         }catch (NullPointerException e){
             assertEquals("gameCenter must not be null", e.getMessage());
         }
     }
 
-    @Test
+    @Test(expected = spark.HaltException.class)
     public void testHandle() throws Exception {
         Session session = mock(Session.class);
         Request request = mock(Request.class);
         Response response = mock(Response.class);
-        GameCenter gameCenter = mock(GameCenter.class);
         Game test = mock(Game.class);
-        PostLoginRoute CuT = new PostLoginRoute(gameCenter);
+
         String _player1 = "niharika";
 
         when(request.session()).thenReturn(session);
