@@ -1,7 +1,6 @@
 # PROJECT Design Documentation
 
 ## Executive Summary
-
 This is a summary of the project.
 
 ### Purpose
@@ -24,7 +23,6 @@ The purpose of this project is to create a web application using Java Spark to a
 
 
 ## Requirements
-
 This section describes the features of the application.
 
 
@@ -49,19 +47,22 @@ Time permitting, the following enhancements will be implemented:
   - A player can accept or deny another player's challenge to a game
 
 ## Application Domain
-
 This section describes the application domain.
 
 ### Overview of Major Domain Areas
-> Provide a high-level overview of the 
+Specific definitions of each domain area are available in the glossary section.  Our domain model is below, which shows the relationships between the various components of the domain.  At its core, two Players play a Game (which is made of a Board, Rows, Spaces, & Pieces) by changing the positions of Pieces with Moves.
 
-### Details of each Domain Area
-> If necessary, high-light certain areas of the Domain model that have a focused purpose.  Create textual narrative that describes the purpose and how that relates to the associated domain model.
+# PUT DOMAIN MODEL HERE
+
+#### Player Details
+A player is a User of the Application, represented by a username, who plays games against other Players
+
+#### Game Details
+A game is an instance of two Player's playing checkers against each other.  The game is played on a board, which is comprised of 8 Rows of 8 Squares each.  Squares contain information about their color, location, and whether or not they have a piece on them.  Some of these Squares on either side of the Board contain 1 of the Player's 12 starting pieces.  Players complete the game by making moves, moving a Piece from one starting coordinate to an ending coordinate.  Moves can only be one row forward, and msut be diagonal.  Players can also capture their opponent's pieces by jumping over them.  If a Player can make a jump, they must take it and are allowed to make multiple jumps in one turn.  A Game ends when a Player has lost all their pieces or cannot make any moves/
 
 
 
 ## Architecture
-
 This section describes the application architecture.
 
 ### Summary
@@ -72,8 +73,7 @@ Accessing the application brings the user to a home page.  If they are not logge
 
 Once in a game, a user is presented with a game board, an indicator of whose turn it is, and a set of 4 controls: “Backup one move,” “Submit turn,” “Reset turn,” and “Resign from game.”  Users can complete a move by clicking and dragging a piece of their color to a new (valid) square.  If the move is valid, the piece will be displayed in the new square.  If it is invalid, the piece will remain in its original square and an error message will be displayed.  After completing a valid move, the “Controls” links will be enabled.  Selecting the “Backup one move” will undo the most recent move and return the board to its previous state.  Selecting “Reset turn” will undo all moves completed on that turn.  Selecting “Submit turn” will submit that user’s turn, saving it to the game (meaning it can no longer be undone).  After a turn is submitted, the game will automatically update the other player’s board to reflect the new board state.  Clicking “Resign from game” will cause that player to forfeit and end the game, taking both players back to the home page.
 
-# Put UI state model here.
-
+# PUT STATE DIAGRAM HERE
 
 
 ### Application Tier
@@ -86,18 +86,14 @@ The model tier handles representing the domain objects, completing each player�
 The UI tier is composed of the WebServer class that initializes the TemplateEngine and GameCenter, in addition to binding various Route Handling Classes to specific URLs.  It is also composed of a series of Route Handling classes that handle HTTP GET and POST requests.  These classes are used to accept input from the user, perform any required input validation, convert the data into the appropriate format, and either pass information to the Model and Application Tier or render the appropriate template view.  These classes also contain a series of static constant strings used throughout the UI Tier.
 
 
-## Sub-system X
-> Provide a section for each major sub-system within the tiers of the architecture.  Replace 'X' with the name of the sub-system.
-> A sub-system would exist within one of the application tiers and is a group of components cooperating on a significant purpose within the application.  For example, in WebCheckers all of the UI Controller components for the Game view would be its own sub-system.
-
-This section describes the detail design of sub-system X.
+## Game Model Sub-System
+This section describes the detail design of The Game Model Sub-System.
 
 ### Purpose of the sub-system
-> Provide a summary of the purpose of this sub-system.
+A Game Object stores the players playing, the board being played on (and piece position), who's turn it is, the moves made on that turn, and any pieces captured on that turn.  A Game object tracks the state of the game being played and implements functionality to undo moves.  The Board object referenced by the game is where all movement validation takes place (determined by standard American Checkers gameplay rules).  Valid moves cause the board object to be updated and reflected to the Users through Messages returned to them.
 
 ### Static models
-> Provide one or more static models (UML class or object diagrams) with some details such as critical attributes and methods.  If the sub-system is large (over 10 classes) then consider decomposing into multiple, smaller, more focused diagrams.
+# PUT CLASS DIAGRAM HERE
 
 ### Dynamic models
-> Provide any dynamic model, such as state and sequence diagrams, as is relevant to a particularly significant user story.
-> For example, in WebCheckers you might create a sequence diagram of the `POST /validateMove` HTTP request processing or you might use a state diagram if the Game component uses a state machine to manage the game.
+# PUT STATE DIAGRAM HERE
