@@ -122,6 +122,14 @@ public class Game{
         this.turn = _turn;
     }
 
+    public List<Piece> getCapturedPieces() {
+        return capturedPieces;
+    }
+
+    public void setCapturedPieces(List<Piece> capturedPieces) {
+        this.capturedPieces = capturedPieces;
+    }
+
     /**
      * Method to change to the other player's turn when a player ends their turn
      * @return this.turn An integer representing whose turn it is (0 = player 1, 1 = player 2)

@@ -51,12 +51,12 @@ public class PostLoginRouteTest {
         when(gameCenter.isUsernameTaken(testName)).thenReturn(true);
 
         //Executing the error function
-        PostLoginRoute testPostLoginRoute = new PostLoginRoute(gameCenter);
-        ModelAndView testModelAndView = testPostLoginRoute.handle(request, response);
+        PostLoginRoute CuT = new PostLoginRoute(gameCenter);
+        ModelAndView result = CuT.handle(request, response);
 
         // Getting the result value from error function
-        Map<String, Object> testVm = (HashMap)testModelAndView.getModel();
-        String testViewName = testModelAndView.getViewName();
+        Map<String, Object> testVm = (HashMap)result.getModel();
+        String testViewName = result.getViewName();
 
         // Comparing the expected and actual values
         assertEquals(VIEW_NAME, testViewName);
