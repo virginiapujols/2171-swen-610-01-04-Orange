@@ -24,15 +24,10 @@ public class GetLogoutRouteTest {
     public void testGetLogoutRoute() throws Exception {
 
         try {
-
             GetLogoutRoute test = new GetLogoutRoute(null);
-
         } catch (NullPointerException e) {
-
             assertEquals("gameCenter must not be null", e.getMessage());
-
         }
-
     }
 
     @Test
@@ -47,7 +42,7 @@ public class GetLogoutRouteTest {
         gameCenter.addPlayer(session, "ashok");
         Response response = mock(Response.class);
         ModelAndView view = test.handle(request, response);
-       Map<String, Object> vm =(Map<String, Object>) view.getModel();
+        Map<String, Object> vm =(Map<String, Object>) view.getModel();
         assertEquals("Login!",vm.get("title"));
         assertEquals(GetHomeRoute.VIEW_NAME, view.getViewName());
         assertEquals(null,vm.get("username"));

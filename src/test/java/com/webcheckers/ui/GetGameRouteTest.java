@@ -44,8 +44,8 @@ public class GetGameRouteTest {
     static final String OPP_COLOR = "opponentColor";
     static final String CURR_PLAYER = "currentPlayer";
     static final String GAME_BOARD = "board";
-    static final String RED = "red";
-    static final String WHITE = "white";
+    static final String RED = "RED";
+    static final String WHITE = "WHITE";
 
     /**
      * Setup common test scenario.

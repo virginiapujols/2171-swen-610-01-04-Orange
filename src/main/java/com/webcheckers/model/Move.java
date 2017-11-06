@@ -1,12 +1,12 @@
 package com.webcheckers.model;
 
+/**
+ * A class that represents a move from one location to another.  Responsible for providing information about that specific move
+ * (i.e. the move's direction, the move's magnitude, etc)
+ */
 public class Move {
 
-    /*private int startX;
-    private int startY;
-    private int endX;
-    private int endY;*/
-
+    //Attributes
     private Coordinate start;
     private Coordinate end;
 
@@ -23,33 +23,28 @@ public class Move {
         return end;
     }
 
-    /**
-     * This function captures a piece in the game
-     * @param _pieceA this is the captured piece
-     */
-    public void capture(Piece _pieceA){
-
+    public int getRowsMoved() {
+        return Math.abs(start.getRow() - end.getRow());
     }
 
     /**
-     * This function is one which verifies if the move is forward or not
-     * @return
+     * A method to detect whether or not a move is "up"
+     * "Up" is defined as the ending row having a higher value than the starting row, so that is towards the red side
+     * @return Whether or not the end row is greater than the starting row
      */
-    public boolean isValidMoveForward() {
-
-        return (end.getCell() == start.getCell() + 1
-                && (end.getRow() == start.getRow() + 1 || end.getRow() == start.getRow() - 1));
+    public boolean isMoveUp() {
+        return end.getRow() > start.getRow();
     }
 
     /**
-     * This function verifies if the piece is captured or not
-     * @param posX is the X co-ordinate of the piece
-     * @param posY is the Y co-ordinate of the piece
-     * @return
+     * A method to get the coordinate that is jumped over when a Jump occurs
+     * @return The coordinate of the jumped space
      */
-    public boolean isCapture(int posX, int posY){
+    public Coordinate getJumpedCoordinate() {
+        int rowVal = (start.getRow() + end.getRow())/2;
+        int cellVal = (start.getCell() + end.getCell())/2;
 
-        return true;
+        return new Coordinate(rowVal, cellVal);
     }
 
     public String toString() {

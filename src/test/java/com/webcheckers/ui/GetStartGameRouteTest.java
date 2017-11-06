@@ -1,3 +1,5 @@
+package com.webcheckers.ui;
+
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.ui.GetGameRoute;
 import com.webcheckers.ui.GetStartGameRoute;

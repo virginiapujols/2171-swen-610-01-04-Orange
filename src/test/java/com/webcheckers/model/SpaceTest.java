@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockingDetails;
 
 public class SpaceTest {
     @Test
@@ -43,5 +44,14 @@ public class SpaceTest {
 
         test = new Space(_color, null, _cellIdx);
         assertTrue(test.isValid());
+    }
+
+    @Test
+    public void testRemoveCapturedPiece(){
+        Piece _piece = mock(Piece.class);
+        Space test = new Space("black", _piece, 1);
+        assertNotNull(test.getPiece());
+        test.removeCapturedPiece();
+        assertNull(test.getPiece());
     }
 }

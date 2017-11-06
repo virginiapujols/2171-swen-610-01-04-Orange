@@ -1,6 +1,15 @@
 package com.webcheckers.model;
 
+/**
+ * A class that represents a movable token used to play Checkers
+ * The class maintains and returns information on the pieces type and color
+ */
 public class Piece {
+    //Constants
+    public static final String PIECE_RED = "RED";
+    public static final String PIECE_WHITE = "WHITE";
+
+    //Attributes
     private String type;
     private String color;
 

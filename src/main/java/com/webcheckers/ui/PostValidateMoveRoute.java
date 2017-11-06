@@ -6,6 +6,7 @@ import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Move;
 import spark.*;
+import sun.rmi.runtime.Log;
 
 import java.util.Objects;
 
@@ -27,9 +28,12 @@ public class PostValidateMoveRoute implements Route {
         String data = request.body();
 
         Move move = JsonUtils.fromJson(data, Move.class);
+        System.out.println(move.toString());
 
         Message message = board.validateMove(move);
-        if(!message.getType().equals("error")) {
+        if(!message.getType().equals(Message.MESSAGE_ERROR)) {
+            game.addMoveToList(move);
+            game.removePieceIfCaptured(move);
             board.movePiece(move);
         }
 

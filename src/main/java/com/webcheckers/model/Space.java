@@ -1,5 +1,9 @@
 package com.webcheckers.model;
 
+/**
+ * A class that represents a location on the game board
+ * This class holds a piece and provides information about itself and gives access to its piece
+ */
 public class Space {
 
    private String color;
@@ -72,5 +76,9 @@ public class Space {
      */
     public boolean isValid() {
        return this.piece == null && this.color.equals("black");
+    }
+
+    public void removeCapturedPiece() {
+        piece = null;
     }
 }
