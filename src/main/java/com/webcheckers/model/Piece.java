@@ -23,11 +23,6 @@ public class Piece {
         this.color = _color;
     }
 
-     /**
-     * This function denotes the transformation of a "plain" piece to a "king" piece
-     */
-    public void becomeKing(){}
-
     /**
      * This function denotes if the piece is captured or not
      * @param _posX this is the X co-ordinate of the piece
@@ -59,13 +54,19 @@ public class Piece {
     public void setColor(String _color) {
         this.color = _color;
     }
-    
+
     /**
-     * This function is the mutator of type
-     * @param _type is the parameter that sets the type attribute
+     * Mutator to set Piece type to SINGLE
      */
-    public void setType(String _type) {
-        this.type = _type;
+    public void makeSingle() {
+        this.type = "SINGLE";
+    }
+
+    /**
+     * Mutator to set Piece type to KING
+     */
+    public void makeKing() {
+        this.type = "KING";
     }
 }
 

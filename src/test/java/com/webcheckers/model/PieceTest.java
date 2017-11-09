@@ -13,12 +13,12 @@ public class PieceTest {
         assertEquals(_color, test.getColor());
     }
 
-    @Test
+    /*@Test
     public void setType() throws Exception {
         String _type = "plain";
         String _color = "black";
         Piece test = new Piece(_type, _color);
         assertEquals(_type, test.getType());
-    }
+    }*/
 
 }
