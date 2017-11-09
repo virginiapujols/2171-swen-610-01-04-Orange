@@ -28,7 +28,6 @@ public class PostValidateMoveRoute implements Route {
         String data = request.body();
 
         Move move = JsonUtils.fromJson(data, Move.class);
-        System.out.println(move.toString());
 
         Message message = board.validateMove(move);
         if(!message.getType().equals(Message.MESSAGE_ERROR)) {

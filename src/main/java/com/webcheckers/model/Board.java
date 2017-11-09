@@ -125,9 +125,9 @@ public class Board implements Iterable<Row>{
         Piece piece = startSpace.getPiece();
 
         //Check if the user has a jump available, requiring them to take it if one exists
-        if(_move.getRowsMoved() == 1 && piece.getColor().equals("RED") && checkForAvailableRedJumps()) {
+        if(_move.getRowsMoved() == 1 && piece.getColor().equals("RED") && (checkForAvailableRedJumps() || checkForAvailableKingJumps("RED"))) {
             return new Message("You have a jump that you must take", "error");
-        } else if(_move.getRowsMoved() == 1 && piece.getColor().equals("WHITE") && checkForAvailableWhiteJumps()) {
+        } else if(_move.getRowsMoved() == 1 && piece.getColor().equals("WHITE") && (checkForAvailableWhiteJumps() || checkForAvailableKingJumps("WHITE"))) {
             return new Message("You have a jump that you must take", "error");
         }
 
@@ -248,53 +248,105 @@ public class Board implements Iterable<Row>{
                 Piece piece = space.getPiece();
 
                 //If the piece in a space isn't null & is a red piece, we check it's jumps
-                if(piece != null && piece.getColor().equals(Piece.PIECE_RED)) {
+                if(piece != null && piece.getType().equals("SINGLE") && piece.getColor().equals(Piece.PIECE_RED)) {
                     if (row.getIndex() > 1) { //If the piece isn't in the last 2 rows (i.e. it wouldn't have enough space to jump)
                         if (space.getCellIdx() <= 1) { //If it's in the two left-most columns, it can only jump right, so we only check that direction
-                            //Get the piece being jumped & landing space
-                            Space squareToJump = getSpaceByCoordinate(new Coordinate(row.getIndex() - 1, space.getCellIdx() + 1));
-                            Space landingSquare = getSpaceByCoordinate(new Coordinate(row.getIndex() - 2, space.getCellIdx() + 2));
+                            boolean jumpExists = checkJumpInOneDirection(row, space, -1, 1, Piece.PIECE_WHITE);
 
-                            Piece jumpedPiece = squareToJump.getPiece();
-                            Piece landingSquarePiece = landingSquare.getPiece();
-
-                            //If it jumps over an opposing piece and onto an empty square, return true
-                            if (jumpedPiece != null && jumpedPiece.getColor().equals(Piece.PIECE_WHITE) && landingSquarePiece == null) {
+                            if(jumpExists)
                                 return true;
-                            }
                         } else if (space.getCellIdx() >= 6) { //If it's in the rightmost columns, it can only jump left, so we only check that direction
-                            Space squareToJump = getSpaceByCoordinate(new Coordinate(row.getIndex() - 1, space.getCellIdx() - 1));
-                            Space landingSquare = getSpaceByCoordinate(new Coordinate(row.getIndex() - 2, space.getCellIdx() - 2));
+                            boolean jumpExists = checkJumpInOneDirection(row, space, -1, -1, Piece.PIECE_WHITE);
 
-                            Piece jumpedPiece = squareToJump.getPiece();
-                            Piece landingSquarePiece = landingSquare.getPiece();
-
-                            if (jumpedPiece != null && jumpedPiece.getColor().equals(Piece.PIECE_WHITE) && landingSquarePiece == null) {
+                            if(jumpExists)
                                 return true;
-                            }
                         } else { //Otherwise it can jump left OR right, so we check both directions
-                            Space squareToJumpLeft = getSpaceByCoordinate(new Coordinate(row.getIndex() - 1, space.getCellIdx() - 1));
-                            Space landingSquareLeft = getSpaceByCoordinate(new Coordinate(row.getIndex() - 2, space.getCellIdx() - 2));
-                            Piece jumpedPieceLeft = squareToJumpLeft.getPiece();
-                            Piece landingSquarePieceLeft = landingSquareLeft.getPiece();
+                            boolean jumpExistsLeft = checkJumpInOneDirection(row, space, -1, -1, Piece.PIECE_WHITE);
+                            boolean jumpExistsRight = checkJumpInOneDirection(row, space, -1, 1, Piece.PIECE_WHITE);
 
-                            Space squareToJumpRight = getSpaceByCoordinate(new Coordinate(row.getIndex() - 1, space.getCellIdx() + 1));
-                            Space landingSquareRight = getSpaceByCoordinate(new Coordinate(row.getIndex() - 2, space.getCellIdx() + 2));
-                            Piece jumpedPieceRight = squareToJumpRight.getPiece();
-                            Piece landingSquarePieceRight = landingSquareRight.getPiece();
-
-                            //If either of the possible jumps can be taken, then return true
-                            if (jumpedPieceLeft != null && jumpedPieceLeft.getColor().equals(Piece.PIECE_WHITE) && landingSquarePieceLeft == null) {
+                            if(jumpExistsLeft || jumpExistsRight)
                                 return true;
-                            } else if (jumpedPieceRight != null && jumpedPieceRight.getColor().equals(Piece.PIECE_WHITE) && landingSquarePieceRight == null) {
-                                return true;
-                            }
                         }
                     }
                 }
             }
         }
         //If no possible jumps exist, return false
+        return false;
+    }
+
+    public boolean checkForAvailableKingJumps(String pieceColor) {
+        String jumpedColor = pieceColor.equals(Piece.PIECE_RED) ? "WHITE" : "RED";
+
+        for(Row row : rows) {
+            for (Space space : row) {
+                Piece piece = space.getPiece();
+
+                if(piece != null && piece.getType().equals("KING") && piece.getColor().equals(pieceColor)) {
+                     if(row.getIndex() <= 1) {
+                        if(space.getCellIdx() <= 1) {
+                            boolean jumpExists = checkJumpInOneDirection(row, space, 1, 1, jumpedColor);
+
+                            if(jumpExists)
+                                return true;
+                        } else if(space.getCellIdx() >= 6) {
+                            boolean jumpExists = checkJumpInOneDirection(row, space, 1, -1, jumpedColor);
+
+                            if(jumpExists)
+                                return true;
+                        } else {
+                            boolean leftJumpExists = checkJumpInOneDirection(row, space, 1, -1, jumpedColor);
+                            boolean rightJumpExists = checkJumpInOneDirection(row, space, 1, 1, jumpedColor);
+
+                            if(leftJumpExists || rightJumpExists)
+                                return true;
+                        }
+                     } else if(row.getIndex() >= 6) {
+                         if(space.getCellIdx() <= 1) {
+                             boolean jumpExists = checkJumpInOneDirection(row, space, -1, 1, jumpedColor);
+
+                             if(jumpExists)
+                                 return true;
+                         } else if(space.getCellIdx() >= 6) {
+                             boolean jumpExists = checkJumpInOneDirection(row, space, -1, -1, jumpedColor);
+
+                             if(jumpExists)
+                                 return true;
+                         } else {
+                             boolean leftJumpExists = checkJumpInOneDirection(row, space, -1, -1, jumpedColor);
+                             boolean rightJumpExists = checkJumpInOneDirection(row, space, -1, 1, jumpedColor);
+
+                             if(leftJumpExists || rightJumpExists)
+                                 return true;
+                         }
+                    } else {
+                         if(space.getCellIdx() <= 1) {
+                             boolean upJumpExists = checkJumpInOneDirection(row, space, -1, 1, jumpedColor);
+                             boolean downJumpExists = checkJumpInOneDirection(row, space, 1, 1, jumpedColor);
+
+                             if(upJumpExists || downJumpExists)
+                                 return true;
+                         } else if(space.getCellIdx() >= 6) {
+                             boolean upJumpExists = checkJumpInOneDirection(row, space, -1, -1, jumpedColor);
+                             boolean downJumpExists = checkJumpInOneDirection(row, space, 1, -1, jumpedColor);
+
+                             if(upJumpExists || downJumpExists)
+                                 return true;
+                         } else {
+                             boolean upLeftJumpExists = checkJumpInOneDirection(row, space, -1, -1, jumpedColor);
+                             boolean downLeftJumpExists = checkJumpInOneDirection(row, space, 1, -1, jumpedColor);
+
+                             boolean upRightJumpExists = checkJumpInOneDirection(row, space, -1, 1, jumpedColor);
+                             boolean downRightJumpExists = checkJumpInOneDirection(row, space, 1, 1, jumpedColor);
+
+                             if(upLeftJumpExists || downLeftJumpExists || upRightJumpExists || downRightJumpExists)
+                                 return true;
+                         }
+                    }
+                }
+            }
+        }
+
         return false;
     }
 
@@ -312,41 +364,21 @@ public class Board implements Iterable<Row>{
                 if(piece != null && piece.getColor().equals(Piece.PIECE_WHITE)) {
                     if (row.getIndex() < 6) { //If the piece is in the last two rows (i.e. It wouldn't have enough space to jump)
                         if (space.getCellIdx() <= 1) { //If it's the 2 leftmost columns, it can only jump right, so only check that direction
-                            Space squareToJump = getSpaceByCoordinate(new Coordinate(row.getIndex() + 1, space.getCellIdx() + 1));
-                            Space landingSquare = getSpaceByCoordinate(new Coordinate(row.getIndex() + 2, space.getCellIdx() + 2));
+                            boolean jumpExists = checkJumpInOneDirection(row, space, 1, 1, Piece.PIECE_RED);
 
-                            Piece jumpedPiece = squareToJump.getPiece();
-                            Piece landingSquarePiece = landingSquare.getPiece();
-
-                            if (jumpedPiece != null && jumpedPiece.getColor().equals(Piece.PIECE_RED) && landingSquarePiece == null) {
-                                return true;
-                            }
+                            if(jumpExists)
+                               return true;
                         } else if (space.getCellIdx() >= 6) { //If it's the 2 rightmost columns, it can only jump left, so only check that direction
-                            Space squareToJump = getSpaceByCoordinate(new Coordinate(row.getIndex() + 1, space.getCellIdx() - 1));
-                            Space landingSquare = getSpaceByCoordinate(new Coordinate(row.getIndex() + 2, space.getCellIdx() - 2));
+                            boolean jumpExists = checkJumpInOneDirection(row, space, 1, -1, Piece.PIECE_RED);
 
-                            Piece jumpedPiece = squareToJump.getPiece();
-                            Piece landingSquarePiece = landingSquare.getPiece();
-
-                            if (jumpedPiece != null && jumpedPiece.getColor().equals(Piece.PIECE_RED) && landingSquarePiece == null) {
+                           if(jumpExists)
                                 return true;
-                            }
                         } else { //Otherwise it can jump both directions so we have to check each way
-                            Space squareToJumpLeft = getSpaceByCoordinate(new Coordinate(row.getIndex() + 1, space.getCellIdx() + 1));
-                            Space landingSquareLeft = getSpaceByCoordinate(new Coordinate(row.getIndex() + 2, space.getCellIdx() + 2));
-                            Piece jumpedPieceLeft = squareToJumpLeft.getPiece();
-                            Piece landingSquarePieceLeft = landingSquareLeft.getPiece();
+                            boolean jumpExistsLeft = checkJumpInOneDirection(row, space, 1, 1, Piece.PIECE_RED);
+                            boolean jumpExistsRight = checkJumpInOneDirection(row, space, 1, -1, Piece.PIECE_RED);
 
-                            Space squareToJumpRight = getSpaceByCoordinate(new Coordinate(row.getIndex() + 1, space.getCellIdx() - 1));
-                            Space landingSquareRight = getSpaceByCoordinate(new Coordinate(row.getIndex() + 2, space.getCellIdx() - 2));
-                            Piece jumpedPieceRight = squareToJumpRight.getPiece();
-                            Piece landingSquarePieceRight = landingSquareRight.getPiece();
-
-                            if (jumpedPieceLeft != null && jumpedPieceLeft.getColor().equals(Piece.PIECE_RED) && landingSquarePieceLeft == null) {
+                            if(jumpExistsLeft || jumpExistsRight)
                                 return true;
-                            } else if (jumpedPieceRight != null && jumpedPieceRight.getColor().equals(Piece.PIECE_RED) && landingSquarePieceRight == null) {
-                                return true;
-                            }
                         }
                     }
                 }
@@ -354,6 +386,20 @@ public class Board implements Iterable<Row>{
         }
 
         return false;
+    }
+
+    private boolean checkJumpInOneDirection(Row row, Space space, int rowDirection, int cellDirection, String jumpedPieceColor) {
+        Space squareToJump = getSpaceByCoordinate(new Coordinate(row.getIndex() + rowDirection, space.getCellIdx() + cellDirection));
+        Space landingSquare = getSpaceByCoordinate(new Coordinate(row.getIndex() + (rowDirection * 2), space.getCellIdx() + (cellDirection * 2)));
+
+        Piece jumpedPiece = squareToJump.getPiece();
+        Piece landingSquarePiece = landingSquare.getPiece();
+
+        if(jumpedPiece != null && jumpedPiece.getColor().equals(jumpedPieceColor) && landingSquarePiece == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean reachedLastRow(Coordinate endSpace, Piece piece) {

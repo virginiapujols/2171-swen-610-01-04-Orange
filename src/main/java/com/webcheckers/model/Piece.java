@@ -12,6 +12,7 @@ public class Piece {
     //Attributes
     private String type;
     private String color;
+    private boolean justKinged;
 
      /**
      * This is the constructor for the "piece" class
@@ -67,6 +68,23 @@ public class Piece {
      */
     public void makeKing() {
         this.type = "KING";
+        this.justKinged = true;
+    }
+
+    /**
+     * Accessor for justKinged attribute
+     * @return justKinged If the Piece was Kinged this turn
+     */
+    public boolean getJustKinged() {
+        return this.justKinged;
+    }
+
+    /**
+     * Mutator for justKinged attribute
+     * @param _justKinged Whether or not the Piece was Kinged this turn
+     */
+    public void setJustKinged(boolean _justKinged) {
+        this.justKinged = _justKinged;
     }
 }
 
