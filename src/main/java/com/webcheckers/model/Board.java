@@ -276,6 +276,42 @@ public class Board implements Iterable<Row>{
         return false;
     }
 
+    public boolean checkForAvailableMoves(String pieceColor) {
+        for(Row row : rows) {
+            for(Space space : row) {
+                Piece piece = space.getPiece();
+
+                if(piece != null && piece.getType().equals("SINGLE")) {
+                    if (piece.getColor().equals(pieceColor) && piece.getColor().equals(Piece.PIECE_RED)) {
+                        boolean moveLeftExists = checkMoveInOneDirection(row, space, -1, -1);
+                        boolean moveRightExists = checkMoveInOneDirection(row, space, -1, 1);
+
+                        if (moveLeftExists || moveRightExists)
+                            return true;
+                    } else if (piece.getColor().equals(pieceColor) && piece.getColor().equals(Piece.PIECE_WHITE)) {
+                        boolean moveLeftExists = checkMoveInOneDirection(row, space, 1, -1);
+                        boolean moveRightExists = checkMoveInOneDirection(row, space, 1, 1);
+
+                        if (moveLeftExists || moveRightExists)
+                            return true;
+                    }
+                } else if(piece != null && piece.getType().equals("KING")) {
+                    if(piece.getColor().equals(pieceColor)) {
+                        boolean moveExistsUpLeft = checkMoveInOneDirection(row, space, -1, -1);
+                        boolean moveExistsUpRight = checkMoveInOneDirection(row, space, -1, 1);
+                        boolean moveExistsDownLeft = checkMoveInOneDirection(row, space, 1, -1);
+                        boolean moveExistsDownRight = checkMoveInOneDirection(row, space, 1, 1);
+
+                        if (moveExistsUpLeft || moveExistsUpRight || moveExistsDownLeft || moveExistsDownRight)
+                            return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     public boolean arePiecesLeft(String pieceColor) {
         for(Row row : rows) {
             for(Space space : row) {
@@ -287,6 +323,10 @@ public class Board implements Iterable<Row>{
         }
 
         return false;
+    }
+
+    public boolean isGameOver(String pieceColor) {
+        return (!arePiecesLeft(pieceColor) || (!checkForAvailableMoves(pieceColor) && !checkForAvailableJumps(pieceColor)));
     }
 
     private boolean checkJumpInOneDirection(Row row, Space space, int rowDirection, int cellDirection, String jumpedPieceColor) {

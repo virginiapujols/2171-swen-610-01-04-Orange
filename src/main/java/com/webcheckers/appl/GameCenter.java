@@ -96,6 +96,10 @@ public class GameCenter {
         return null;
     }
 
+    public void removeGame(Game game) {
+        games.remove(game);
+    }
+
     /**
      * A method to return a List of all Players who are not currently in a game
      * @return available A List<String> of all players currently not in games

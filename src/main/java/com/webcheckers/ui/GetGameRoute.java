@@ -54,6 +54,21 @@ public class GetGameRoute implements TemplateViewRoute {
         game = gameCenter.getGame(currentUsername);
 
         if(game != null) { //If they are in game:
+            int gameResult = game.isGameOver();
+            gameResult = 0;
+            if(gameResult != -1) {
+                String winningUsername = gameResult == 0 ? game.getPlayer1().getUsername() : game.getPlayer2().getUsername();
+
+                if(currentUsername.equals(winningUsername)) {
+                    response.redirect("/gameOver/won");
+                } else {
+                    response.redirect("/gameOver/lost");
+                }
+
+                halt();
+                return null;
+            }
+
             if(game.getPlayer1().getUsername().equals(currentUsername)) { //Check if they're player 1 & populate the ViewModel
                 vm.put(PLAYER_NAME, game.getPlayer1().getUsername());
                 vm.put(PLAYER_COLOR, RED);

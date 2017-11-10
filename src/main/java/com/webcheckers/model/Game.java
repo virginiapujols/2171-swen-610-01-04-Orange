@@ -217,6 +217,16 @@ public class Game{
         }
     }
 
+    public int isGameOver() {
+        if(board.isGameOver("RED")) {
+            return 1;
+        } else if(board.isGameOver("WHITE")) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Game) {

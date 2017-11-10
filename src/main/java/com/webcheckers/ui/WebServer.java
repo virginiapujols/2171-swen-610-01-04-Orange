@@ -165,6 +165,10 @@ public class WebServer {
 
     //Post to check if it's the User's Turn
     post(CHECKTURN_URL, new PostCheckTurnRoute(gameCenter), JsonUtils.json());
-  }
 
+    //Get to return Game Over Page
+    get("/gameOver/*", new GetGameOverRoute(gameCenter), templateEngine);
+
+    get("/endGame", new GetEndGameRoute(gameCenter), templateEngine);
+  }
 }
