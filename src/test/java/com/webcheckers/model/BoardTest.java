@@ -149,6 +149,7 @@ public class BoardTest {
         when(endPos.getCell()).thenReturn(1);
 
         Move move = new Move(startPos, endPos);
+
         assertFalse(CuT.getDidJump());
         CuT.movePiece(move);
         assertTrue(CuT.getDidJump());
@@ -209,4 +210,12 @@ public class BoardTest {
         assertEquals(jumpedSpace.getPiece(), null);
         assertFalse(CuT.getDidJump());
     }
+    @Test
+    public void testArePiecesLeft() throws Exception {
+        Piece piece = new Piece("king","PIECE_WHITE");
+        String _pieceColor = "WHITE";
+        Space space = mock(Space.class);
+        when(space.getPiece()).thenReturn(piece);
+        CuT.arePiecesLeft(_pieceColor);
+        assertEquals(true,CuT.arePiecesLeft(_pieceColor));
 }
