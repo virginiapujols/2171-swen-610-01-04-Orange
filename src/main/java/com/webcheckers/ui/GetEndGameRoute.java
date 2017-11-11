@@ -48,7 +48,7 @@ public class GetEndGameRoute implements TemplateViewRoute {
         final String currentUsername = request.session().attribute(PostLoginRoute.USERNAME_PARAM);
         game = gameCenter.getGame(currentUsername);
 
-        if(game != null) {
+        if(game != null && game.getIsOver()) {
             gameCenter.removeGame(game);
         }
 

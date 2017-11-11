@@ -219,8 +219,10 @@ public class Game{
 
     public int isGameOver() {
         if(board.isGameOver("RED")) {
+            isOver = true;
             return 1;
         } else if(board.isGameOver("WHITE")) {
+            isOver = true;
             return 0;
         } else {
             return -1;

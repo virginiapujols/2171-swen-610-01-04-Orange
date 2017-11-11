@@ -55,7 +55,7 @@ public class GetGameRoute implements TemplateViewRoute {
 
         if(game != null) { //If they are in game:
             int gameResult = game.isGameOver();
-            gameResult = 0;
+
             if(gameResult != -1) {
                 String winningUsername = gameResult == 0 ? game.getPlayer1().getUsername() : game.getPlayer2().getUsername();
 

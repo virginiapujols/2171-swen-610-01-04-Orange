@@ -48,28 +48,26 @@ public class GetGameOverRoute implements TemplateViewRoute {
         final String currentUsername = request.session().attribute(PostLoginRoute.USERNAME_PARAM);
         game = gameCenter.getGame(currentUsername);
 
-        if(game == null) {
+        if(game != null && game.getIsOver()) {
+            Map<String, Object> vm = new HashMap<>();
+            vm.put("title", "Game Over!");
+
+            String gameResult = request.splat()[0];
+
+            if(gameResult.equals("won")) {
+                vm.put("resultMessage", "Congratulations! You win!");
+            } else {
+                vm.put("resultMessage", "You lost, better luck next time!");
+            }
+
+            vm.put("playerName", currentUsername);
+            vm.put("board", game.getBoard());
+
+            return new ModelAndView(vm , VIEW_NAME);
+        } else {
             response.redirect("/");
             halt();
             return null;
         }
-
-        Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Game Over!");
-
-        String gameResult = request.splat()[0];
-
-        if(gameResult.equals("won")) {
-            vm.put("resultMessage", "Congratulations! You win!");
-        } else {
-            vm.put("resultMessage", "You lost, better luck next time!");
-        }
-
-        vm.put("playerName", currentUsername);
-        vm.put("board", game.getBoard());
-
-
-
-        return new ModelAndView(vm , VIEW_NAME);
     }
 }
