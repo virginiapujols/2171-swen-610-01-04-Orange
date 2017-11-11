@@ -60,6 +60,9 @@ public class WebServer {
   public static final String CHECKTURN_URL = "/checkTurn";
   public static final String GAMEOVER_URL = "/gameOver/*";
   public static final String ENDGAME_URL = "/endGame";
+  public static final String SPECTATEGAME_URL = "/spectateGame";
+  public static final String ENDSPECTATING_URL = "/endSpectating";
+
   //
   // Attributes
   //
@@ -172,5 +175,11 @@ public class WebServer {
 
     //Get to End the Game and redirect to the Home page
     get(ENDGAME_URL, new GetEndGameRoute(gameCenter), templateEngine);
+
+    //Get to Spectate a Game between two other players
+    get(SPECTATEGAME_URL, new GetSpectateGameRoute(gameCenter), templateEngine);
+
+    //Get to end spectating
+    get(ENDSPECTATING_URL, new GetEndSpectatingRoute(gameCenter), templateEngine);
   }
 }

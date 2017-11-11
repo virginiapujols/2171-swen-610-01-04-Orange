@@ -11,7 +11,7 @@ import spark.*;
 import static spark.Spark.halt;
 
 /**
- * The Web Controller for the Home page.
+ * The Web Controller for getting the Game page.
  *
  * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
  */

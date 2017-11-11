@@ -64,17 +64,15 @@ public class PostLoginRoute implements TemplateViewRoute {
         final Session session = request.session();
         final String reqUsername = request.queryParams(USERNAME_PARAM);
 
-        if(gameCenter.isUsernameTaken(reqUsername)) {
+        if(gameCenter.isUsernameTaken(reqUsername)) { //If that username is already taken, show an error message
             return error(vm, USER_EXIST_MESSAGE);
         } else {
             gameCenter.addPlayer(request.session(), reqUsername);
             session.attribute(USERNAME_PARAM, reqUsername);
             vm.put(USERNAME_PARAM, reqUsername);
             response.redirect("/");
-//            halt();
+            halt();
+            return null;
         }
-
-        vm.put(USERNAME_PARAM, reqUsername);
-        return new ModelAndView(vm , GetHomeRoute.VIEW_NAME);
     }
 }
