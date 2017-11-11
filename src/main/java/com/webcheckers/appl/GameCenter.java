@@ -96,8 +96,12 @@ public class GameCenter {
         return null;
     }
 
-    public void removeGame(Game game) {
-        games.remove(game);
+    /**
+     * A method to remove a game from the list of games when it is completed
+     * @param _game The game to be removed
+     */
+    public void removeGame(Game _game) {
+        games.remove(_game);
     }
 
     /**

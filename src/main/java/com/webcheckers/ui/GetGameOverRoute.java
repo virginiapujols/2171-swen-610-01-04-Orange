@@ -14,7 +14,7 @@ import spark.TemplateViewRoute;
 import static spark.Spark.halt;
 
 /**
- * The Web Controller for the Home page.
+ * The Web Controller for the gameOver page.
  *
  * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
  */
@@ -32,7 +32,7 @@ public class GetGameOverRoute implements TemplateViewRoute {
     //
 
     /**
-     * The constructor for the {@code GET /} route handler.
+     * The constructor for the {@code GET /GameOver} route handler.
      *
      * @param gameCenter
      *    The {@link GameCenter} for the application.
@@ -48,13 +48,14 @@ public class GetGameOverRoute implements TemplateViewRoute {
         final String currentUsername = request.session().attribute(PostLoginRoute.USERNAME_PARAM);
         game = gameCenter.getGame(currentUsername);
 
-        if(game != null && game.getIsOver()) {
+        if(game != null && game.getIsOver()) { //If the game exists and is one that has ended, show the end game messages
             Map<String, Object> vm = new HashMap<>();
             vm.put("title", "Game Over!");
 
+            //Use Spark's .splat() to pull the value entered for the wildcard character in the URL
             String gameResult = request.splat()[0];
 
-            if(gameResult.equals("won")) {
+            if(gameResult.equals("won")) { //If the wildcard value was "won", they player won, otherwise ("lost"), they lost
                 vm.put("resultMessage", "Congratulations! You win!");
             } else {
                 vm.put("resultMessage", "You lost, better luck next time!");

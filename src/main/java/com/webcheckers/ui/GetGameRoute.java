@@ -56,7 +56,8 @@ public class GetGameRoute implements TemplateViewRoute {
         if(game != null) { //If they are in game:
             int gameResult = game.isGameOver();
 
-            if(gameResult != -1) {
+            if(gameResult != -1) { //If the game result is not -1, meaning a player has won, redirect to the game over screens
+                //If game result is 0, player 1 is the winner, otherwise (gameResult == 1) player 2 is the winner
                 String winningUsername = gameResult == 0 ? game.getPlayer1().getUsername() : game.getPlayer2().getUsername();
 
                 if(currentUsername.equals(winningUsername)) {
@@ -97,16 +98,22 @@ public class GetGameRoute implements TemplateViewRoute {
         }
     }
 
-    private Board getPlayerBoard(String username) {
-        if(game.getPlayer1().getUsername().equals(username)) {
+    /**
+     * UI Helper method to make use of the flipRow method to visually flip the board for Player 2
+     * This way, both player see the board as if they are sitting at their end (moving their pieces from the bottom of the screen to the top)
+     * @param _username The username of the player who will be seeing the board
+     * @return A board item to be shown to the Player
+     */
+    private Board getPlayerBoard(String _username) {
+        if(game.getPlayer1().getUsername().equals(_username)) { //Player 1 sees a normal board
             return game.getBoard();
-        } else {
+        } else { //Player 2 sees a flipped board
             Board flippedBoard = new Board();
 
             List<Row> rows = new ArrayList<>(game.getBoard().getRows());
             List<Row> flippedRows = new ArrayList<>();
 
-            for (int i = rows.size() - 1; i >= 0; i--) {
+            for (int i = rows.size() - 1; i >= 0; i--) { //Add each row backwards to the board, flipping it horizontally as it's added
                 flippedRows.add(rows.get(i).flipRow());
             }
             flippedBoard.setRows(flippedRows);

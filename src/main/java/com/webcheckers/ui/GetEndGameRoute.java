@@ -19,10 +19,6 @@ import static spark.Spark.halt;
  * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
  */
 public class GetEndGameRoute implements TemplateViewRoute {
-
-    // Constants
-    static final String VIEW_NAME = "gameOver.ftl";
-
     // Attributes
     private final GameCenter gameCenter;
     private Game game;
@@ -32,7 +28,7 @@ public class GetEndGameRoute implements TemplateViewRoute {
     //
 
     /**
-     * The constructor for the {@code GET /} route handler.
+     * The constructor for the {@code GET /endGame} route handler.
      *
      * @param gameCenter
      *    The {@link GameCenter} for the application.
@@ -48,7 +44,7 @@ public class GetEndGameRoute implements TemplateViewRoute {
         final String currentUsername = request.session().attribute(PostLoginRoute.USERNAME_PARAM);
         game = gameCenter.getGame(currentUsername);
 
-        if(game != null && game.getIsOver()) {
+        if(game != null && game.getIsOver()) { //If the game exists and is over, remove the game from the list of games
             gameCenter.removeGame(game);
         }
 
