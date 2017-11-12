@@ -59,6 +59,7 @@ public class WebServer {
   public static final String BACKUP_URL = "/backupMove";
   public static final String CHECKTURN_URL = "/checkTurn";
   public static final String GAMEOVER_URL = "/gameOver/*";
+  public static final String RESIGN_GAME_URL = "/resignGame";
   public static final String ENDGAME_URL = "/endGame";
   //
   // Attributes
@@ -172,5 +173,8 @@ public class WebServer {
 
     //Get to End the Game and redirect to the Home page
     get(ENDGAME_URL, new GetEndGameRoute(gameCenter), templateEngine);
+
+    post(RESIGN_GAME_URL, new PostResignGameRoute(gameCenter), templateEngine);
+
   }
 }

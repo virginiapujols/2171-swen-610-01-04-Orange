@@ -248,8 +248,12 @@ define(function(require){
      * updated Game view from the server.
      */
     this.resignGame = function resignGame() {
-      // TODO
-      alert('NYI: Resign action');
+        if (confirm('Are you sure you want to resign this game?')) {
+            jQuery.post('/resignGame', function( data ) {
+                console.log("estamos qii");
+                window.location.replace('/gameOver/lost');
+            });
+        }
     }
 
     // Private (internal) functions

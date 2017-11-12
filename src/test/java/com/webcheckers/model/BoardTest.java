@@ -18,14 +18,14 @@ public class BoardTest {
     public void setRows() throws Exception {
 
         List<Row> rows = CuT.getRows();
-        assertEquals(rows,CuT.getRows());
+        assertEquals(rows, CuT.getRows());
     }
 
     @Test
     public void didMove() throws Exception {
         Board test = new Board();
         boolean _didMove = false;
-        assertEquals(false,_didMove);
+        assertEquals(false, _didMove);
 
     }
 
@@ -58,7 +58,7 @@ public class BoardTest {
 
         Move move = new Move(c1, c2);
         Message message = CuT.validateMove(move);
-        assertEquals("info",message.getType());
+        assertEquals("info", message.getType());
         assertEquals("Valid Move", message.getText());
     }
 
@@ -78,7 +78,7 @@ public class BoardTest {
         Message message = CuT.validateMove(move);
         // System.out.println(message.getType());
         // System.out.println(message.getText());
-        assertEquals("error",message.getType());
+        assertEquals("error", message.getType());
         assertEquals("You must move 1 row forward", message.getText());
     }
 
@@ -98,7 +98,7 @@ public class BoardTest {
         Message message = CuT.validateMove(move);
         // System.out.println(message.getType());
         // System.out.println(message.getText());
-        assertEquals("error",message.getType());
+        assertEquals("error", message.getType());
         assertEquals("You must move 1 row forward", message.getText());
     }
 
@@ -116,12 +116,12 @@ public class BoardTest {
         when(c2.getCell()).thenReturn(1);
 
         Message message = CuT.validateMove(move);
-        assertEquals("error",message.getType());
+        assertEquals("error", message.getType());
         assertEquals("You must move 1 row forward", message.getText());
     }
 
     @Test
-    public void moveMade(){
+    public void moveMade() {
         Move move = mock(Move.class);
         Coordinate c1 = mock(Coordinate.class);
         Coordinate c2 = mock(Coordinate.class);
@@ -134,8 +134,8 @@ public class BoardTest {
         CuT.setDidMove(true);
 
         Message message = CuT.validateMove(move);
-        assertEquals("error",message.getType());
-        assertEquals("You have already made a move this turn",message.getText());
+        assertEquals("error", message.getType());
+        assertEquals("You have already made a move this turn", message.getText());
     }
 
     @Test
@@ -169,8 +169,8 @@ public class BoardTest {
         when(endPos.getRow()).thenReturn(5);
         when(endPos.getCell()).thenReturn(2);
 
-        int rowVal = (startPos.getRow() + endPos.getRow())/2;
-        int cellVal = (startPos.getCell() + endPos.getCell())/2;
+        int rowVal = (startPos.getRow() + endPos.getRow()) / 2;
+        int cellVal = (startPos.getCell() + endPos.getCell()) / 2;
         Coordinate jumpedCoordinate = new Coordinate(rowVal, cellVal);
 
         when(move.getStart()).thenReturn(startPos);
@@ -179,7 +179,7 @@ public class BoardTest {
 
         Message message = CuT.validateJump(move, jumpingPiece);
         assertEquals("error", message.getType());
-        assertEquals("You cannot jump an empty square!",message.getText());
+        assertEquals("You cannot jump an empty square!", message.getText());
     }
 
     @Test
@@ -210,12 +210,14 @@ public class BoardTest {
         assertEquals(jumpedSpace.getPiece(), null);
         assertFalse(CuT.getDidJump());
     }
+
     @Test
     public void testArePiecesLeft() throws Exception {
-        Piece piece = new Piece("king","PIECE_WHITE");
+        Piece piece = new Piece("king", "PIECE_WHITE");
         String _pieceColor = "WHITE";
         Space space = mock(Space.class);
         when(space.getPiece()).thenReturn(piece);
         CuT.arePiecesLeft(_pieceColor);
-        assertEquals(true,CuT.arePiecesLeft(_pieceColor));
+        assertEquals(true, CuT.arePiecesLeft(_pieceColor));
+    }
 }
