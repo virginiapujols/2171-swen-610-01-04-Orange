@@ -213,7 +213,7 @@ public class BoardTest {
     
   @Test
     public void testArePiecesLeft() throws Exception {
-        Piece piece = new Piece("king","PIECE_WHITE");'
+        Piece piece = new Piece("king","PIECE_WHITE");
         String _pieceColor = "WHITE";
         Space space = mock(Space.class);
         when(space.getPiece()).thenReturn(piece);
