@@ -218,4 +218,5 @@ public class BoardTest {
         when(space.getPiece()).thenReturn(piece);
         CuT.arePiecesLeft(_pieceColor);
         assertEquals(true,CuT.arePiecesLeft(_pieceColor));
+    }
 }
