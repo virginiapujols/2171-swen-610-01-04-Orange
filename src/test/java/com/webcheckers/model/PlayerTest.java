@@ -13,24 +13,7 @@ public class PlayerTest {
         assertEquals("Messi",test.getUsername());
 
     }
-/*
-    @Test
-    public void testLogOut() throws Exception {
 
-    }
-
-    @Test
-    public void testChallengeUser() throws Exception {
-    }
-
-    @Test
-    public void testAcceptChallenge() throws Exception {
-    }
-
-    @Test
-    public void testDeclineChallenge() throws Exception {
-    }
-*/
     @Test
     public void testGetUsername() throws Exception {
 
@@ -39,15 +22,27 @@ public class PlayerTest {
 
         assertEquals("Messi",test.getUsername());
     }
-/*
+
     @Test
-    public void getIsPlaying() throws Exception {
+    public void testUpdateGamesLost(){
+        String _username = "niharika";
+        Player test = new Player(_username);
+        int gamesLost = 0;
+        assertEquals(gamesLost, test.getGamesLost());
+        test.updateGamesLost();
+        assertEquals(gamesLost+1, test.getGamesLost());
     }
 
     @Test
-    public void testSetIsPlaying() throws Exception {
+    public void testUpdateGamesWon(){
+        String _username = "niharika";
+        Player test = new Player(_username);
+        int gamesWon = 0;
+        assertEquals(gamesWon, test.getGamesLost());
+        test.updateGamesLost();
+        assertEquals(gamesWon+1, test.getGamesLost());
     }
-*/
+
     @Test
     public void testEquals() throws Exception {
         String _username = "Messi";
@@ -56,12 +51,5 @@ public class PlayerTest {
         Player test2 = new Player(_username2);
 
         assertTrue(test.equals(test2));
-
-
     }
-/*
-    @Test
-    public void testHashCode() throws Exception {
-    }
-*/
 }

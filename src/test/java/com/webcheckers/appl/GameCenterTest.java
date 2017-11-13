@@ -139,4 +139,29 @@ public class GameCenterTest {
         assertTrue(CuT.isInGame(P2_USERNAME));
         assertFalse(CuT.isInGame(P3_USERNAME));
     }
+
+    @Test
+    public void testGetGame(){
+
+    }
+
+    @Test
+    public void testRemoveGame(){
+
+    }
+
+    @Test
+    public void testGetAvailablePlayers(){
+
+    }
+
+    @Test
+    public void testGetPlayerScores(){
+
+    }
+
+    @Test
+    public void testRemovePlayer(){
+
+    }
 }

@@ -42,12 +42,12 @@ public class Player {
         return gamesLost;
     }
 
-    public void updateGamesLost() {
-        this.gamesLost += 1;
-    }
-
     public int getGamesWon() {
         return gamesWon;
+    }
+
+    public void updateGamesLost() {
+        this.gamesLost += 1;
     }
 
     public void updateGamesWon() {
