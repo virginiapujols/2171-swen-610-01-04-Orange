@@ -5,20 +5,19 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PieceTest {
+
+    String _type = "plain";
+    String _color = "black";
+    Piece CuT = new Piece(_type, _color);
+
     @Test
     public void setColor() throws Exception {
-        String _type = "plain";
-        String _color = "black";
-        Piece test = new Piece(_type, _color);
-        assertEquals(_color, test.getColor());
+        assertEquals(_color, CuT.getColor());
     }
 
     @Test
     public void setType() throws Exception {
-        String _type = "plain";
-        String _color = "black";
-        Piece test = new Piece(_type, _color);
-        assertEquals(_type, test.getType());
+        assertEquals(_type, CuT.getType());
     }
 
 }

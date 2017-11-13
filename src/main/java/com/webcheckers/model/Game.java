@@ -173,6 +173,8 @@ public class Game{
         if(moves.size() > 0) { //Only undo a move if there are moves to be undone
             int lastMovePosition = moves.size() - 1;
             Move moveToUndo = moves.get(lastMovePosition);
+            Piece movedPiece = board.getSpaceByCoordinate(moveToUndo.getEnd()).getPiece();
+
             moves.remove(lastMovePosition);
 
             board.undoMove(moveToUndo);
@@ -186,6 +188,11 @@ public class Game{
 
                 capturedPieces.remove(lastPieceCapturedPosition);
                 board.undoCapture(jumpedSpace, pieceToRestore, capturedPieces.size());
+            }
+
+            if(movedPiece.getJustKinged()) {
+                movedPiece.makeSingle();
+                movedPiece.setJustKinged(false);
             }
 
             return new Message("Move has been undone!", "info");

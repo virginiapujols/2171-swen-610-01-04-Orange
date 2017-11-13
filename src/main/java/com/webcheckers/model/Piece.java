@@ -12,6 +12,7 @@ public class Piece {
     //Attributes
     private String type;
     private String color;
+    private boolean justKinged;
 
      /**
      * This is the constructor for the "piece" class
@@ -22,11 +23,6 @@ public class Piece {
         this.type = _type;
         this.color = _color;
     }
-
-     /**
-     * This function denotes the transformation of a "plain" piece to a "king" piece
-     */
-    public void becomeKing(){}
 
     /**
      * This function denotes if the piece is captured or not
@@ -59,13 +55,36 @@ public class Piece {
     public void setColor(String _color) {
         this.color = _color;
     }
-    
+
     /**
-     * This function is the mutator of type
-     * @param _type is the parameter that sets the type attribute
+     * Mutator to set Piece type to SINGLE
      */
-    public void setType(String _type) {
-        this.type = _type;
+    public void makeSingle() {
+        this.type = "SINGLE";
+    }
+
+    /**
+     * Mutator to set Piece type to KING
+     */
+    public void makeKing() {
+        this.type = "KING";
+        this.justKinged = true;
+    }
+
+    /**
+     * Accessor for justKinged attribute
+     * @return justKinged If the Piece was Kinged this turn
+     */
+    public boolean getJustKinged() {
+        return this.justKinged;
+    }
+
+    /**
+     * Mutator for justKinged attribute
+     * @param _justKinged Whether or not the Piece was Kinged this turn
+     */
+    public void setJustKinged(boolean _justKinged) {
+        this.justKinged = _justKinged;
     }
 }
 

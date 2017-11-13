@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import sun.security.util.AuthResources_ja;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +27,7 @@ public class Board implements Iterable<Row>{
             rows.add(new Row(i));
         }
     }
-   
+
     /**
      * This function updates the board after moves
      * @return the updated board
@@ -105,6 +107,10 @@ public class Board implements Iterable<Row>{
             Space jumpedSpace = getSpaceByCoordinate(jumpedCoordinate);
             jumpedSpace.removeCapturedPiece();
         }
+
+        if(reachedLastRow(_move.getEnd(), piece)) {
+            piece.makeKing();
+        }
     }
 
     /**
@@ -119,28 +125,39 @@ public class Board implements Iterable<Row>{
         Piece piece = startSpace.getPiece();
 
         //Check if the user has a jump available, requiring them to take it if one exists
-        if(_move.getRowsMoved() == 1 && piece.getColor().equals("RED") && checkForAvailableRedJumps()) {
+        if(_move.getRowsMoved() == 1 && piece.getColor().equals("RED") && checkForAvailableJumps("RED")) {
             return new Message("You have a jump that you must take", "error");
-        } else if(_move.getRowsMoved() == 1 && piece.getColor().equals("WHITE") && checkForAvailableWhiteJumps()) {
+        } else if(_move.getRowsMoved() == 1 && piece.getColor().equals("WHITE") && checkForAvailableJumps("WHITE")) {
             return new Message("You have a jump that you must take", "error");
         }
 
         //If they don't have any available jumps, allow them to make a move and evalute it's validity
         if(!didMove || (didMove && didJump)) { //If the user hasn't already moved OR has only made jumps
             if(endSpace.getPiece() == null) { //If there's already a piece in the ending space
-                if (piece.getColor().equals(Piece.PIECE_RED)) { //If the piece is red (i.e. if the piece moves "up" on the board)
-                    if (_move.getRowsMoved() == 1 && !_move.isMoveUp() && !didJump) { //Ensure that a move is only 1 row "up"
-                        return new Message("Valid Move", "info");
-                    } else if(_move.getRowsMoved() == 2 && !_move.isMoveUp()) { //Check for a Jump, but it still has to be "up"
-                        return validateJump(_move, piece);
-                    } else { //Otherwise return an error message
-                        String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
-                        return new Message(messageText, "error");
+                if(piece.getType().equals("SINGLE")) { //If the piece is a single piece
+                    if (piece.getColor().equals(Piece.PIECE_RED)) { //If the piece is red (i.e. if the piece moves "up" on the board)
+                        if (_move.getRowsMoved() == 1 && !_move.isMoveUp() && !didJump) { //Ensure that a move is only 1 row "up"
+                            return new Message("Valid Move", "info");
+                        } else if (_move.getRowsMoved() == 2 && !_move.isMoveUp()) { //Check for a Jump, but it still has to be "up"
+                            return validateJump(_move, piece);
+                        } else { //Otherwise return an error message
+                            String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
+                            return new Message(messageText, "error");
+                        }
+                    } else if (piece.getColor().equals(Piece.PIECE_WHITE)) { //If the piece is white (i.e. the piece moves "down" on the board
+                        if (_move.getRowsMoved() == 1 && _move.isMoveUp() && !didJump) { //Ensure that a move is only one row "down"
+                            return new Message("Valid Move", "info");
+                        } else if (_move.getRowsMoved() == 2 && _move.isMoveUp()) { //Check for a Jump, but it still has to be "down"
+                            return validateJump(_move, piece);
+                        } else { //Otherwise return an error message
+                            String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
+                            return new Message(messageText, "error");
+                        }
                     }
-                } else if (piece.getColor().equals(Piece.PIECE_WHITE)) { //If the piece is white (i.e. the piece moves "down" on the board
-                    if (_move.getRowsMoved() == 1 && _move.isMoveUp() && !didJump) { //Ensure that a move is only one row "down"
+                } else if(piece.getType().equals("KING")) { //If the piece is a King Piece, it has special move logic
+                    if(_move.getRowsMoved() == 1 && !didJump) { //A king piece can move 1 row in any direction
                         return new Message("Valid Move", "info");
-                    } else if(_move.getRowsMoved() == 2 && _move.isMoveUp()) { //Check for a Jump, but it still has to be "down"
+                    } else if(_move.getRowsMoved() == 2) { //A king piece can jump 2 rows in any direction, return jump validation
                         return validateJump(_move, piece);
                     } else { //Otherwise return an error message
                         String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
@@ -220,123 +237,94 @@ public class Board implements Iterable<Row>{
         return rows.get(_coord.getRow()).getSpaces().get(_coord.getCell());
     }
 
-    /**
-     * A method to check if Player 1 (Red pieces) has any available jumps
-     * @return A boolean that is true if they have a jump they can take
-     */
-    public boolean checkForAvailableRedJumps() {
-        //Loop through each Row & Space, getting the Piece from each space if it exists
+
+    public boolean checkForAvailableJumps(String pieceColor) {
+        String jumpedColor = pieceColor.equals(Piece.PIECE_RED) ? "WHITE" : "RED";
+
         for(Row row: rows) {
-            for(Space space : row) {
+            for (Space space : row) {
                 Piece piece = space.getPiece();
 
-                //If the piece in a space isn't null & is a red piece, we check it's jumps
-                if(piece != null && piece.getColor().equals(Piece.PIECE_RED)) {
-                    if (row.getIndex() > 1) { //If the piece isn't in the last 2 rows (i.e. it wouldn't have enough space to jump)
-                        if (space.getCellIdx() <= 1) { //If it's in the two left-most columns, it can only jump right, so we only check that direction
-                            //Get the piece being jumped & landing space
-                            Space squareToJump = getSpaceByCoordinate(new Coordinate(row.getIndex() - 1, space.getCellIdx() + 1));
-                            Space landingSquare = getSpaceByCoordinate(new Coordinate(row.getIndex() - 2, space.getCellIdx() + 2));
+                if(piece != null && piece.getType().equals("SINGLE")) {
+                    if (piece.getColor().equals(pieceColor) && piece.getColor().equals(Piece.PIECE_RED)) {
+                        boolean jumpLeftExists = checkJumpInOneDirection(row, space, -1, -1, Piece.PIECE_WHITE);
+                        boolean jumpRightExists = checkJumpInOneDirection(row, space, -1, 1, Piece.PIECE_WHITE);
 
-                            Piece jumpedPiece = squareToJump.getPiece();
-                            Piece landingSquarePiece = landingSquare.getPiece();
+                        if (jumpLeftExists || jumpRightExists)
+                            return true;
+                    } else if (piece.getColor().equals(pieceColor) && piece.getColor().equals(Piece.PIECE_WHITE)) {
+                        boolean jumpLeftExists = checkJumpInOneDirection(row, space, 1, -1, Piece.PIECE_RED);
+                        boolean jumpRightExists = checkJumpInOneDirection(row, space, 1, 1, Piece.PIECE_RED);
 
-                            //If it jumps over an opposing piece and onto an empty square, return true
-                            if (jumpedPiece != null && jumpedPiece.getColor().equals("WHITE") && landingSquarePiece == null) {
-                                return true;
-                            }
-                        } else if (space.getCellIdx() >= 6) { //If it's in the rightmost columns, it can only jump left, so we only check that direction
-                            Space squareToJump = getSpaceByCoordinate(new Coordinate(row.getIndex() - 1, space.getCellIdx() - 1));
-                            Space landingSquare = getSpaceByCoordinate(new Coordinate(row.getIndex() - 2, space.getCellIdx() - 2));
+                        if (jumpLeftExists || jumpRightExists)
+                            return true;
+                    }
+                } else if(piece != null && piece.getType().equals("KING")) {
+                    if(piece.getColor().equals(pieceColor)) {
+                        boolean jumpExistsUpLeft = checkJumpInOneDirection(row, space, -1, -1, jumpedColor);
+                        boolean jumpExistsUpRight = checkJumpInOneDirection(row, space, -1, 1, jumpedColor);
+                        boolean jumpExistsDownLeft = checkJumpInOneDirection(row, space, 1, -1, jumpedColor);
+                        boolean jumpExistsDownRight = checkJumpInOneDirection(row, space, 1, 1, jumpedColor);
 
-                            Piece jumpedPiece = squareToJump.getPiece();
-                            Piece landingSquarePiece = landingSquare.getPiece();
-
-                            if (jumpedPiece != null && jumpedPiece.getColor().equals(Piece.PIECE_WHITE) && landingSquarePiece == null) {
-                                return true;
-                            }
-                        } else { //Otherwise it can jump left OR right, so we check both directions
-                            Space squareToJumpLeft = getSpaceByCoordinate(new Coordinate(row.getIndex() - 1, space.getCellIdx() - 1));
-                            Space landingSquareLeft = getSpaceByCoordinate(new Coordinate(row.getIndex() - 2, space.getCellIdx() - 2));
-                            Piece jumpedPieceLeft = squareToJumpLeft.getPiece();
-                            Piece landingSquarePieceLeft = landingSquareLeft.getPiece();
-
-                            Space squareToJumpRight = getSpaceByCoordinate(new Coordinate(row.getIndex() - 1, space.getCellIdx() + 1));
-                            Space landingSquareRight = getSpaceByCoordinate(new Coordinate(row.getIndex() - 2, space.getCellIdx() + 2));
-                            Piece jumpedPieceRight = squareToJumpRight.getPiece();
-                            Piece landingSquarePieceRight = landingSquareRight.getPiece();
-
-                            //If either of the possible jumps can be taken, then return true
-                            if (jumpedPieceLeft != null && jumpedPieceLeft.getColor().equals(Piece.PIECE_WHITE) && landingSquarePieceLeft == null) {
-                                return true;
-                            } else if (jumpedPieceRight != null && jumpedPieceRight.getColor().equals(Piece.PIECE_WHITE) && landingSquarePieceRight == null) {
-                                return true;
-                            }
-                        }
+                        if (jumpExistsUpLeft || jumpExistsUpRight || jumpExistsDownLeft || jumpExistsDownRight)
+                            return true;
                     }
                 }
             }
         }
-        //If no possible jumps exist, return false
+
         return false;
     }
 
-    /**
-     * A method to check if Player 2 (White pieces) has any available jumps
-     * @return A boolean that is true if they have a jump they can take
-     */
-    public boolean checkForAvailableWhiteJumps() {
-        //Loop through each Row & Space, getting the Piece from each space if it exists
-        for(Row row: rows) {
+    public boolean arePiecesLeft(String pieceColor) {
+        for(Row row : rows) {
             for(Space space : row) {
                 Piece piece = space.getPiece();
 
-                //If the piece in a space isn't null & is a white piece, we check it's jumps
-                if(piece != null && piece.getColor().equals(Piece.PIECE_WHITE)) {
-                    if (row.getIndex() < 6) { //If the piece is in the last two rows (i.e. It wouldn't have enough space to jump)
-                        if (space.getCellIdx() <= 1) { //If it's the 2 leftmost columns, it can only jump right, so only check that direction
-                            Space squareToJump = getSpaceByCoordinate(new Coordinate(row.getIndex() + 1, space.getCellIdx() + 1));
-                            Space landingSquare = getSpaceByCoordinate(new Coordinate(row.getIndex() + 2, space.getCellIdx() + 2));
-
-                            Piece jumpedPiece = squareToJump.getPiece();
-                            Piece landingSquarePiece = landingSquare.getPiece();
-
-                            if (jumpedPiece != null && jumpedPiece.getColor().equals(Piece.PIECE_RED) && landingSquarePiece == null) {
-                                return true;
-                            }
-                        } else if (space.getCellIdx() >= 6) { //If it's the 2 rightmost columns, it can only jump left, so only check that direction
-                            Space squareToJump = getSpaceByCoordinate(new Coordinate(row.getIndex() + 1, space.getCellIdx() - 1));
-                            Space landingSquare = getSpaceByCoordinate(new Coordinate(row.getIndex() + 2, space.getCellIdx() - 2));
-
-                            Piece jumpedPiece = squareToJump.getPiece();
-                            Piece landingSquarePiece = landingSquare.getPiece();
-
-                            if (jumpedPiece != null && jumpedPiece.getColor().equals(Piece.PIECE_RED) && landingSquarePiece == null) {
-                                return true;
-                            }
-                        } else { //Otherwise it can jump both directions so we have to check each way
-                            Space squareToJumpLeft = getSpaceByCoordinate(new Coordinate(row.getIndex() + 1, space.getCellIdx() + 1));
-                            Space landingSquareLeft = getSpaceByCoordinate(new Coordinate(row.getIndex() + 2, space.getCellIdx() + 2));
-                            Piece jumpedPieceLeft = squareToJumpLeft.getPiece();
-                            Piece landingSquarePieceLeft = landingSquareLeft.getPiece();
-
-                            Space squareToJumpRight = getSpaceByCoordinate(new Coordinate(row.getIndex() + 1, space.getCellIdx() - 1));
-                            Space landingSquareRight = getSpaceByCoordinate(new Coordinate(row.getIndex() + 2, space.getCellIdx() - 2));
-                            Piece jumpedPieceRight = squareToJumpRight.getPiece();
-                            Piece landingSquarePieceRight = landingSquareRight.getPiece();
-
-                            if (jumpedPieceLeft != null && jumpedPieceLeft.getColor().equals(Piece.PIECE_RED) && landingSquarePieceLeft == null) {
-                                return true;
-                            } else if (jumpedPieceRight != null && jumpedPieceRight.getColor().equals(Piece.PIECE_RED) && landingSquarePieceRight == null) {
-                                return true;
-                            }
-                        }
-                    }
-                }
+                if(piece != null && piece.getColor().equals(pieceColor))
+                    return true;
             }
         }
 
         return false;
+    }
+
+    private boolean checkJumpInOneDirection(Row row, Space space, int rowDirection, int cellDirection, String jumpedPieceColor) {
+        try {
+            Space squareToJump = getSpaceByCoordinate(new Coordinate(row.getIndex() + rowDirection, space.getCellIdx() + cellDirection));
+            Space landingSquare = getSpaceByCoordinate(new Coordinate(row.getIndex() + (rowDirection * 2), space.getCellIdx() + (cellDirection * 2)));
+
+            Piece jumpedPiece = squareToJump.getPiece();
+            Piece landingSquarePiece = landingSquare.getPiece();
+
+            if (jumpedPiece != null && jumpedPiece.getColor().equals(jumpedPieceColor) && landingSquarePiece == null) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch(Exception e) {
+            return false;
+        }
+    }
+
+    private boolean checkMoveInOneDirection(Row row, Space space, int rowDirection, int cellDirection) {
+        try {
+            Space landingSquare = getSpaceByCoordinate(new Coordinate(row.getIndex() + rowDirection, space.getCellIdx() + cellDirection));
+
+            return landingSquare.getPiece() == null;
+        } catch(Exception e) {
+            return false;
+        }
+    }
+
+    private boolean reachedLastRow(Coordinate endSpace, Piece piece) {
+        int rowValue = endSpace.getRow();
+
+        if((rowValue == 0 && piece.getColor().equals(Piece.PIECE_RED)) || (rowValue == 7 && piece.getColor().equals(Piece.PIECE_WHITE))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

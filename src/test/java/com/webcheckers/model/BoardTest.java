@@ -209,4 +209,94 @@ public class BoardTest {
         assertEquals(jumpedSpace.getPiece(), null);
         assertFalse(CuT.getDidJump());
     }
+
+    @Test
+    public void testMoveKing() {
+
+        Coordinate c1 = mock(Coordinate.class);
+        Coordinate c2 = mock(Coordinate.class);
+
+        when(c1.getRow()).thenReturn(2);
+        when(c1.getCell()).thenReturn(1);
+        when(c2.getRow()).thenReturn(3);
+        when(c2.getCell()).thenReturn(0);
+
+        CuT.setDidMove(false);
+        CuT.getRows().get(c1.getRow()).getSpaces().get(c1.getCell()).getPiece().makeKing();
+
+        Move move = new Move(c1, c2);
+
+        Message message = CuT.validateMove(move);
+        assertEquals("info",message.getType());
+        assertEquals("Valid Move", message.getText());
+    }
+
+    @Test
+    public void testValidJumpKing() {
+
+        Coordinate c1 = mock(Coordinate.class);
+        Coordinate c2 = mock(Coordinate.class);
+
+        when(c1.getRow()).thenReturn(2);
+        when(c1.getCell()).thenReturn(1);
+        when(c2.getRow()).thenReturn(4);
+        when(c2.getCell()).thenReturn(3);
+
+        CuT.setDidMove(false);
+        CuT.getRows().get(c1.getRow()).getSpaces().get(c1.getCell()).getPiece().makeKing();
+
+        // Inserting opponent piece to simulate available jump
+        CuT.getRows().get(3).getSpaces().get(2).setPiece(new Piece("SINGLE", "RED"));
+
+        Move move = new Move(c1, c2);
+
+        Message message = CuT.validateMove(move);
+        assertEquals("info",message.getType());
+        assertEquals("Valid Move", message.getText());
+    }
+
+    @Test
+    public void testInvalidJumpKing() {
+
+        Coordinate c1 = mock(Coordinate.class);
+        Coordinate c2 = mock(Coordinate.class);
+
+        when(c1.getRow()).thenReturn(2);
+        when(c1.getCell()).thenReturn(1);
+        when(c2.getRow()).thenReturn(3);
+        when(c2.getCell()).thenReturn(0);
+
+        CuT.setDidMove(false);
+        CuT.getRows().get(c1.getRow()).getSpaces().get(c1.getCell()).getPiece().makeKing();
+
+        // Inserting opponent piece to simulate available jump
+        CuT.getRows().get(3).getSpaces().get(2).setPiece(new Piece("SINGLE", "RED"));
+
+        Move move = new Move(c1, c2);
+
+        Message message = CuT.validateMove(move);
+        assertEquals("error",message.getType());
+        assertEquals("You have a jump that you must take", message.getText());
+    }
+
+    @Test
+    public void testMoveInvalidKing() {
+        Coordinate c1 = mock(Coordinate.class);
+        Coordinate c2 = mock(Coordinate.class);
+
+        when(c1.getRow()).thenReturn(2);
+        when(c1.getCell()).thenReturn(1);
+        when(c2.getRow()).thenReturn(3);
+        when(c2.getCell()).thenReturn(0);
+
+        CuT.setDidMove(false);
+        CuT.setDidJump(true);
+        CuT.getRows().get(c1.getRow()).getSpaces().get(c1.getCell()).getPiece().makeKing();
+
+        Move move = new Move(c1, c2);
+
+        Message message = CuT.validateMove(move);
+        assertEquals("error",message.getType());
+        assertEquals("You cannot make a regular move after jumping!", message.getText());
+    }
 }
