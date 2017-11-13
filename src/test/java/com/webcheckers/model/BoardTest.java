@@ -42,6 +42,8 @@ public class BoardTest {
 
     @Test
     public void testSetDidResign() throws Exception{
+        Board test = new Board();
+        boolean _didResign = false;
 
     }
 
