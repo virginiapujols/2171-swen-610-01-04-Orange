@@ -40,8 +40,19 @@
                          <p>No other users are currently available for a game</p>
                     </#if>
                 </#if>
-            </div>
 
+                <p>Online Scores</p>
+            <#if scores??>
+                <ul>
+                    <#list scores as item>
+                        <li>${item}</li>
+                    </#list>
+                </ul>
+            <#else>
+                <p>There is no score available yet.</p>
+            </#if>
+
+            </div>
 
         </div>
     </body>

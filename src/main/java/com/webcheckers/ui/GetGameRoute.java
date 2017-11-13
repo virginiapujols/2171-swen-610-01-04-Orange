@@ -5,6 +5,7 @@ import java.util.*;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Player;
 import com.webcheckers.model.Row;
 import spark.*;
 
@@ -60,10 +61,15 @@ public class GetGameRoute implements TemplateViewRoute {
                 //If game result is 0, player 1 is the winner, otherwise (gameResult == 1) player 2 is the winner
                 String winningUsername = gameResult == 0 ? game.getPlayer1().getUsername() : game.getPlayer2().getUsername();
 
+                Player player;
                 if(currentUsername.equals(winningUsername)) {
                     response.redirect("/gameOver/won");
+                    player = gameResult == 0 ? game.getPlayer1() : game.getPlayer2();
+                    player.updateGamesWon();
                 } else {
                     response.redirect("/gameOver/lost");
+                    player = gameResult == 1 ? game.getPlayer1() : game.getPlayer2();
+                    player.updateGamesLost();
                 }
 
                 halt();

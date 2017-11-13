@@ -21,13 +21,10 @@ public class GameCenter {
     // Public methods
     //
 
-    /**
-     * Returns a keyset of the players playlist (this is a unique list of Usernames registered with the application)
-     * @return players.keySet() Every username that has been registered with the application
-     */
-    /*public Set<String> getUsernames() {
-        return players.keySet();
-    }*/
+
+    public Map<String, Player> getPlayers() {
+        return players;
+    }
 
     /**
      * Method to add a Player to the application and set the "player" value for that user's session
@@ -113,6 +110,15 @@ public class GameCenter {
         for(String username : players.keySet()) { //Loop through each username registered with the application
             if(!isInGame(username)) //If they aren't in a game, add to the list to be returned
                 available.add(username);
+        }
+
+        return available;
+    }
+
+    public List<String> getPlayerScores() {
+        List<String> available = new ArrayList<>();
+        for(Player player : players.values()) { //Loop through each username registered with the application
+            available.add(player.getUsername() + " W: " + player.getGamesWon() +  " - L: " + player.getGamesLost() + " ");
         }
 
         return available;
