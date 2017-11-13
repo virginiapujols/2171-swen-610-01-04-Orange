@@ -116,6 +116,10 @@ public class GameCenter {
         return available;
     }
 
+    /**
+     * A method to return a list of Players with their scores
+     * @return available A list strings showing player names with their record
+     */
     public List<String> getPlayerScores() {
         List<String> available = new ArrayList<>();
         for(Player player : players.values()) { //Loop through each username registered with the application

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-    <meta http-equiv="refresh" content="10">
+    <meta http-equiv="refresh" content="4">
     <title>${title} | Web Checkers</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
@@ -65,7 +65,7 @@
 
                 <div id="leaderboard">
                     <div class="subheading">
-                        <p class="listHeader">Online Leaderboard</p>
+                        <p class="listHeader">Player Records</p>
                         <hr />
                     </div>
                     <#if scores??>
