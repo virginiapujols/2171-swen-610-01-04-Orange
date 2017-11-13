@@ -122,3 +122,30 @@ div.info {
     padding: 4px;
     font-size: 13px;
 }
+
+#greetingsMessage {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.subheading {
+    display: inline-block;
+}
+
+.displayList {
+    margin-left: 25px;
+    margin-top: 0px;
+}
+
+#usernameList {
+    margin-bottom: 40px;
+}
+
+.listHeader {
+    margin-bottom: 0px;
+}
+
+hr {
+    color: #CAECFF;
+    background-color: #CAECFF;
+}

@@ -16,6 +16,7 @@ public class GameCenter {
     // Attributes
     private Map<String, Player> players = new HashMap<>(); //<username, Player>: All players in the application
     private List<Game> games = new ArrayList<>(); //All games in the application
+    private List<String> spectators = new ArrayList<>();
 
     //
     // Public methods
@@ -105,13 +106,13 @@ public class GameCenter {
     }
 
     /**
-     * A method to return a List of all Players who are not currently in a game
-     * @return available A List<String> of all players currently not in games
+     * A method to return a List of all Players who are not currently in a game or spectating
+     * @return available A List<String> of all players currently not in games or spectating
      */
     public List<String> getAvailablePlayers() {
         List<String> available = new ArrayList<>();
         for(String username : players.keySet()) { //Loop through each username registered with the application
-            if(!isInGame(username)) //If they aren't in a game, add to the list to be returned
+            if(!isInGame(username) && !isSpectating(username)) //If they aren't in a game or spectating, add to the list to be returned
                 available.add(username);
         }
 
@@ -124,5 +125,44 @@ public class GameCenter {
      */
     public void removePlayer(String _username) {
         players.remove(_username);
+    }
+
+    /**
+     * A method to return a printed list of games ("Player1 vs. Player2") to allow for spectating
+     * @return A List of strings showing what games are being played
+     */
+    public List<String> printAvailableGames() {
+        List<String> available = new ArrayList<>();
+
+        for(Game game : games) {
+            available.add(game.getPlayer1().getUsername() + " vs. " + game.getPlayer2().getUsername());
+        }
+
+        return available;
+    }
+
+    /**
+     * Function to mark a user as spectating a game
+     * @param _username The username of the Player spectating a game
+     */
+    public void markAsSpectating(String _username) {
+        spectators.add(_username);
+    }
+
+    /**
+     * Function to mark a user as no longer spectating
+     * @param _username The username of the player who is no longer spectating
+     */
+    public void endSpectating(String _username) {
+        spectators.remove(_username);
+    }
+
+    /**
+     * Function to signal whether or not a user is spectating a game
+     * @param _username The username of the Player we're checking to see if they're spectating
+     * @return Boolean indicating whether or not they're spectating
+     */
+    public boolean isSpectating(String _username) {
+        return spectators.contains(_username);
     }
 }

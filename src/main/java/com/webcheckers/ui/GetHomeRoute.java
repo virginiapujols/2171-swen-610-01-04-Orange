@@ -44,15 +44,23 @@ public class GetHomeRoute implements TemplateViewRoute {
   @Override
   public ModelAndView handle(Request request, Response response) {
     Map<String, Object> vm = new HashMap<>();
+    String username = request.session().attribute("username");
     vm.put("title", "Welcome!");
 
-    if(gameCenter.isInGame(request.session().attribute("username"))) {
+    //State check to mark a user as not spectating a game if they access the home page (for any reason)
+    if(gameCenter.isSpectating(username)) {
+        gameCenter.endSpectating(username);
+    }
+
+    //Redirect user's in a game to their game
+    if(gameCenter.isInGame(username)) {
         response.redirect("/game");
         halt();
         return null;
     }
 
     vm.put("usernames", gameCenter.getAvailablePlayers());
+    vm.put("games", gameCenter.printAvailableGames());
 
     if(request.session().attribute("username") != null) {
         vm.put("username", request.session().attribute("username"));

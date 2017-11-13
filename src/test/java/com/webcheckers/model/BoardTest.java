@@ -145,6 +145,7 @@ public class BoardTest {
 
         when(startPos.getRow()).thenReturn(2);
         when(startPos.getCell()).thenReturn(3);
+        
         when(endPos.getRow()).thenReturn(4);
         when(endPos.getCell()).thenReturn(1);
 
@@ -301,7 +302,8 @@ public class BoardTest {
         assertEquals("You cannot make a regular move after jumping!", message.getText());
     }
     
-    @Test
+
+  @Test
     public void testArePiecesLeft() throws Exception {
         Piece piece = new Piece("king","WHITE");
         String _pieceColor = "WHITE";

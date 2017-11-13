@@ -63,7 +63,7 @@ public class PostLoginRouteTest {
         assertEquals(USER_EXIST_MESSAGE, testVm.get(MESSAGE_ATTR));
     }
 
-    @Test
+    @Test (expected = spark.HaltException.class)
     public void testHandle(){
         // Testing for error
         GameCenter gameCenter = mock(GameCenter.class);

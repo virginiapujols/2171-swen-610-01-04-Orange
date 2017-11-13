@@ -139,4 +139,28 @@ public class GameCenterTest {
         assertTrue(CuT.isInGame(P2_USERNAME));
         assertFalse(CuT.isInGame(P3_USERNAME));
     }
+
+    @Test
+    public void testSpectateGame() {
+        //Create GameCenter, Add Players, & Create Game
+        CuT = new GameCenter();
+        CuT.addPlayer(p1Session, P1_USERNAME);
+        CuT.addPlayer(p2Session, P2_USERNAME);
+        CuT.addPlayer(p2Session, P3_USERNAME);
+
+        // Test adding/removing games and spectating them
+        assertEquals(0, CuT.printAvailableGames().size());
+        Game game = CuT.startGame(P1_USERNAME, P2_USERNAME);
+        assertEquals(1, CuT.printAvailableGames().size());
+        assertEquals(game, CuT.getGame(P1_USERNAME));
+
+        // Test spectating
+        CuT.markAsSpectating(P3_USERNAME);
+        assertTrue(CuT.isSpectating(P3_USERNAME));
+        CuT.endSpectating(P3_USERNAME);
+        assertFalse(CuT.isSpectating(P3_USERNAME));
+
+        CuT.removeGame(game);
+        assertEquals(0, CuT.printAvailableGames().size());
+    }
 }

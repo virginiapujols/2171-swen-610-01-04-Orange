@@ -14,11 +14,11 @@ import spark.TemplateViewRoute;
 import static spark.Spark.halt;
 
 /**
- * The Web Controller for Ending the Game and returning to the home page.
+ * The Web Controller for returning from the Spectating Page to the Home Page.
  *
  * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
  */
-public class GetEndGameRoute implements TemplateViewRoute {
+public class GetEndSpectatingRoute implements TemplateViewRoute {
     // Attributes
     private final GameCenter gameCenter;
     private Game game;
@@ -28,12 +28,12 @@ public class GetEndGameRoute implements TemplateViewRoute {
     //
 
     /**
-     * The constructor for the {@code GET /endGame} route handler.
+     * The constructor for the {@code GET /endSpectating} route handler.
      *
      * @param gameCenter
      *    The {@link GameCenter} for the application.
      */
-    GetEndGameRoute(final GameCenter gameCenter) {
+    GetEndSpectatingRoute(final GameCenter gameCenter) {
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
 
         this.gameCenter = gameCenter;
@@ -42,11 +42,9 @@ public class GetEndGameRoute implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request request, Response response) {
         final String currentUsername = request.session().attribute(PostLoginRoute.USERNAME_PARAM);
-        game = gameCenter.getGame(currentUsername);
 
-        if(game != null && game.getIsOver()) { //If the game exists and is over, remove the game from the list of games
-            gameCenter.removeGame(game);
-        }
+        //Remove the user from spectating & return to the home page
+        gameCenter.endSpectating(currentUsername);
 
         response.redirect("/");
         halt();
