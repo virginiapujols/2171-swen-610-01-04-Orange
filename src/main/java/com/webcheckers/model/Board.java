@@ -28,15 +28,6 @@ public class Board implements Iterable<Row>{
     }
 
     /**
-     * This function updates the board after moves
-     * @return the updated board
-     */
-    public Board updateBoard() {
-        Board board = new Board();
-        return board;
-    }
-
-    /**
      * Accessor for rows attribute
      * @return rows The Rows on the board
      */

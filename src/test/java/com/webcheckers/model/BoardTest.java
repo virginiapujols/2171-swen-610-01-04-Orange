@@ -202,11 +202,6 @@ public class BoardTest {
     }
 
     @Test
-    public void testUpdateBoard() {
-        assertNotNull(CuT.updateBoard());
-    }
-
-    @Test
     public void testUndoMove() {
         Coordinate startPos = mock(Coordinate.class);
         Coordinate endPos = mock(Coordinate.class);

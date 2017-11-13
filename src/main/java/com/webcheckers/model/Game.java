@@ -193,7 +193,7 @@ public class Game{
                 board.undoCapture(jumpedSpace, pieceToRestore, capturedPieces.size());
             }
 
-            //If teh undone move kinged a piece, we need to undo that and make the piece a SINGLE piece again
+            //If the undone move kinged a piece, we need to undo that and make the piece a SINGLE piece again
             if(movedPiece.getJustKinged()) {
                 movedPiece.makeSingle();
                 movedPiece.setJustKinged(false);

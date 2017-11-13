@@ -6,15 +6,6 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
     @Test
-    public void testLogin() throws Exception {
-        String _username = "Messi";
-        Player test = new Player(_username);
-        test.login(_username);
-        assertEquals("Messi",test.getUsername());
-
-    }
-
-    @Test
     public void testGetUsername() throws Exception {
 
         String _username = "Messi";

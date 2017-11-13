@@ -18,16 +18,6 @@ public class Player {
         this.username = _username;
     }
     
-    /**
-     * This function denotes a player logging in
-     * @param _username this is the username of the player
-     * @return a Boolean "true" or "false"
-     */
-    public boolean login(String _username) {
-        return true;
-    }
-
-
     //Accessors & Mutators
 
     /**
