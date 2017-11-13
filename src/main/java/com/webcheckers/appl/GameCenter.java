@@ -97,6 +97,14 @@ public class GameCenter {
     }
 
     /**
+     * A method to remove a game from the list of games when it is completed
+     * @param _game The game to be removed
+     */
+    public void removeGame(Game _game) {
+        games.remove(_game);
+    }
+
+    /**
      * A method to return a List of all Players who are not currently in a game
      * @return available A List<String> of all players currently not in games
      */

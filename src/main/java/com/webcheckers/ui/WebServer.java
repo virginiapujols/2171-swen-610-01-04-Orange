@@ -58,7 +58,8 @@ public class WebServer {
   public static final String SUBMIT_URL = "/submitTurn";
   public static final String BACKUP_URL = "/backupMove";
   public static final String CHECKTURN_URL = "/checkTurn";
-
+  public static final String GAMEOVER_URL = "/gameOver/*";
+  public static final String ENDGAME_URL = "/endGame";
   //
   // Attributes
   //
@@ -165,6 +166,11 @@ public class WebServer {
 
     //Post to check if it's the User's Turn
     post(CHECKTURN_URL, new PostCheckTurnRoute(gameCenter), JsonUtils.json());
-  }
 
+    //Get to return Game Over Page
+    get(GAMEOVER_URL, new GetGameOverRoute(gameCenter), templateEngine);
+
+    //Get to End the Game and redirect to the Home page
+    get(ENDGAME_URL, new GetEndGameRoute(gameCenter), templateEngine);
+  }
 }

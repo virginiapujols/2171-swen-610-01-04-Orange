@@ -134,3 +134,19 @@ table#game-board td.valid {
 .Space.hover {
   background-color: rgba(255, 192, 203, 0.4);
 }
+
+#gameOver_board {
+  opacity: 0.5;
+}
+
+#gameOver_message {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 0px;
+}
+
+#endGame_Link {
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 25px;
+}
