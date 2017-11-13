@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -31,11 +32,17 @@ public class GetLogoutRoute implements TemplateViewRoute{
     public ModelAndView handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Login!");
-
-        // start building the View-Model, retrieve the requested username, and attempt to create the Player object
-        // Removing a player from the player list.
         final Session session = request.session();
         final String currentPlayer = session.attribute("username");
+
+        // Removing a player from the player list.
+        if(gameCenter.isInGame(currentPlayer)) {
+            Game game = gameCenter.getGame(currentPlayer);
+            game.resign();
+            //response.redirect("/game");
+        }
+
+        session.removeAttribute("username");
         gameCenter.removePlayer(currentPlayer);
 
         vm.put("username", null);

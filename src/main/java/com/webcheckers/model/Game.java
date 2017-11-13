@@ -138,6 +138,17 @@ public class Game{
     }
 
     /**
+     * A method to resign current
+     */
+    public void resign() {
+        this.setIsOver(true);
+        this.getBoard().setDidResign(true);
+
+        // Change turn to refresh opponent's board and indicate he/she wins.
+        this.changeTurn();
+    }
+
+    /**
      * Method to check if it is a given user's turn
      * @param _username The username of the user we are checking for
      * @return A boolean: true if it's that user's turn, false if it isn't

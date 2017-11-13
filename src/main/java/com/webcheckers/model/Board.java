@@ -14,6 +14,7 @@ public class Board implements Iterable<Row>{
     private List<Row> rows;
     private boolean didMove = false; //whether or not the user has moved this turn
     private boolean didJump = false; //whether or not the user has jumped this turn
+    private boolean didResign = false; //whether or not the user has jumped this turn
 
 
     /**
@@ -81,6 +82,14 @@ public class Board implements Iterable<Row>{
      */
     public void setDidJump(boolean _didJump) {
         this.didJump = _didJump;
+    }
+
+    public boolean didResign() {
+        return didResign;
+    }
+
+    public void setDidResign(boolean didResign) {
+        this.didResign = didResign;
     }
 
     /**
@@ -352,7 +361,7 @@ public class Board implements Iterable<Row>{
      */
     public boolean isGameOver(String _pieceColor) {
         //If a player/color has no pieces left OR has no moves AND jumps left, the game is over
-        return (!arePiecesLeft(_pieceColor) || (!checkForAvailableMoves(_pieceColor) && !checkForAvailableJumps(_pieceColor)));
+        return (didResign || !arePiecesLeft(_pieceColor) || (!checkForAvailableMoves(_pieceColor) && !checkForAvailableJumps(_pieceColor)));
     }
 
     /**

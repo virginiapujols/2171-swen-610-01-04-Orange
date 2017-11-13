@@ -59,6 +59,7 @@ public class WebServer {
   public static final String BACKUP_URL = "/backupMove";
   public static final String CHECKTURN_URL = "/checkTurn";
   public static final String GAMEOVER_URL = "/gameOver/*";
+  public static final String RESIGN_GAME_URL = "/resignGame";
   public static final String ENDGAME_URL = "/endGame";
   public static final String SPECTATEGAME_URL = "/spectateGame";
   public static final String ENDSPECTATING_URL = "/endSpectating";
@@ -181,5 +182,8 @@ public class WebServer {
 
     //Get to end spectating
     get(ENDSPECTATING_URL, new GetEndSpectatingRoute(gameCenter), templateEngine);
+
+    //POST to resign from during a game
+    post(RESIGN_GAME_URL, new PostResignGameRoute(gameCenter), templateEngine);
   }
 }
