@@ -34,7 +34,7 @@ public class PostResignGameRoute implements TemplateViewRoute {
         game.resign();
         response.redirect("/game");
 
-        halt();
+        //halt();
         return null;
     }
 }
