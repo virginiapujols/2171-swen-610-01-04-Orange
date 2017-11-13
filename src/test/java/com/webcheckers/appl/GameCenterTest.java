@@ -7,7 +7,9 @@ import org.junit.Test;
 import spark.Session;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -162,5 +164,79 @@ public class GameCenterTest {
 
         CuT.removeGame(game);
         assertEquals(0, CuT.printAvailableGames().size());
+    }
+
+    public void testGetGame() {
+        GameCenter test = new GameCenter();
+        String player1 = "p1";
+        String player2 = "p2";
+        Session session = mock(Session.class);
+        test.addPlayer(session, player1);
+        test.addPlayer(session, player2);
+
+        test.startGame(player1, player2);
+        assertEquals(test.getGame(player1), test.getGame(player2));
+        assertNull(test.getGame("dummyName"));
+    }
+
+    @Test
+    public void testRemoveGame(){
+        GameCenter test = new GameCenter();
+        String player1 = "p1";
+        String player2 = "p2";
+        Session session = mock(Session.class);
+        test.addPlayer(session, player1);
+        test.addPlayer(session, player2);
+        test.startGame(player1, player2);
+        assertNotNull(test.getGame(player1));
+        test.removeGame(test.getGame(player1));
+        assertNull(test.getGame(player1));
+    }
+
+    @Test
+    public void testGetAvailablePlayers(){
+        String player1 = "a";
+        String player2 = "b";
+        String player3 = "c";
+
+        Session session = mock(Session.class);
+
+        GameCenter test = new GameCenter();
+
+        test.addPlayer(session, player1);
+        test.addPlayer(session, player2);
+        test.addPlayer(session, player3);
+
+        assertEquals(3, test.getAvailablePlayers().size());
+        test.startGame(player1, player2);
+        assertEquals(1, test.getAvailablePlayers().size());
+    }
+
+    @Test
+    public void testGetPlayerScores(){
+        String player1 = "p1";
+        String player2 = "p2";
+        String[] users = {"p1", "p2"};
+        Session session = mock(Session.class);
+        GameCenter test = new GameCenter();
+
+        test.addPlayer(session, player1);
+        test.addPlayer(session, player2);
+
+        List<String> playerScores = test.getPlayerScores();
+
+        assertEquals(player1 + " W: " + 0 + " - L: " + 0 + " ", playerScores.get(0));
+        assertEquals(player2 + " W: " + 0 + " - L: " + 0 + " ", playerScores.get(1));
+    }
+
+    @Test
+    public void testRemovePlayer(){
+        GameCenter test = new GameCenter();
+        String _username = "Niharika";
+        Session session = mock(Session.class);
+        test.addPlayer(session, _username);
+        assertEquals(1, test.getAvailablePlayers().size());
+        test.removePlayer(_username);
+        assertEquals(0, test.getAvailablePlayers().size());
     }
 }

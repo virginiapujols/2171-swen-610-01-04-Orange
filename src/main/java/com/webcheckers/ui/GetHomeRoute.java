@@ -61,6 +61,7 @@ public class GetHomeRoute implements TemplateViewRoute {
 
     vm.put("usernames", gameCenter.getAvailablePlayers());
     vm.put("games", gameCenter.printAvailableGames());
+    vm.put("scores", gameCenter.getPlayerScores());
 
     if(request.session().attribute("username") != null) {
         vm.put("username", request.session().attribute("username"));
