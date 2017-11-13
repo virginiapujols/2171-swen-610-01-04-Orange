@@ -26,6 +26,22 @@ public class BoardTest {
         Board test = new Board();
         boolean _didMove = false;
         assertEquals(false, _didMove);
+    }
+
+    @Test
+    public void testDidResign() throws Exception{
+        Board test = new Board();
+        boolean _didResign = false;
+        test.setDidResign(_didResign);
+        assertEquals(false, test.didResign());
+
+        _didResign = true;
+        test.setDidResign(_didResign);
+        assertEquals(true, test.didResign());
+    }
+
+    @Test
+    public void testSetDidResign() throws Exception{
 
     }
 
