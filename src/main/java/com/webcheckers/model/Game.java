@@ -12,9 +12,10 @@ public class Game{
     private Player player1;
     private Player player2;
     private boolean isOver;
-    int turn;
+    private int turn;
     private List<Move> moves = new ArrayList<Move>();
     private List<Piece> capturedPieces = new ArrayList<Piece>();
+    private String resigningPlayer;
 
     /**
      * Parameterized constructor for the Game class
@@ -140,9 +141,8 @@ public class Game{
     /**
      * A method to resign current
      */
-    public void resign() {
-        this.setIsOver(true);
-        this.getBoard().setDidResign(true);
+    public void resign(String _resigningPlayer) {
+        resigningPlayer = _resigningPlayer;
 
         // Change turn to refresh opponent's board and indicate he/she wins.
         this.changeTurn();
@@ -234,7 +234,12 @@ public class Game{
             isOver = true;
             return 0;
         } else {
-            return -1;
+            if(resigningPlayer != null) {
+                isOver = true;
+                return player1.getUsername().equals(resigningPlayer) ? 1 : 0;
+            } else {
+                return -1;
+            }
         }
     }
 

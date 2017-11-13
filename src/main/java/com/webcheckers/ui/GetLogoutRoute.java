@@ -38,7 +38,7 @@ public class GetLogoutRoute implements TemplateViewRoute{
         // Removing a player from the player list.
         if(gameCenter.isInGame(currentPlayer)) {
             Game game = gameCenter.getGame(currentPlayer);
-            game.resign();
+            game.resign(currentPlayer);
             //response.redirect("/game");
         }
 

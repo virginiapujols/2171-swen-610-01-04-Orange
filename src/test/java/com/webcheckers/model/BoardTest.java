@@ -29,25 +29,6 @@ public class BoardTest {
     }
 
     @Test
-    public void testDidResign() throws Exception{
-        Board test = new Board();
-        boolean _didResign = false;
-        test.setDidResign(_didResign);
-        assertEquals(false, test.didResign());
-
-        _didResign = true;
-        test.setDidResign(_didResign);
-        assertEquals(true, test.didResign());
-    }
-
-    @Test
-    public void testSetDidResign() throws Exception{
-        Board test = new Board();
-        boolean _didResign = false;
-
-    }
-
-    @Test
     public void movePiece() throws Exception {
         Move move = mock(Move.class);
         Coordinate c1 = mock(Coordinate.class);

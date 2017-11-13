@@ -42,7 +42,7 @@ public class GetStartGameRoute implements TemplateViewRoute {
         String player1 =  session.attribute(PostLoginRoute.USERNAME_PARAM);
         String player2 = request.queryParams(CHALLENGED);
 
-        if(gameCenter.isInGame(player2) || player2 == null) { //If the challenged player is in a game, redirect the challenger to the home page
+        if(gameCenter.isInGame(player2) || player1 == null || !gameCenter.getPlayers().containsKey(player2)) { //If the challenged player is in a game or doesn't exist, redirect the challenger to the home page
             response.redirect(WebServer.HOME_URL);
             halt();
             return null;

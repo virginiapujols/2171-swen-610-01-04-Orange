@@ -79,23 +79,6 @@ public class GameTest {
     }
 
     @Test
-    public void testResign(){
-        Player _player1 = mock(Player.class);
-        Player _player2 = mock(Player.class);
-        Game test = new Game(_player1, _player2);
-        Boolean _isOver = true;
-
-        test.changeTurn();
-        assertFalse(test.getIsOver());
-        assertFalse(test.getBoard().didResign());
-
-        test.resign();
-
-        assertTrue(test.getIsOver());
-        assertTrue(test.getBoard().didResign());
-    }
-
-    @Test
     public void testIsMyTurn(){
         String _username = "niharika";
         when(_player1.getUsername()).thenReturn(_username);

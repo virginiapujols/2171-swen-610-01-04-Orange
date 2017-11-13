@@ -31,7 +31,7 @@ public class PostResignGameRoute implements TemplateViewRoute {
 
         final String currentUsername = request.session().attribute(PostLoginRoute.USERNAME_PARAM);
         Game game = gameCenter.getGame(currentUsername);
-        game.resign();
+        game.resign(currentUsername);
         response.redirect("/game");
 
         //halt();
