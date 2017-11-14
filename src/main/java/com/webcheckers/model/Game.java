@@ -199,9 +199,9 @@ public class Game{
                 movedPiece.setJustKinged(false);
             }
 
-            return new Message("Move has been undone!", "info");
+            return new Message("Move has been undone!", MessageStatus.info);
         } else {
-            return new Message("No moves have been made!", "error");
+            return new Message("No moves have been made!", MessageStatus.error);
         }
     }
 

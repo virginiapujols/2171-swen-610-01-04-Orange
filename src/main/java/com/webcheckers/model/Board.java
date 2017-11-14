@@ -116,9 +116,9 @@ public class Board implements Iterable<Row>{
 
         //Check if the user has a jump available, requiring them to take it if one exists
         if(_move.getRowsMoved() == 1 && piece.getColor().equals("RED") && checkForAvailableJumps("RED")) {
-            return new Message("You have a jump that you must take", "error");
+            return new Message("You have a jump that you must take", MessageStatus.error);
         } else if(_move.getRowsMoved() == 1 && piece.getColor().equals("WHITE") && checkForAvailableJumps("WHITE")) {
-            return new Message("You have a jump that you must take", "error");
+            return new Message("You have a jump that you must take", MessageStatus.error);
         }
 
         //If they don't have any available jumps, allow them to make a move and evalute it's validity
@@ -127,42 +127,42 @@ public class Board implements Iterable<Row>{
                 if(piece.getType().equals("SINGLE")) { //If the piece is a single piece
                     if (piece.getColor().equals(Piece.PIECE_RED)) { //If the piece is red (i.e. if the piece moves "up" on the board)
                         if (_move.getRowsMoved() == 1 && !_move.isMoveUp() && !didJump) { //Ensure that a move is only 1 row "up"
-                            return new Message("Valid Move", "info");
+                            return new Message("Valid Move", MessageStatus.info);
                         } else if (_move.getRowsMoved() == 2 && !_move.isMoveUp()) { //Check for a Jump, but it still has to be "up"
                             return validateJump(_move, piece);
                         } else { //Otherwise return an error message
                             String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
-                            return new Message(messageText, "error");
+                            return new Message(messageText, MessageStatus.error);
                         }
                     } else if (piece.getColor().equals(Piece.PIECE_WHITE)) { //If the piece is white (i.e. the piece moves "down" on the board
                         if (_move.getRowsMoved() == 1 && _move.isMoveUp() && !didJump) { //Ensure that a move is only one row "down"
-                            return new Message("Valid Move", "info");
+                            return new Message("Valid Move", MessageStatus.info);
                         } else if (_move.getRowsMoved() == 2 && _move.isMoveUp()) { //Check for a Jump, but it still has to be "down"
                             return validateJump(_move, piece);
                         } else { //Otherwise return an error message
                             String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
-                            return new Message(messageText, "error");
+                            return new Message(messageText, MessageStatus.error);
                         }
                     }
                 } else if(piece.getType().equals("KING")) { //If the piece is a King Piece, it has special move logic
                     if(_move.getRowsMoved() == 1 && !didJump) { //A king piece can move 1 row in any direction
-                        return new Message("Valid Move", "info");
+                        return new Message("Valid Move", MessageStatus.info);
                     } else if(_move.getRowsMoved() == 2) { //A king piece can jump 2 rows in any direction, return jump validation
                         return validateJump(_move, piece);
                     } else { //Otherwise return an error message
                         String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
-                        return new Message(messageText, "error");
+                        return new Message(messageText, MessageStatus.error);
                     }
                 }
             } else { //If there's a piece in the ending location, show an error message
-                return new Message("A Piece is already in that Square", "error");
+                return new Message("A Piece is already in that Square", MessageStatus.error);
             }
         } else { //If they have already moved, show an error message
-            return new Message("You have already made a move this turn", "error");
+            return new Message("You have already made a move this turn", MessageStatus.error);
         }
 
         //catch all that returns a generic error message
-        return new Message("Invalid Move", "error");
+        return new Message("Invalid Move", MessageStatus.error);
     }
 
     /**
@@ -180,12 +180,12 @@ public class Board implements Iterable<Row>{
 
         if(jumpedPiece != null) { //If the jumped piece isn't null, check that it's the opposing color and return a corresponding message
             if(!jumpedPiece.getColor().equals(_jumpingPiece.getColor())) {
-                return new Message("Valid Move", "info");
+                return new Message("Valid Move", MessageStatus.info);
             } else {
-                return new Message("You cannot jump your own piece!", "error");
+                return new Message("You cannot jump your own piece!", MessageStatus.error);
             }
         } else {
-            return new Message("You cannot jump an empty square!", "error");
+            return new Message("You cannot jump an empty square!", MessageStatus.error);
         }
     }
 
