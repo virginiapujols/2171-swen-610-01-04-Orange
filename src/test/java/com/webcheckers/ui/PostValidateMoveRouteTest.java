@@ -39,7 +39,7 @@ public class PostValidateMoveRouteTest {
 
         Message message = (Message) CuT.handle(request, response);
 
-        assertEquals("info", message.getType());
+        assertEquals(MessageStatus.info, message.getType());
         assertEquals("Valid Move", message.getText());
     }
 
