@@ -20,6 +20,8 @@ public class Board implements Iterable<Row>{
     private boolean didMove = false; //whether or not the user has moved this turn
     private boolean didJump = false; //whether or not the user has jumped this turn
 
+    //Public Methods
+
 
     /**
      * Constructor for the "Board" class.
@@ -126,7 +128,7 @@ public class Board implements Iterable<Row>{
             return new Message("You have a jump that you must take", MessageStatus.error);
         }
 
-        //If they don't have any available jumps, allow them to make a move and evalute it's validity
+        //If they don't have any available jumps, allow them to make a move and evaluate it's validity
         if(!didMove || (didMove && didJump)) { //If the user hasn't already moved OR has only made jumps
             if(endSpace.getPiece() == null) { //If there's already a piece in the ending space
                 if(piece.getType().equals(PieceType.SINGLE)) { //If the piece is a single piece
