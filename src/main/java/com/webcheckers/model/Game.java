@@ -134,6 +134,14 @@ public class Game{
         this.turn = (this.turn == 0) ? 1 : 0; //If turn = 0 (i.e. Player 1's turn is finished), set it to 1 (player 2's turn), otherwise set it to 0
         this.board.setDidMove(false);
         this.board.setDidJump(false);
+
+        for(Move move : moves) { //Loop to ensure setJustKinged is false for any pieces that were kinged on that turn
+            Piece piece = board.getSpaceByCoordinate(move.getEnd()).getPiece();
+
+            if (piece != null)
+                piece.setJustKinged(false);
+        }
+
         moves.clear();
         return this.turn;
     }

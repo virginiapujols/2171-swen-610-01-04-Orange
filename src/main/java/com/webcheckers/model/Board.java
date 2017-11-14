@@ -10,6 +10,11 @@ import java.util.function.Consumer;
  * A class that represents a game board.  This class enforces move logic and tracks piece locations
  */
 public class Board implements Iterable<Row>{
+    //Constants
+    public static final String JUMP_AFTER_MOVE_ERROR  = "You cannot make a regular move after jumping!";
+    public static final String INVALID_ROW_OR_CELL_ERROR = "You must move diagonally 1 cell forward";
+    public static final String VALID_MOVE = "Valid Move";
+
     //Class Attributes
     private List<Row> rows;
     private boolean didMove = false; //whether or not the user has moved this turn
@@ -126,31 +131,31 @@ public class Board implements Iterable<Row>{
             if(endSpace.getPiece() == null) { //If there's already a piece in the ending space
                 if(piece.getType().equals(PieceType.SINGLE)) { //If the piece is a single piece
                     if (piece.getColor().equals(PieceColor.RED)) { //If the piece is red (i.e. if the piece moves "up" on the board)
-                        if (_move.getRowsMoved() == 1 && !_move.isMoveUp() && !didJump) { //Ensure that a move is only 1 row "up"
-                            return new Message("Valid Move", MessageStatus.info);
+                        if (_move.getRowsMoved() == 1 && _move.getCellsMoved() == 1 && !_move.isMoveUp() && !didJump) { //Ensure that a move is only 1 row "up"
+                            return new Message(VALID_MOVE, MessageStatus.info);
                         } else if (_move.getRowsMoved() == 2 && !_move.isMoveUp()) { //Check for a Jump, but it still has to be "up"
                             return validateJump(_move, piece);
                         } else { //Otherwise return an error message
-                            String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
+                            String messageText = didJump ? JUMP_AFTER_MOVE_ERROR : INVALID_ROW_OR_CELL_ERROR;
                             return new Message(messageText, MessageStatus.error);
                         }
                     } else if (piece.getColor().equals(PieceColor.WHITE)) { //If the piece is white (i.e. the piece moves "down" on the board
-                        if (_move.getRowsMoved() == 1 && _move.isMoveUp() && !didJump) { //Ensure that a move is only one row "down"
-                            return new Message("Valid Move", MessageStatus.info);
+                        if (_move.getRowsMoved() == 1 && _move.getCellsMoved() == 1 && _move.isMoveUp() && !didJump) { //Ensure that a move is only one row "down"
+                            return new Message(VALID_MOVE, MessageStatus.info);
                         } else if (_move.getRowsMoved() == 2 && _move.isMoveUp()) { //Check for a Jump, but it still has to be "down"
                             return validateJump(_move, piece);
                         } else { //Otherwise return an error message
-                            String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
+                            String messageText = didJump ? JUMP_AFTER_MOVE_ERROR : INVALID_ROW_OR_CELL_ERROR;
                             return new Message(messageText, MessageStatus.error);
                         }
                     }
                 } else if(piece.getType().equals(PieceType.KING)) { //If the piece is a King Piece, it has special move logic
-                    if(_move.getRowsMoved() == 1 && !didJump) { //A king piece can move 1 row in any direction
-                        return new Message("Valid Move", MessageStatus.info);
+                    if(_move.getRowsMoved() == 1 && _move.getCellsMoved() == 1 && !didJump) { //A king piece can move 1 row in any direction
+                        return new Message(VALID_MOVE, MessageStatus.info);
                     } else if(_move.getRowsMoved() == 2) { //A king piece can jump 2 rows in any direction, return jump validation
                         return validateJump(_move, piece);
                     } else { //Otherwise return an error message
-                        String messageText = didJump ? "You cannot make a regular move after jumping!" : "You must move 1 row forward";
+                        String messageText = didJump ? JUMP_AFTER_MOVE_ERROR : INVALID_ROW_OR_CELL_ERROR;
                         return new Message(messageText, MessageStatus.error);
                     }
                 }
@@ -319,7 +324,7 @@ public class Board implements Iterable<Row>{
 
     /**
      * A function to check if there are pieces of an inputted color left
-     * @param _pieceColor
+     * @param _pieceColor The color of the pice that was jumped
      * @return Whether or not their are pieces left
      */
     public boolean arePiecesLeft(PieceColor _pieceColor) {

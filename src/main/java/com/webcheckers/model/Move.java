@@ -5,26 +5,50 @@ package com.webcheckers.model;
  * (i.e. the move's direction, the move's magnitude, etc)
  */
 public class Move {
-
     //Attributes
     private Coordinate start;
     private Coordinate end;
 
+    /**
+     * Parameterized Constructor for the Move Class
+     * @param _start The starting coordinate of the Move
+     * @param _end The ending coordinate of the Move
+     */
     public Move(Coordinate _start, Coordinate _end) {
         this.start = _start;
         this.end = _end;
     }
 
+    /**
+     * Accessor for starting position
+     * @return start The Starting Coordinate (row, cell)
+     */
     public Coordinate getStart() {
         return start;
     }
 
+    /**
+     * Accessor for ending position
+     * @return end The Ending Coordinate (row, cell)
+     */
     public Coordinate getEnd() {
         return end;
     }
 
+    /**
+     * A method to calculate the number of rows moved by a piece in a Move
+     * @return The number of rows the ending Coordinate is away from the starting space
+     */
     public int getRowsMoved() {
         return Math.abs(start.getRow() - end.getRow());
+    }
+
+    /**
+     * A method to calculate the number of cells moved by a piece in a Move
+     * @return The number of cells the ending Coordinate is away from the starting space
+     */
+    public int getCellsMoved() {
+        return Math.abs(start.getCell() - end.getCell());
     }
 
     /**
