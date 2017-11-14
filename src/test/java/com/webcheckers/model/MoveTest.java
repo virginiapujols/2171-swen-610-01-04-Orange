@@ -30,5 +30,29 @@ public class MoveTest {
         when(start.getRow()).thenReturn(5);
         assertFalse(test.isMoveUp());
     }
+    
+      @Test                                           
+    public void testGetCellsMoved() throws Exception {  
+        Coordinate _start = mock(Coordinate.class); 
+        Coordinate _end = mock(Coordinate.class);   
+        Move test = new Move(_start, _end);         
+        when(_start.getCell()).thenReturn(2);       
+        when(_end.getCell()).thenReturn(3);         
+        assertEquals(1,test.getCellsMoved());       
+    }                                               
+     @Test                                          
+    public void testGetJumpedCoordinate() throws Exc
+        Coordinate _start = mock(Coordinate.class); 
+        Coordinate _end = mock(Coordinate.class);   
+        Move test = new Move(_start,_end);          
+        when(_start.getRow()).thenReturn(2);        
+        when(_start.getCell()).thenReturn(0);       
+        when(_end.getRow()).thenReturn(4);          
+        when(_end.getCell()).thenReturn(2);         
+                                                    
+        Coordinate c1 = new Coordinate(3,1);        
+        assertEquals(c1,test.getJumpedCoordinate());
+    }                                               
+                                                    
 
 }
