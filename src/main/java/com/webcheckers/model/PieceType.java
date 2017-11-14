@@ -1,6 +1,6 @@
 package com.webcheckers.model;
 
-public enum PieceStatus {
+public enum PieceType {
     SINGLE,
     KING;
 }

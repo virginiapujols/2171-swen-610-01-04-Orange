@@ -24,8 +24,8 @@ public class BoardTest {
     @Test
     public void didMove() throws Exception {
         Board test = new Board();
-        boolean _didMove = false;
-        assertEquals(false, _didMove);
+        test.setDidMove(false);
+        assertEquals(false, test.didMove());
     }
 
     @Test
@@ -158,8 +158,8 @@ public class BoardTest {
     @Test
     public void testJumpInvalid() {
         Piece jumpingPiece = mock(Piece.class);
-        when(jumpingPiece.getColor()).thenReturn("WHITE");
-        when(jumpingPiece.getType()).thenReturn("SINGLE");
+        when(jumpingPiece.getColor()).thenReturn(PieceColor.WHITE);
+        when(jumpingPiece.getType()).thenReturn(PieceType.SINGLE);
 
         Move move = mock(Move.class);
         Coordinate startPos = mock(Coordinate.class);
@@ -242,7 +242,7 @@ public class BoardTest {
         CuT.getRows().get(c1.getRow()).getSpaces().get(c1.getCell()).getPiece().makeKing();
 
         // Inserting opponent piece to simulate available jump
-        CuT.getRows().get(3).getSpaces().get(2).setPiece(new Piece("SINGLE", "RED"));
+        CuT.getRows().get(3).getSpaces().get(2).setPiece(new Piece(PieceType.SINGLE, PieceColor.RED));
 
         Move move = new Move(c1, c2);
 
@@ -266,7 +266,7 @@ public class BoardTest {
         CuT.getRows().get(c1.getRow()).getSpaces().get(c1.getCell()).getPiece().makeKing();
 
         // Inserting opponent piece to simulate available jump
-        CuT.getRows().get(3).getSpaces().get(2).setPiece(new Piece("SINGLE", "RED"));
+        CuT.getRows().get(3).getSpaces().get(2).setPiece(new Piece(PieceType.SINGLE, PieceColor.RED));
 
         Move move = new Move(c1, c2);
 
@@ -299,11 +299,10 @@ public class BoardTest {
 
   @Test
     public void testArePiecesLeft() throws Exception {
-        Piece piece = new Piece("king","WHITE");
-        String _pieceColor = "WHITE";
+        Piece piece = new Piece(PieceType.KING,PieceColor.WHITE);
         Space space = mock(Space.class);
         when(space.getPiece()).thenReturn(piece);
-        CuT.arePiecesLeft(_pieceColor);
-        assertEquals(true,CuT.arePiecesLeft(_pieceColor));
+        CuT.arePiecesLeft(PieceColor.WHITE);
+        assertEquals(true, CuT.arePiecesLeft(PieceColor.WHITE));
     }
 }

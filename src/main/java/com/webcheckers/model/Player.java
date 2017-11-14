@@ -6,7 +6,6 @@ package com.webcheckers.model;
 public class Player {
     //Class Attributes
     private String username;
-    private boolean isPlaying;
     private int gamesLost = 0;
     private int gamesWon = 0;
 

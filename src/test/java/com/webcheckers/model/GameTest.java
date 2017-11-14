@@ -105,7 +105,7 @@ public class GameTest {
         */
 
         // Test jump
-        CuT.getCapturedPieces().add(new Piece("SINGLE", "WHITE"));
+        CuT.getCapturedPieces().add(new Piece(PieceType.SINGLE, PieceColor.WHITE));
         when(startPos.getRow()).thenReturn(4);
         when(startPos.getCell()).thenReturn(3);
         when(endPos.getRow()).thenReturn(2);

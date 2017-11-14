@@ -227,10 +227,10 @@ public class Game{
      * 0 = Red Wins, 1 = White Wins, -1 = Game not Over
      */
     public int isGameOver() {
-        if(board.isGameOver("RED")) {
+        if(board.isGameOver(PieceColor.RED)) {
             isOver = true;
             return 1;
-        } else if(board.isGameOver("WHITE")) {
+        } else if(board.isGameOver(PieceColor.WHITE)) {
             isOver = true;
             return 0;
         } else {

@@ -8,7 +8,7 @@ public class PieceTest {
 
     String _type = "plain";
     String _color = "black";
-    Piece CuT = new Piece(_type, _color);
+    Piece CuT = new Piece(PieceType.SINGLE, PieceColor.WHITE);
 
     @Test
     public void setColor() throws Exception {
