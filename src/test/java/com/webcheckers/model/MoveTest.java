@@ -41,7 +41,7 @@ public class MoveTest {
         assertEquals(1,test.getCellsMoved());       
     }                                               
      @Test                                          
-    public void testGetJumpedCoordinate() throws Exc
+    public void testGetJumpedCoordinate() throws Exception {
         Coordinate _start = mock(Coordinate.class); 
         Coordinate _end = mock(Coordinate.class);   
         Move test = new Move(_start,_end);          
