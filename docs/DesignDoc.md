@@ -77,7 +77,7 @@ Accessing the application brings the user to a home page.  If they are not logge
 
 Once in a game, a user is presented with a game board, an indicator of whose turn it is, and a set of 4 controls: “Backup one move,” “Submit turn,” “Reset turn,” and “Resign from game.”  Users can complete a move by clicking and dragging a piece of their color to a new (valid) square.  If the move is valid, the piece will be displayed in the new square.  If it is invalid, the piece will remain in its original square and an error message will be displayed.  After completing a valid move, the “Controls” links will be enabled.  Selecting the “Backup one move” will undo the most recent move and return the board to its previous state.  Selecting “Reset turn” will undo all moves completed on that turn.  Selecting “Submit turn” will submit that user’s turn, saving it to the game (meaning it can no longer be undone).  After a turn is submitted, the game will automatically update the other player’s board to reflect the new board state.  Clicking “Resign from game” will cause that player to forfeit and end the game, taking both players back to the home page.  When a game is won, either by the current board state or by forfeit, both players will be taken to a screen displaying the final board state and a message indicating if that player won or lost.  Players are able to return to the home screen from this page, at which point their win/loss record will be updating accordingly and they will be added back to the list of players available to be challenged to a game.
 
-![State Diagram](http://andydistasi.com/dev/610Models/610StateDiagram.png)
+![State Diagram](http://andydistasi.com/dev/610Models/610StateDiagram2.png)
 
 ### Application Tier
 The application tier is comprised of the GameCenter class that manages state functionality.  It handles validating usernames, creating and removing user accounts and games, starting games between two players, and getting a list of all available players.
@@ -104,6 +104,15 @@ This section describes the detail design of The Game Model Sub-System.
 A Game Object stores the players playing, the board being played on (and piece position), who's turn it is, the moves made on that turn, and any pieces captured on that turn.  A Game object tracks the state of the game being played and implements functionality to undo moves.  The Board object referenced by the game is where all movement validation takes place (determined by standard American Checkers gameplay rules).  Valid moves cause the board object to be updated and reflected to the Users through Messages returned to them.
 
 ### Static models
-![State Diagram](http://andydistasi.com/dev/610Models/610ClassDiagram.png)
+#### Class Diagram
+![Class Diagram](http://andydistasi.com/dev/610Models/610ClassDiagram2.png)
+
 ### Dynamic models
-![Sequence Diagram](http://andydistasi.com/dev/610Models/610SequenceDiagram.png)
+#### Sequence Diagram - Display Available Players
+![Sequence Diagram](http://andydistasi.com/dev/610Models/610SequenceDiagram2.1.png)
+
+#### Sequence Diagram - Start Game
+![Sequence Diagram](http://andydistasi.com/dev/610Models/610SequenceDiagram2.2.png)
+
+#### Sequence Diagram - Spectate Game
+![Sequence Diagram](http://andydistasi.com/dev/610Models/610SequenceDiagram2.3.png)
