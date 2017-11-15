@@ -41,7 +41,7 @@ public class GameCenterTest {
      * Test for Adding a Player (i.e. on log in)
      */
     @Test
-    public void test_addPlayer() {
+    public void testAddPlayer() {
         //Set Mock Data
         when(p1Session.attribute(PLAYER)).thenReturn(p1);
 
@@ -60,7 +60,7 @@ public class GameCenterTest {
      * Unit Test for removing a Player from the ArrayList of Players
      */
     @Test
-    public void test_removePlayer() {
+    public void testRemovePlayer() {
         //Set Mock Data
         when(p1Session.attribute(PLAYER)).thenReturn(p1);
 
@@ -81,7 +81,7 @@ public class GameCenterTest {
      * Unit Test to check functionality of method to determine if username is taken
      */
     @Test
-    public void test_usernameTaken() {
+    public void testUsernameTaken() {
         //Set Mock Data
         when(p1Session.attribute(PLAYER)).thenReturn(p1);
 
@@ -98,7 +98,7 @@ public class GameCenterTest {
      * Unit Test to check functionality of method to start game
      */
     @Test
-    public void test_startGame() {
+    public void testStartGame() {
         //Set Mock Data
         when(p1Session.attribute(PLAYER)).thenReturn(p1);
         when(p2Session.attribute(PLAYER)).thenReturn(p2);
@@ -123,7 +123,7 @@ public class GameCenterTest {
      * Unit Test to test method telling if user is in game
      */
     @Test
-    public void test_isInGame() {
+    public void testIsInGame() {
         //Set Mock Data
         when(p1Session.attribute(PLAYER)).thenReturn(p1);
         when(p2Session.attribute(PLAYER)).thenReturn(p2);
@@ -142,6 +142,9 @@ public class GameCenterTest {
         assertFalse(CuT.isInGame(P3_USERNAME));
     }
 
+    /**
+     * Unit Test to validate if a player is spectating or playing
+     */
     @Test
     public void testSpectateGame() {
         //Create GameCenter, Add Players, & Create Game
@@ -166,77 +169,76 @@ public class GameCenterTest {
         assertEquals(0, CuT.printAvailableGames().size());
     }
 
+    /**
+     * Unit test to get a Game object based on a player' username
+     */
+    @Test
     public void testGetGame() {
         GameCenter test = new GameCenter();
-        String player1 = "p1";
-        String player2 = "p2";
         Session session = mock(Session.class);
-        test.addPlayer(session, player1);
-        test.addPlayer(session, player2);
+        test.addPlayer(session, P1_USERNAME);
+        test.addPlayer(session, P2_USERNAME);
 
-        test.startGame(player1, player2);
-        assertEquals(test.getGame(player1), test.getGame(player2));
-        assertNull(test.getGame("dummyName"));
+        test.startGame(P1_USERNAME, P2_USERNAME);
+        assertEquals(test.getGame(P1_USERNAME), test.getGame(P2_USERNAME));
+        assertNull(test.getGame(P3_USERNAME));
     }
 
+    /**
+     * Unit test to remove a game from the stack of current games
+     */
     @Test
     public void testRemoveGame(){
-        GameCenter test = new GameCenter();
-        String player1 = "p1";
-        String player2 = "p2";
+        CuT = new GameCenter();
         Session session = mock(Session.class);
-        test.addPlayer(session, player1);
-        test.addPlayer(session, player2);
-        test.startGame(player1, player2);
-        assertNotNull(test.getGame(player1));
-        test.removeGame(test.getGame(player1));
-        assertNull(test.getGame(player1));
+        CuT.addPlayer(session, P1_USERNAME);
+        CuT.addPlayer(session, P2_USERNAME);
+        CuT.startGame(P1_USERNAME, P2_USERNAME);
+        assertNotNull(CuT.getGame(P1_USERNAME));
+        CuT.removeGame(CuT.getGame(P1_USERNAME));
+        assertNull(CuT.getGame(P1_USERNAME));
     }
 
+    /**
+     * Unit test to validate the players availability
+     */
     @Test
     public void testGetAvailablePlayers(){
-        String player1 = "a";
-        String player2 = "b";
-        String player3 = "c";
-
         Session session = mock(Session.class);
+        CuT = new GameCenter();
+        CuT.addPlayer(session, P1_USERNAME);
+        CuT.addPlayer(session, P2_USERNAME);
+        CuT.addPlayer(session, P3_USERNAME);
 
-        GameCenter test = new GameCenter();
-
-        test.addPlayer(session, player1);
-        test.addPlayer(session, player2);
-        test.addPlayer(session, player3);
-
-        assertEquals(3, test.getAvailablePlayers().size());
-        test.startGame(player1, player2);
-        assertEquals(1, test.getAvailablePlayers().size());
+        assertEquals(3, CuT.getAvailablePlayers().size());
+        CuT.startGame(P1_USERNAME, P2_USERNAME);
+        assertEquals(1, CuT.getAvailablePlayers().size());
     }
 
+    /**
+     * Unit Test to validate showing scores correctly
+     */
     @Test
     public void testGetPlayerScores(){
-        String player1 = "p1";
-        String player2 = "p2";
-        String[] users = {"p1", "p2"};
         Session session = mock(Session.class);
-        GameCenter test = new GameCenter();
+        CuT = new GameCenter();
+        CuT.addPlayer(session, P1_USERNAME);
+        CuT.addPlayer(session, P2_USERNAME);
 
-        test.addPlayer(session, player1);
-        test.addPlayer(session, player2);
+        List<String> playerScores = CuT.getPlayerScores();
 
-        List<String> playerScores = test.getPlayerScores();
-
-        assertEquals(player1 + " W: " + 0 + " - L: " + 0 + " ", playerScores.get(0));
-        assertEquals(player2 + " W: " + 0 + " - L: " + 0 + " ", playerScores.get(1));
+        assertEquals(P1_USERNAME + " W: " + 0 + " - L: " + 0 + " ", playerScores.get(0));
+        assertEquals(P2_USERNAME + " W: " + 0 + " - L: " + 0 + " ", playerScores.get(1));
     }
 
-    @Test
-    public void testRemovePlayer(){
-        GameCenter test = new GameCenter();
-        String _username = "Niharika";
-        Session session = mock(Session.class);
-        test.addPlayer(session, _username);
-        assertEquals(1, test.getAvailablePlayers().size());
-        test.removePlayer(_username);
-        assertEquals(0, test.getAvailablePlayers().size());
-    }
+//    @Test
+//    public void testRemovePlayer(){
+//        GameCenter test = new GameCenter();
+//        String _username = "Niharika";
+//        Session session = mock(Session.class);
+//        test.addPlayer(session, _username);
+//        assertEquals(1, test.getAvailablePlayers().size());
+//        test.removePlayer(_username);
+//        assertEquals(0, test.getAvailablePlayers().size());
+//    }
 }

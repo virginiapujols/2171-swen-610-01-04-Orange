@@ -16,7 +16,6 @@ public class BoardTest {
 
     @Test
     public void setRows() throws Exception {
-
         List<Row> rows = CuT.getRows();
         assertEquals(rows, CuT.getRows());
     }
@@ -49,7 +48,6 @@ public class BoardTest {
     public void validateMoveIsValidRED() throws Exception {
         Coordinate c1 = mock(Coordinate.class);
         Coordinate c2 = mock(Coordinate.class);
-        PieceColor test = PieceColor.RED;
 
         when(c1.getRow()).thenReturn(2);
         when(c1.getCell()).thenReturn(1);
@@ -77,8 +75,6 @@ public class BoardTest {
         when(c2.getCell()).thenReturn(0);
 
         Message message = CuT.validateMove(move);
-        // System.out.println(message.getType());
-        // System.out.println(message.getText());
         assertEquals(MessageStatus.error, message.getType());
         assertEquals("You must move diagonally 1 cell forward", message.getText());
     }
@@ -298,9 +294,8 @@ public class BoardTest {
         assertEquals(MessageStatus.error, message.getType());
         assertEquals("You cannot make a regular move after jumping!", message.getText());
     }
-    
 
-  @Test
+    @Test
     public void testArePiecesLeft() throws Exception {
         Piece piece = new Piece(PieceType.KING,PieceColor.WHITE);
         Space space = mock(Space.class);

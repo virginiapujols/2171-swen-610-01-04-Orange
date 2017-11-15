@@ -13,7 +13,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class PostResignGameRouteTest {
-    @Test
+
+    @Test (expected = spark.HaltException.class)
     public void handle() throws Exception {
         GameCenter gameCenter = mock(GameCenter.class);
         Game game = mock(Game.class);

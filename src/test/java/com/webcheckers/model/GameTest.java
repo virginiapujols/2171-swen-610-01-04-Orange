@@ -44,9 +44,8 @@ public class GameTest {
 
     @Test
     public void testSetIsOver() throws Exception {
-        Boolean _isOver = true;
-        CuT.setIsOver(_isOver);
-        assertEquals(_isOver, CuT.getIsOver());
+        CuT.setIsOver(true);
+        assertEquals(true, CuT.getIsOver());
     }
 
     @Test
