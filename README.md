@@ -16,6 +16,12 @@ An online Checkers game system built in Java 8 and Spark, a web microframework.
 - Java 8
 - Maven
 
+## Enhancements Implemented
+Beyond the requirements of the MVP, the following enhancements were implemented:
+- Players are able to spectate a Game in progress as it occurs
+- Players are able to see the Win/Loss record of all other players currently logged in to the application.  (Win/Loss record is not maintained between sessions)
+- The Board is rotated for each player so that their pieces are located at the bottom of the screen (simulating sitting in front of an actual checkerboard)
+
 ## How to run it
 
 1. Clone the repository and go to the root directory.
