@@ -36,7 +36,8 @@ public class GetEndSpectatingRoute implements TemplateViewRoute {
         final String currentUsername = request.session().attribute(PostLoginRoute.USERNAME_PARAM);
 
         //Remove the user from spectating & return to the home page
-        gameCenter.endSpectating(currentUsername);
+        if(currentUsername != null)
+            gameCenter.endSpectating(currentUsername);
 
         response.redirect("/");
         halt();
