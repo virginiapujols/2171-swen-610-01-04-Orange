@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import org.junit.Before;
 import org.junit.Test;
 import spark.Request;
 import spark.Response;
@@ -15,25 +16,37 @@ import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.when;
 
 public class PostCheckTurnRouteTest {
+
+    // Atributes
+    private GameCenter gameCenter = mock(GameCenter.class);
+    private Game game = mock(Game.class);
+    private String _username = "Niharika";
+    private Request request;
+    private Response response;
+    private Session session;
+
+    /**
+     * The component under test(CuT)
+     */
+    private PostCheckTurnRoute CuT = new PostCheckTurnRoute(gameCenter);
+
+    @Before
+    public void setUp(){
+        game = mock(Game.class);
+        request = mock(Request.class);
+        response = mock(Response.class);
+        session = mock(Session.class);
+    }
+
     @Test
     public void testHandle() throws Exception {
-        Request request = mock(Request.class);
-        Response response = mock(Response.class);
-        Session session = mock(Session.class);
-        GameCenter gameCenter = mock(GameCenter.class);
-        String username = "niharika";
-        Game game = mock(Game.class);
-        PostCheckTurnRoute test = new PostCheckTurnRoute(gameCenter);
-
         when(request.session()).thenReturn(session);
-        when(session.attribute(PostLoginRoute.USERNAME_PARAM)).thenReturn(username);
-        when(gameCenter.getGame(username)).thenReturn(game);
-        when(game.isMyTurn(username)).thenReturn(true);
+        when(session.attribute(PostLoginRoute.USERNAME_PARAM)).thenReturn(_username);
+        when(gameCenter.getGame(_username)).thenReturn(game);
+        when(game.isMyTurn(_username)).thenReturn(true);
+        assertTrue((boolean)CuT.handle(request, response));
 
-        assertTrue((boolean)test.handle(request, response));
-
-        when(gameCenter.getGame(username)).thenReturn(null);
-        assertFalse((boolean)test.handle(request, response));
-
+        when(gameCenter.getGame(_username)).thenReturn(null);
+        assertFalse((boolean)CuT.handle(request, response));
     }
 }
