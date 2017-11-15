@@ -11,6 +11,9 @@ import com.webcheckers.model.Player;
  * The object to coordinate the state of the Web Application.
  *
  * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
+ * @author <a href='mailto:nrd8504@rit.edu'>Niharika Dalal</a>
+ * @author <a href='mailto:vp2532@rit.edu'>Virginia Pujols</a>
+ * @author <a href='mailto:ask5893@rit.edu'>Ashok Kesari</a>
  */
 public class GameCenter {
     // Attributes

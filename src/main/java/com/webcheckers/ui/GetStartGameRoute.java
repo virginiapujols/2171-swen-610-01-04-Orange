@@ -10,9 +10,10 @@ import spark.*;
 import static spark.Spark.halt;
 
 /**
- * The Web Controller for the Home page.
+ * The Web Controller for Starting a Game.
  *
  * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
+ * @author <a href='mailto:ask5893@rit.edu'>Ashok Kesari</a>
  */
 public class GetStartGameRoute implements TemplateViewRoute {
     //Constants

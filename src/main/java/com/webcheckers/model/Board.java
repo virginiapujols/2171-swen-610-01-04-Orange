@@ -8,12 +8,14 @@ import java.util.function.Consumer;
 
 /**
  * A class that represents a game board.  This class enforces move logic and tracks piece locations
+ * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
+ * @author <a href='mailto:ask5893@rit.edu'>Ashok Kesari</a>
  */
 public class Board implements Iterable<Row>{
     //Constants
-    public static final String JUMP_AFTER_MOVE_ERROR  = "You cannot make a regular move after jumping!";
-    public static final String INVALID_ROW_OR_CELL_ERROR = "You must move diagonally 1 cell forward";
-    public static final String VALID_MOVE = "Valid Move";
+    private static final String JUMP_AFTER_MOVE_ERROR  = "You cannot make a regular move after jumping!";
+    private static final String INVALID_ROW_OR_CELL_ERROR = "You must move diagonally 1 cell forward";
+    private static final String VALID_MOVE = "Valid Move";
 
     //Class Attributes
     private List<Row> rows;

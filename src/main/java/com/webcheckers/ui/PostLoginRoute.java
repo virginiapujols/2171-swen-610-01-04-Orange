@@ -15,7 +15,8 @@ import static spark.Spark.halt;
 /**
  * The Web Controller for the Login page.
  *
- * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
+ * @author <a href='mailto:nrd8504@rit.edu'>Niharika Dalal</a>
+ * @author <a href='mailto:vp2532@rit.edu'>Virginia Pujols</a>
  */
 public class PostLoginRoute implements TemplateViewRoute {
 

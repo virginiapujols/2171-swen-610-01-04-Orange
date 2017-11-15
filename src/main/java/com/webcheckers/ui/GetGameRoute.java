@@ -12,6 +12,9 @@ import static spark.Spark.halt;
  * The Web Controller for getting the Game page.
  *
  * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
+ * @author <a href='mailto:nrd8504@rit.edu'>Niharika Dalal</a>
+ * @author <a href='mailto:vp2532@rit.edu'>Virginia Pujols</a>
+ * @author <a href='mailto:ask5893@rit.edu'>Ashok Kesari</a>
  */
 public class GetGameRoute implements TemplateViewRoute {
 
@@ -58,10 +61,10 @@ public class GetGameRoute implements TemplateViewRoute {
 
                 Player player = gameCenter.getPlayers().get(currentUsername);
 
-                if(currentUsername.equals(winningUsername)) {
+                if(currentUsername.equals(winningUsername)) { //If the player has won the game
                     response.redirect(WebServer.GAMEOVER_URL.replace("*", "won"));
                     player.updateGamesWon();
-                } else {
+                } else { //otherwise (the player has lost the game)
                     response.redirect(WebServer.GAMEOVER_URL.replace("*", "lost"));
                     player.updateGamesLost();
                 }

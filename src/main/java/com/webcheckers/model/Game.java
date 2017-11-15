@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class to represent a Game between 2 players.  Responsible for handling game creation, ending, and tracking the state of the gaem
+ * A class to represent a Game between 2 players.  Responsible for handling game creation, ending, and tracking the state of the game
+ * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
+ * @author <a href='mailto:ask5893@rit.edu'>Ashok Kesari</a>
  */
 public class Game{
     //Class Attributes
@@ -13,8 +15,8 @@ public class Game{
     private Player player2;
     private boolean isOver;
     private int turn;
-    private List<Move> moves = new ArrayList<Move>();
-    private List<Piece> capturedPieces = new ArrayList<Piece>();
+    private List<Move> moves = new ArrayList<>();
+    private List<Piece> capturedPieces = new ArrayList<>();
     private String resigningPlayer;
 
     /**

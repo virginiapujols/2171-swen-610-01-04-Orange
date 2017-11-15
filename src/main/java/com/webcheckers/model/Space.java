@@ -3,6 +3,8 @@ package com.webcheckers.model;
 /**
  * A class that represents a location on the game board
  * This class holds a piece and provides information about itself and gives access to its piece
+ * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
+ * @author <a href='mailto:ask5893@rit.edu'>Ashok Kesari</a>
  */
 public class Space {
     // Constants
@@ -82,6 +84,9 @@ public class Space {
         return this.piece == null && this.color.equals(SPACE_COLOR_BLACK);
     }
 
+    /**
+     * A function to remove a piece from a square (and thus the board) when it is captured
+     */
     public void removeCapturedPiece() {
         piece = null;
     }

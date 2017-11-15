@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 /**
  * A Value Object that represents a Message sent to a User for feedback
+ * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
  */
 public class Message {
     //Attributes

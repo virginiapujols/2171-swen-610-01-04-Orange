@@ -3,6 +3,7 @@ package com.webcheckers.model;
 /**
  * A class that represents a move from one location to another.  Responsible for providing information about that specific move
  * (i.e. the move's direction, the move's magnitude, etc)
+ * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
  */
 public class Move {
     //Attributes
@@ -71,6 +72,10 @@ public class Move {
         return new Coordinate(rowVal, cellVal);
     }
 
+    /**
+     * Method to return a string representation of the Move object
+     * @return A string conveying the data for a move
+     */
     public String toString() {
         return "Move: (Initial - R: " + start.getRow() + ", C: " + start.getCell() + ", Ending - R: " + end.getRow() + ", C: " + end.getCell() + ")";
     }

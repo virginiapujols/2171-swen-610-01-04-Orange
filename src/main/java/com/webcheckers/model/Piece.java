@@ -3,6 +3,10 @@ package com.webcheckers.model;
 /**
  * A class that represents a movable token used to play Checkers
  * The class maintains and returns information on the pieces type and color
+ * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
+ * @author <a href='mailto:nrd8504@rit.edu'>Niharika Dalal</a>
+ * @author <a href='mailto:vp2532@rit.edu'>Virginia Pujols</a>
+ * @author <a href='mailto:ask5893@rit.edu'>Ashok Kesari</a>
  */
 public class Piece {
     //Attributes
@@ -19,14 +23,6 @@ public class Piece {
         this.type = _type;
         this.color = _color;
     }
-
-    /**
-     * This function denotes if the piece is captured or not
-     * @param _posX this is the X co-ordinate of the piece
-     * @param _posY this is the Y co-ordinate of the piece
-     * @return a Boolean "true" or "false"
-     */
-    public  boolean isCapture(int _posX, int _posY ){return true;}
     
     /**
      * This function is the accessor of color
