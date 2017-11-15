@@ -56,8 +56,35 @@ public class GetGameRouteTest {
         when(request.session()).thenReturn(sessionPlayer2);
     }
 
+    @Test (expected = spark.HaltException.class)
+    public void testIdentifyWinner() {
+        // Arrange the test scenario: The session starts with a Game.
+        when(sessionPlayer1.attribute(PostLoginRoute.USERNAME_PARAM)).thenReturn(USERNAME1);
+        when(request.session()).thenReturn(sessionPlayer1);
+        when(request.queryParams(GetStartGameRoute.CHALLENGED)).thenReturn(USERNAME2);
+
+        GameCenter gameCenter = mock(GameCenter.class);
+        CuT = new GetGameRoute(gameCenter);
+        Game game = mock(Game.class);
+        when(game.getIsOver()).thenReturn(true);
+        when(game.getPlayer1()).thenReturn(new Player(USERNAME1));
+        when(game.getPlayer2()).thenReturn(new Player(USERNAME2));
+        when(gameCenter.getGame(USERNAME1)).thenReturn(game);
+        when(game.isGameOver()).thenReturn(1);
+
+        Map<String, Player> players = new HashMap<>();
+        players.put(USERNAME1, new Player(USERNAME1));
+        players.put(USERNAME1, new Player(USERNAME2));
+        when(gameCenter.getPlayers()).thenReturn(players);
+
+        // Invoke the test
+        final ModelAndView result = CuT.handle(request, response);
+        // Analyze the results
+        assertNull(result);
+    }
+
     @Test
-    public void test_existingGamePlayer1() {
+    public void testExistingGamePlayer1() {
         // Arrange the test scenario: The session starts with a Game.
         when(sessionPlayer1.attribute(PostLoginRoute.USERNAME_PARAM)).thenReturn(USERNAME1);
         when(request.session()).thenReturn(sessionPlayer1);
@@ -86,7 +113,7 @@ public class GetGameRouteTest {
     }
 
     @Test
-    public void test_existingGamePlayer2() {
+    public void testExistingGamePlayer2() {
         // Arrange the test scenario: The session starts with a Game.
         when(sessionPlayer1.attribute(PostLoginRoute.USERNAME_PARAM)).thenReturn(USERNAME1);
         when(request.session()).thenReturn(sessionPlayer1);
@@ -116,7 +143,7 @@ public class GetGameRouteTest {
     }
 
     @Test(expected = spark.HaltException.class)
-    public void test_notInGame() {
+    public void testNotInGame() {
         // Arrange the test scenario: The session starts with no game.
         when(sessionPlayer1.attribute(PostLoginRoute.USERNAME_PARAM)).thenReturn(null);
 

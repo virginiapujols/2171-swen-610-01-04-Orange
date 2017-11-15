@@ -11,14 +11,14 @@ public class RowTest {
     Row CuT = new Row(0);
 
     @Test
-    public void test_createRowZero() {
+    public void testCreateRowZero() {
         assertEquals(NUMBER_ROWS, CuT.getSpaces().size());
         assertEquals(Space.SPACE_COLOR_WHITE, CuT.getSpaces().get(0).getColor());
         assertEquals(Space.SPACE_COLOR_BLACK, CuT.getSpaces().get(1).getColor());
     }
 
     @Test
-    public void test_createRowOne() {
+    public void testCreateRowOne() {
         CuT = new Row(1);
         assertEquals(NUMBER_ROWS, CuT.getSpaces().size());
         assertEquals(Space.SPACE_COLOR_BLACK, CuT.getSpaces().get(0).getColor());
@@ -26,12 +26,12 @@ public class RowTest {
     }
 
     @Test
-    public void test_getIndex() {
+    public void testGetIndex() {
         assertEquals(0, CuT.getIndex());
     }
 
     @Test
-    public void test_setIndex() {
+    public void testSetIndex() {
         CuT.setIndex(3);
         assertEquals(3, CuT.getIndex());
     }

@@ -58,7 +58,7 @@ public class GetStartGameRouteTest {
      * Expected result is HaltException called from halt()
      */
     @Test(expected = spark.HaltException.class)
-    public void test_playerInGame() {
+    public void testPlayerInGame() {
         //Set Mock Objects
         when(p1Session.attribute(USERNAME)).thenReturn(USERNAME1);
         when(request.session()).thenReturn(p1Session);
@@ -78,7 +78,7 @@ public class GetStartGameRouteTest {
      * Test for handle() when challenged player is not in a game
      */
     @Test
-    public void test_playerNotInGame() {
+    public void testPlayerNotInGame() {
         //Set Mock Objects
         when(p1Session.attribute(USERNAME)).thenReturn(USERNAME1);
         when(request.session()).thenReturn(p1Session);
@@ -120,7 +120,7 @@ public class GetStartGameRouteTest {
      * Should result in halt() being called
      */
     @Test(expected = spark.HaltException.class)
-    public void test_noPlayers() {
+    public void testNoPlayers() {
         //Call handle without setting any mock session data
         final ModelAndView result = CuT.handle(request, response);
     }

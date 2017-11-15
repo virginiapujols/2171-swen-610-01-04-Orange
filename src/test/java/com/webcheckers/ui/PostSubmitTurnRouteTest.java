@@ -12,8 +12,16 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class PostSubmitTurnRouteTest {
-
+    /**
+     * The component-under-test (CuT).
+     *
+     * <p>
+     * This is a stateless component so we only need one.
+     * The {@link PostSubmitTurnRoute} component is thoroughly tested so
+     * we can use it safely as a "friendly" dependency.
+     */
     PostSubmitTurnRoute CuT;
+
     GameCenter gameCenter = mock(GameCenter.class);
 
     @Before
