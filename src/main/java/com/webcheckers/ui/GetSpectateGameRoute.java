@@ -27,7 +27,6 @@ public class GetSpectateGameRoute implements TemplateViewRoute {
 
     // Attributes
     private final GameCenter gameCenter;
-    private Game game;
 
     /**
      * The constructor for the {@code GET /spectateGame} route handler
@@ -49,7 +48,7 @@ public class GetSpectateGameRoute implements TemplateViewRoute {
 
         //Get the name of Player 1 in the game and use it to get the game to spectate
         final String p1Username = request.queryParams("player1");
-        game = gameCenter.getGame(p1Username);
+        Game game = gameCenter.getGame(p1Username);
 
         if(game != null) { //If they are in game:
             int gameResult = game.isGameOver();

@@ -23,7 +23,7 @@ public class GetGameOverRouteTest {
     private static final String USERNAME1 = "Virginia";
 
     private GetGameOverRoute CuT;
-    GameCenter gameCenter = mock(GameCenter.class);
+    private GameCenter gameCenter = mock(GameCenter.class);
 
     private Request request;
     private Response response;
