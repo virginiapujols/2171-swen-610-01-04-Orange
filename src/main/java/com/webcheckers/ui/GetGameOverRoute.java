@@ -27,10 +27,6 @@ public class GetGameOverRoute implements TemplateViewRoute {
     private final GameCenter gameCenter;
     private Game game;
 
-    //
-    // Constructor
-    //
-
     /**
      * The constructor for the {@code GET /GameOver} route handler.
      *

@@ -67,8 +67,6 @@ public class GameTest {
     @Test
     public void testChangeTurn1(){
         CuT.setTurn(1);
-        //System.out.println(test.changeTurn());
-        //assertEquals(1, test.changeTurn());
         assertEquals(0, CuT.changeTurn());
     }
     @Test
@@ -88,7 +86,7 @@ public class GameTest {
     @Test
     public void testBackupMoveWithNoMoves() {
         Message result = CuT.backupMove();
-        assertEquals("error", result.getType());
+        assertEquals(MessageStatus.error, result.getType());
         assertEquals("No moves have been made!", result.getText());
     }
 
@@ -97,15 +95,8 @@ public class GameTest {
         Coordinate startPos = mock(Coordinate.class);
         Coordinate endPos = mock(Coordinate.class);
 
-        /* Test single move
-        when(startPos.getRow()).thenReturn(5);
-        when(startPos.getCell()).thenReturn(4);
-        when(endPos.getRow()).thenReturn(4);
-        when(endPos.getCell()).thenReturn(3);
-        */
-
         // Test jump
-        CuT.getCapturedPieces().add(new Piece("SINGLE", "WHITE"));
+        CuT.getCapturedPieces().add(new Piece(PieceType.SINGLE, PieceColor.WHITE));
         when(startPos.getRow()).thenReturn(4);
         when(startPos.getCell()).thenReturn(3);
         when(endPos.getRow()).thenReturn(2);
@@ -115,7 +106,7 @@ public class GameTest {
         CuT.addMoveToList(move);
 
         Message result = CuT.backupMove();
-        assertEquals("info", result.getType());
+        assertEquals(MessageStatus.info, result.getType());
         assertEquals("Move has been undone!", result.getText());
     }
 

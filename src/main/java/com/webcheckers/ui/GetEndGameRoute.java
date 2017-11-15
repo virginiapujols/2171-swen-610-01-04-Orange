@@ -23,10 +23,6 @@ public class GetEndGameRoute implements TemplateViewRoute {
     private final GameCenter gameCenter;
     private Game game;
 
-    //
-    // Constructor
-    //
-
     /**
      * The constructor for the {@code GET /endGame} route handler.
      *

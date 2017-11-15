@@ -27,7 +27,7 @@ public class PostSubmitTurnRoute implements Route {
         //return message;
         Game game = gameCenter.getGame(request.session().attribute(PostLoginRoute.USERNAME_PARAM));
         game.changeTurn();
-        response.redirect("/game");
+        response.redirect(WebServer.GAME_URL);
         halt();
         return null;
     }

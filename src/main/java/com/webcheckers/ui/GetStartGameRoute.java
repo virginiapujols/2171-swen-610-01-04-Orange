@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.PieceColor;
 import spark.*;
 
 import static spark.Spark.halt;
@@ -50,10 +51,10 @@ public class GetStartGameRoute implements TemplateViewRoute {
             Game game = gameCenter.startGame(player1, player2);
 
             vm.put(GetGameRoute.PLAYER_NAME, player1);
-            vm.put(GetGameRoute.PLAYER_COLOR, GetGameRoute.RED);
+            vm.put(GetGameRoute.PLAYER_COLOR, PieceColor.RED);
             vm.put(GetGameRoute.MY_TURN, true);
             vm.put(GetGameRoute.OPP_NAME, player2);
-            vm.put(GetGameRoute.OPP_COLOR, GetGameRoute.WHITE);
+            vm.put(GetGameRoute.OPP_COLOR, PieceColor.WHITE);
             vm.put(GetGameRoute.CURR_PLAYER, true);
             vm.put(GetGameRoute.GAME_BOARD, game.getBoard());
 

@@ -54,7 +54,7 @@ public class GetHomeRoute implements TemplateViewRoute {
 
     //Redirect user's in a game to their game
     if(gameCenter.isInGame(username)) {
-        response.redirect("/game");
+        response.redirect(WebServer.GAME_URL);
         halt();
         return null;
     }
@@ -67,6 +67,6 @@ public class GetHomeRoute implements TemplateViewRoute {
         vm.put("username", request.session().attribute("username"));
     }
 
-    return new ModelAndView(vm , "home.ftl");
+    return new ModelAndView(vm , VIEW_NAME);
   }
 }

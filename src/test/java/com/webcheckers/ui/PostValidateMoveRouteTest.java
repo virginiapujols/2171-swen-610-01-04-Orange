@@ -4,6 +4,7 @@ import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
+import com.webcheckers.model.MessageStatus;
 import org.junit.Test;
 import spark.Request;
 import spark.Response;
@@ -39,7 +40,7 @@ public class PostValidateMoveRouteTest {
 
         Message message = (Message) CuT.handle(request, response);
 
-        assertEquals("info", message.getType());
+        assertEquals(MessageStatus.info, message.getType());
         assertEquals("Valid Move", message.getText());
     }
 

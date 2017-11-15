@@ -134,6 +134,14 @@ public class Game{
         this.turn = (this.turn == 0) ? 1 : 0; //If turn = 0 (i.e. Player 1's turn is finished), set it to 1 (player 2's turn), otherwise set it to 0
         this.board.setDidMove(false);
         this.board.setDidJump(false);
+
+        for(Move move : moves) { //Loop to ensure setJustKinged is false for any pieces that were kinged on that turn
+            Piece piece = board.getSpaceByCoordinate(move.getEnd()).getPiece();
+
+            if (piece != null)
+                piece.setJustKinged(false);
+        }
+
         moves.clear();
         return this.turn;
     }
@@ -199,9 +207,9 @@ public class Game{
                 movedPiece.setJustKinged(false);
             }
 
-            return new Message("Move has been undone!", "info");
+            return new Message("Move has been undone!", MessageStatus.info);
         } else {
-            return new Message("No moves have been made!", "error");
+            return new Message("No moves have been made!", MessageStatus.error);
         }
     }
 
@@ -227,10 +235,10 @@ public class Game{
      * 0 = Red Wins, 1 = White Wins, -1 = Game not Over
      */
     public int isGameOver() {
-        if(board.isGameOver("RED")) {
+        if(board.isGameOver(PieceColor.RED)) {
             isOver = true;
             return 1;
-        } else if(board.isGameOver("WHITE")) {
+        } else if(board.isGameOver(PieceColor.WHITE)) {
             isOver = true;
             return 0;
         } else {

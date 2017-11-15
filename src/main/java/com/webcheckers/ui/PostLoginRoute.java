@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import java.util.*;
 
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.model.MessageStatus;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -51,7 +52,7 @@ public class PostLoginRoute implements TemplateViewRoute {
     //
     private ModelAndView error(final Map<String, Object> vm, final String message) {
         vm.put(MESSAGE_ATTR, message);
-        vm.put(MESSAGE_TYPE_ATTR, ERROR_TYPE);
+        vm.put(MESSAGE_TYPE_ATTR, MessageStatus.error);
         return new ModelAndView(vm, VIEW_NAME);
     }
 

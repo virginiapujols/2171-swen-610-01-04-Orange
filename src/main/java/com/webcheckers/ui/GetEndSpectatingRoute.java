@@ -21,11 +21,6 @@ import static spark.Spark.halt;
 public class GetEndSpectatingRoute implements TemplateViewRoute {
     // Attributes
     private final GameCenter gameCenter;
-    private Game game;
-
-    //
-    // Constructor
-    //
 
     /**
      * The constructor for the {@code GET /endSpectating} route handler.

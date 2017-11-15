@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.PieceColor;
 import com.webcheckers.model.Player;
 import org.junit.After;
 import org.junit.Before;
@@ -85,7 +86,7 @@ public class GetGameRouteTest {
         Map<String, Object> vm = (Map<String, Object>) model;
         assertEquals(USERNAME1, vm.get(PLAYER_NAME));
         assertEquals(USERNAME2, vm.get(OPP_NAME));
-        assertEquals(RED, vm.get(PLAYER_COLOR));
+        assertEquals(PieceColor.RED, vm.get(PLAYER_COLOR));
         assertEquals(Boolean.TRUE, vm.get(MY_TURN));
     }
 
@@ -115,7 +116,7 @@ public class GetGameRouteTest {
         Map<String, Object> vm = (Map<String, Object>) model;
         assertEquals(USERNAME1, vm.get(PLAYER_NAME));
         assertEquals(USERNAME2, vm.get(OPP_NAME));
-        assertEquals(WHITE, vm.get(PLAYER_COLOR));
+        assertEquals(PieceColor.WHITE, vm.get(PLAYER_COLOR));
         assertEquals(Boolean.FALSE, vm.get(MY_TURN));
     }
 
@@ -137,3 +138,4 @@ public class GetGameRouteTest {
         verify(response).redirect(WebServer.HOME_URL);
     }
 }
+
