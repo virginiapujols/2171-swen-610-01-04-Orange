@@ -68,12 +68,6 @@ public class GameTest {
         CuT.setTurn(1);
         assertEquals(0, CuT.changeTurn());
     }
-    @Test
-    public void testChangeTurn0(){
-        //test.setTurn(1);
-        //System.out.println(test.changeTurn());
-        assertEquals(1, CuT.changeTurn());
-    }
 
     @Test
     public void testIsMyTurn(){
