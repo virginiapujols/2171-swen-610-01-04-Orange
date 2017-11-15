@@ -16,7 +16,7 @@ public class GameCenter {
     // Attributes
     private Map<String, Player> players = new HashMap<>(); //<username, Player>: All players in the application
     private List<Game> games = new ArrayList<>(); //All games in the application
-    private List<String> spectators = new ArrayList<>();
+    private List<String> spectators = new ArrayList<>(); //All spectators in the application.
 
     //
     // Public methods
@@ -85,7 +85,7 @@ public class GameCenter {
      * @return The game (if it exists, otherwise null)
      */
     public Game getGame(String _username) {
-        for(Game game : games) { //Loop through each game & return true if the username matches the game's Player1 or Player2 attribute
+        for(Game game : games) { //Loop through each game & return game if the username matches the game's Player1 or Player2 attribute
             if(game.getPlayer1().getUsername().equals(_username) || game.getPlayer2().getUsername().equals(_username)) {
                 return game;
             }
