@@ -33,8 +33,7 @@ public class PostResignGameRoute implements TemplateViewRoute {
         Game game = gameCenter.getGame(currentUsername);
         game.resign(currentUsername);
         response.redirect(WebServer.GAME_URL);
-
-        //halt();
+        halt();
         return null;
     }
 }
