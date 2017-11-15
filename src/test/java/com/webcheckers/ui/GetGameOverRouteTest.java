@@ -21,13 +21,21 @@ import static org.mockito.Mockito.when;
 public class GetGameOverRouteTest {
     private static final String USERNAME = "username";
     private static final String USERNAME1 = "Virginia";
-
-    private GetGameOverRoute CuT;
     private GameCenter gameCenter = mock(GameCenter.class);
 
     private Request request;
     private Response response;
     private Session session;
+
+    /**
+     * The component-under-test (CuT).
+     *
+     * <p>
+     * This is a stateless component so we only need one.
+     * The {@link GetGameOverRoute} component is thoroughly tested so
+     * we can use it safely as a "friendly" dependency.
+     */
+    private GetGameOverRoute CuT;
 
     @Before
     public void setUp() throws Exception {

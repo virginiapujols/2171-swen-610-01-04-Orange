@@ -24,16 +24,6 @@ public class GetGameRouteTest {
     private Response response;
     private GameCenter gameCenter = new GameCenter();
 
-    /**
-     * The component-under-test (CuT).
-     *
-     * <p>
-     * This is a stateless component so we only need one.
-     * The {@link GameCenter} component is thoroughly tested so
-     * we can use it safely as a "friendly" dependency.
-     */
-    private GetGameRoute CuT = new GetGameRoute(gameCenter);
-
     // Test Values
     private String USERNAME1 = "kat";
     private String USERNAME2 = "pedro";
@@ -42,11 +32,16 @@ public class GetGameRouteTest {
     static final String PLAYER_COLOR = "playerColor";
     static final String MY_TURN = "isMyTurn";
     static final String OPP_NAME = "opponentName";
-    static final String OPP_COLOR = "opponentColor";
-    static final String CURR_PLAYER = "currentPlayer";
-    static final String GAME_BOARD = "board";
-    static final String RED = "RED";
-    static final String WHITE = "WHITE";
+
+    /**
+     * The component-under-test (CuT).
+     *
+     * <p>
+     * This is a stateless component so we only need one.
+     * The {@link GetGameRoute} component is thoroughly tested so
+     * we can use it safely as a "friendly" dependency.
+     */
+    private GetGameRoute CuT = new GetGameRoute(gameCenter);
 
     /**
      * Setup common test scenario.
