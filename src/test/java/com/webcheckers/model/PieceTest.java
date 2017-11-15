@@ -10,7 +10,8 @@ public class PieceTest {
 
     @Test
     public void setColor() throws Exception {
-        assertEquals(PieceColor.WHITE, CuT.getColor());
+        CuT.setColor(PieceColor.RED);
+        assertEquals(PieceColor.RED, CuT.getColor());
     }
 
     @Test
