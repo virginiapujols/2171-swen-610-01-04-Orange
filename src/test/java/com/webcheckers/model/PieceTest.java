@@ -20,4 +20,18 @@ public class PieceTest {
         assertEquals(_type, CuT.getType());
     }
 
+    @Test
+    public void testMakeKing() throws Exception{
+        CuT.makeKing();
+        assertTrue(CuT.getJustKinged());
+    }
+
+    @Test
+    public void testSetJustKing() throws Exception{
+        CuT.setJustKinged(true);
+        assertTrue(CuT.getJustKinged());
+
+        CuT.setJustKinged(false);
+        assertFalse(CuT.getJustKinged());
+    }
 }
