@@ -1,10 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Message;
-import com.webcheckers.model.Move;
+import com.webcheckers.model.*;
 import spark.*;
 
 import java.util.Objects;
@@ -41,7 +38,7 @@ public class PostValidateMoveRoute implements Route {
 
         //Validate the move and enact it if it is valid
         Message message = board.validateMove(move);
-        if(!message.getType().equals(Message.MESSAGE_ERROR)) {
+        if(message.getType() == MessageStatus.info) {
             game.addMoveToList(move);
             game.removePieceIfCaptured(move);
             board.movePiece(move);

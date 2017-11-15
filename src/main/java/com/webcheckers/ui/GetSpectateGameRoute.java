@@ -24,10 +24,10 @@ public class GetSpectateGameRoute implements TemplateViewRoute {
     public static final String CURR_PLAYER = "currentPlayer";
     public static final String GAME_BOARD = "board";
     public static final String VIEW_NAME = "spectateGame.ftl";
+    public static final String PLAYER_NAME = "playerName";
 
     // Attributes
     private final GameCenter gameCenter;
-    private Game game;
 
     /**
      * The constructor for the {@code GET /spectateGame} route handler
@@ -45,11 +45,11 @@ public class GetSpectateGameRoute implements TemplateViewRoute {
         Session session = request.session();
         String username = session.attribute(PostLoginRoute.USERNAME_PARAM);
         vm.put("title", "Play a game!");
-        vm.put("playerName", username);
+        vm.put(PLAYER_NAME, username);
 
         //Get the name of Player 1 in the game and use it to get the game to spectate
         final String p1Username = request.queryParams("player1");
-        game = gameCenter.getGame(p1Username);
+        Game game = gameCenter.getGame(p1Username);
 
         if(game != null) { //If they are in game:
             int gameResult = game.isGameOver();

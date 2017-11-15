@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -7,51 +8,44 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockingDetails;
 
 public class SpaceTest {
+
+    Piece _piece = mock(Piece.class);
+    int _cellIdx = 3;
+
+    Space CuT;
+
+    @Before
+    public void setUp() throws Exception {
+        CuT = new Space(Space.SPACE_COLOR_BLACK, _piece, _cellIdx);
+    }
+
     @Test
-    public void testSetColor() throws Exception{
-        String _color = "black";
-        Piece _piece = mock(Piece.class);
-        int _cellIdx = 3;
-        Space test = new Space(_color, _piece, _cellIdx);
-        assertEquals(_color, test.getColor());
+    public void testSetColor() throws Exception {
+        assertEquals(Space.SPACE_COLOR_BLACK, CuT.getColor());
     }
 
     @Test
     public void testSetPiece() throws Exception{
-        String _color = "black";
-        Piece _piece = mock(Piece.class);
-        int _cellIdx = 3;
-        Space test = new Space(_color, _piece, _cellIdx);
-        assertEquals(_piece, test.getPiece());
+        assertEquals(_piece, CuT.getPiece());
     }
 
     @Test
     public void testSetCellIdx() throws Exception{
-        String _color = "black";
-        Piece _piece = mock(Piece.class);
-        int _cellIdx = 3;
-        Space test = new Space(_color, _piece, _cellIdx);
-        assertEquals(_cellIdx, test.getCellIdx());
+        assertEquals(_cellIdx, CuT.getCellIdx());
     }
 
     @Test
     public void testIsValid() throws Exception {
-        String _color = "black";
-        Piece _piece = mock(Piece.class);
-        int _cellIdx = 3;
-        Space test = new Space(_color, _piece, _cellIdx);
-        assertFalse(test.isValid());
-
-        test = new Space(_color, null, _cellIdx);
-        assertTrue(test.isValid());
+        assertFalse(CuT.isValid());
+        CuT = new Space(Space.SPACE_COLOR_BLACK, null, _cellIdx);
+        assertTrue(CuT.isValid());
     }
 
     @Test
     public void testRemoveCapturedPiece(){
-        Piece _piece = mock(Piece.class);
-        Space test = new Space("black", _piece, 1);
-        assertNotNull(test.getPiece());
-        test.removeCapturedPiece();
-        assertNull(test.getPiece());
+        CuT = new Space(Space.SPACE_COLOR_BLACK, _piece, 1);
+        assertNotNull(CuT.getPiece());
+        CuT.removeCapturedPiece();
+        assertNull(CuT.getPiece());
     }
 }

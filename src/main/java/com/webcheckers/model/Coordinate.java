@@ -5,6 +5,7 @@ import java.util.Objects;
 /**
  * Value Object to represent a Coordinate pointing to a Space
  * A Coordinate is 2 ints representing a location on the board
+ * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
  */
 public class Coordinate {
     //Attributes

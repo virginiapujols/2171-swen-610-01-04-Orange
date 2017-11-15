@@ -14,12 +14,20 @@ public class GetHomeRouteTest {
     private static final String USERNAME = "username";
     private static final String USERNAME1 = "Andres";
     private static final String USERNAME2 = "Julia";
-
-    private GetHomeRoute CuT;
     private GameCenter gameCenter = new GameCenter();
     private Request request;
     private Response response;
     private Session session;
+
+    /**
+     * The component-under-test (CuT).
+     *
+     * <p>
+     * This is a stateless component so we only need one.
+     * The {@link GetHomeRoute} component is thoroughly tested so
+     * we can use it safely as a "friendly" dependency.
+     */
+    private GetHomeRoute CuT;
 
     @Before
     public void setUp() throws Exception {

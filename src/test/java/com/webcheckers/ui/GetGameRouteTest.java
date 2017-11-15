@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.PieceColor;
 import com.webcheckers.model.Player;
 import org.junit.After;
 import org.junit.Before;
@@ -23,16 +24,6 @@ public class GetGameRouteTest {
     private Response response;
     private GameCenter gameCenter = new GameCenter();
 
-    /**
-     * The component-under-test (CuT).
-     *
-     * <p>
-     * This is a stateless component so we only need one.
-     * The {@link GameCenter} component is thoroughly tested so
-     * we can use it safely as a "friendly" dependency.
-     */
-    private GetGameRoute CuT = new GetGameRoute(gameCenter);
-
     // Test Values
     private String USERNAME1 = "kat";
     private String USERNAME2 = "pedro";
@@ -41,11 +32,16 @@ public class GetGameRouteTest {
     static final String PLAYER_COLOR = "playerColor";
     static final String MY_TURN = "isMyTurn";
     static final String OPP_NAME = "opponentName";
-    static final String OPP_COLOR = "opponentColor";
-    static final String CURR_PLAYER = "currentPlayer";
-    static final String GAME_BOARD = "board";
-    static final String RED = "RED";
-    static final String WHITE = "WHITE";
+
+    /**
+     * The component-under-test (CuT).
+     *
+     * <p>
+     * This is a stateless component so we only need one.
+     * The {@link GetGameRoute} component is thoroughly tested so
+     * we can use it safely as a "friendly" dependency.
+     */
+    private GetGameRoute CuT = new GetGameRoute(gameCenter);
 
     /**
      * Setup common test scenario.
@@ -85,7 +81,7 @@ public class GetGameRouteTest {
         Map<String, Object> vm = (Map<String, Object>) model;
         assertEquals(USERNAME1, vm.get(PLAYER_NAME));
         assertEquals(USERNAME2, vm.get(OPP_NAME));
-        assertEquals(RED, vm.get(PLAYER_COLOR));
+        assertEquals(PieceColor.RED, vm.get(PLAYER_COLOR));
         assertEquals(Boolean.TRUE, vm.get(MY_TURN));
     }
 
@@ -115,7 +111,7 @@ public class GetGameRouteTest {
         Map<String, Object> vm = (Map<String, Object>) model;
         assertEquals(USERNAME1, vm.get(PLAYER_NAME));
         assertEquals(USERNAME2, vm.get(OPP_NAME));
-        assertEquals(WHITE, vm.get(PLAYER_COLOR));
+        assertEquals(PieceColor.WHITE, vm.get(PLAYER_COLOR));
         assertEquals(Boolean.FALSE, vm.get(MY_TURN));
     }
 
@@ -137,3 +133,4 @@ public class GetGameRouteTest {
         verify(response).redirect(WebServer.HOME_URL);
     }
 }
+

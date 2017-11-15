@@ -2,22 +2,19 @@ package com.webcheckers.model;
 
 /**
  * A Value Object that represents a Message sent to a User for feedback
+ * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
  */
 public class Message {
-    //Constants
-    public static String MESSAGE_ERROR = "error";
-    public static String MESSAGE_INFO = "info";
-
     //Attributes
     private String text;
-    private String type;
+    private MessageStatus type;
 
     /**
      * Parameterized Constructor for Message Class
      * @param _text The message's text
      * @param _type The message's type
      */
-    public Message(String _text, String _type) {
+    public Message(String _text, MessageStatus _type) {
         this.text = _text;
         this.type = _type;
     }
@@ -34,7 +31,7 @@ public class Message {
      * Accessor for type property
      * @return type The Message's type
      */
-    public String getType() {
+    public MessageStatus getType() {
         return this.type;
     }
 

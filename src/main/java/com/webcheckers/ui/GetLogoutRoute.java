@@ -2,16 +2,16 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
 import spark.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 /**
- * Created by lenovo on 10/9/2017.
+ * The Web Controller for Logging out.
+ *
+ * @author <a href='mailto:vp2532@rit.edu'>Virginia Pujols</a>
  */
 public class GetLogoutRoute implements TemplateViewRoute{
     private final GameCenter gameCenter;
@@ -39,7 +39,6 @@ public class GetLogoutRoute implements TemplateViewRoute{
         if(gameCenter.isInGame(currentPlayer)) {
             Game game = gameCenter.getGame(currentPlayer);
             game.resign(currentPlayer);
-            //response.redirect("/game");
         }
 
         session.removeAttribute("username");

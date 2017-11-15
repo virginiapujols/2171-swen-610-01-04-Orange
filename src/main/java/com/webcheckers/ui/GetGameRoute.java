@@ -3,10 +3,7 @@ package com.webcheckers.ui;
 import java.util.*;
 
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
-import com.webcheckers.model.Row;
+import com.webcheckers.model.*;
 import spark.*;
 
 import static spark.Spark.halt;
@@ -15,6 +12,9 @@ import static spark.Spark.halt;
  * The Web Controller for getting the Game page.
  *
  * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
+ * @author <a href='mailto:nrd8504@rit.edu'>Niharika Dalal</a>
+ * @author <a href='mailto:vp2532@rit.edu'>Virginia Pujols</a>
+ * @author <a href='mailto:ask5893@rit.edu'>Ashok Kesari</a>
  */
 public class GetGameRoute implements TemplateViewRoute {
 
@@ -26,8 +26,6 @@ public class GetGameRoute implements TemplateViewRoute {
     public static final String OPP_COLOR = "opponentColor";
     public static final String CURR_PLAYER = "currentPlayer";
     public static final String GAME_BOARD = "board";
-    public static final String RED = "RED";
-    public static final String WHITE = "WHITE";
     public static final String VIEW_NAME = "game.ftl";
 
     // Attributes
@@ -63,11 +61,11 @@ public class GetGameRoute implements TemplateViewRoute {
 
                 Player player = gameCenter.getPlayers().get(currentUsername);
 
-                if(currentUsername.equals(winningUsername)) {
-                    response.redirect("/gameOver/won");
+                if(currentUsername.equals(winningUsername)) { //If the player has won the game
+                    response.redirect(WebServer.GAMEOVER_URL.replace("*", "won"));
                     player.updateGamesWon();
-                } else {
-                    response.redirect("/gameOver/lost");
+                } else { //otherwise (the player has lost the game)
+                    response.redirect(WebServer.GAMEOVER_URL.replace("*", "lost"));
                     player.updateGamesLost();
                 }
 
@@ -77,17 +75,17 @@ public class GetGameRoute implements TemplateViewRoute {
 
             if(game.getPlayer1().getUsername().equals(currentUsername)) { //Check if they're player 1 & populate the ViewModel
                 vm.put(PLAYER_NAME, game.getPlayer1().getUsername());
-                vm.put(PLAYER_COLOR, RED);
+                vm.put(PLAYER_COLOR, PieceColor.RED);
                 vm.put(MY_TURN, true);
                 vm.put(OPP_NAME, game.getPlayer2().getUsername());
-                vm.put(OPP_COLOR, WHITE);
+                vm.put(OPP_COLOR, PieceColor.WHITE);
                 vm.put(CURR_PLAYER, true);
             } else { //Check if they're player 2 & populate the ViewModel
                 vm.put(PLAYER_NAME, game.getPlayer2().getUsername());
-                vm.put(PLAYER_COLOR, WHITE);
+                vm.put(PLAYER_COLOR, PieceColor.WHITE);
                 vm.put(MY_TURN, false);
                 vm.put(OPP_NAME, game.getPlayer1().getUsername());
-                vm.put(OPP_COLOR, RED);
+                vm.put(OPP_COLOR, PieceColor.RED);
                 vm.put(CURR_PLAYER, false);
             }
 

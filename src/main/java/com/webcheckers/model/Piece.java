@@ -3,15 +3,15 @@ package com.webcheckers.model;
 /**
  * A class that represents a movable token used to play Checkers
  * The class maintains and returns information on the pieces type and color
+ * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
+ * @author <a href='mailto:nrd8504@rit.edu'>Niharika Dalal</a>
+ * @author <a href='mailto:vp2532@rit.edu'>Virginia Pujols</a>
+ * @author <a href='mailto:ask5893@rit.edu'>Ashok Kesari</a>
  */
 public class Piece {
-    //Constants
-    public static final String PIECE_RED = "RED";
-    public static final String PIECE_WHITE = "WHITE";
-
     //Attributes
-    private String type;
-    private String color;
+    private PieceType type;
+    private PieceColor color;
     private boolean justKinged;
 
      /**
@@ -19,24 +19,16 @@ public class Piece {
      * @param _type denotes if the piece is a "plain" piece or a "king" piece
      * @param _color denotes if the piece is red or white
      */
-    public Piece(String _type, String _color) {
+    public Piece(PieceType _type, PieceColor _color) {
         this.type = _type;
         this.color = _color;
     }
-
-    /**
-     * This function denotes if the piece is captured or not
-     * @param _posX this is the X co-ordinate of the piece
-     * @param _posY this is the Y co-ordinate of the piece
-     * @return a Boolean "true" or "false"
-     */
-    public  boolean isCapture(int _posX, int _posY ){return true;}
     
     /**
      * This function is the accessor of color
      * @return the color of the piece
      */
-    public String getColor() {
+    public PieceColor getColor() {
         return this.color;
     }
     
@@ -44,7 +36,7 @@ public class Piece {
      * This function is the accessor of type
      * @return the type of piece (plain or king)
      */
-    public String getType() {
+    public PieceType getType() {
         return this.type;
     }
     
@@ -52,7 +44,7 @@ public class Piece {
      * This fuction is the mutator of color
      * @param _color is the parameter that sets the color attribute
      */
-    public void setColor(String _color) {
+    public void setColor(PieceColor _color) {
         this.color = _color;
     }
 
@@ -60,14 +52,14 @@ public class Piece {
      * Mutator to set Piece type to SINGLE
      */
     public void makeSingle() {
-        this.type = "SINGLE";
+        this.type = PieceType.SINGLE;
     }
 
     /**
      * Mutator to set Piece type to KING
      */
     public void makeKing() {
-        this.type = "KING";
+        this.type = PieceType.KING;
         this.justKinged = true;
     }
 

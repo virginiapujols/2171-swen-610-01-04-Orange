@@ -18,12 +18,21 @@ public class GetEndGameRouteTest {
     private static final String USERNAME = "username";
     private static final String USERNAME1 = "Virgi";
 
-    private GetEndGameRoute CuT;
     GameCenter gameCenter = mock(GameCenter.class);
 
     private Request request;
     private Response response;
     private Session session;
+
+    /**
+     * The component-under-test (CuT).
+     *
+     * <p>
+     * This is a stateless component so we only need one.
+     * The {@link GetEndGameRoute} component is thoroughly tested so
+     * we can use it safely as a "friendly" dependency.
+     */
+    private GetEndGameRoute CuT;
 
     @Before
     public void setUp() throws Exception {

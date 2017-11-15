@@ -1,11 +1,8 @@
 package com.webcheckers.ui;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.model.Game;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -21,11 +18,6 @@ import static spark.Spark.halt;
 public class GetEndSpectatingRoute implements TemplateViewRoute {
     // Attributes
     private final GameCenter gameCenter;
-    private Game game;
-
-    //
-    // Constructor
-    //
 
     /**
      * The constructor for the {@code GET /endSpectating} route handler.

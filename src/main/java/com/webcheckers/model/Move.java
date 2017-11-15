@@ -3,28 +3,53 @@ package com.webcheckers.model;
 /**
  * A class that represents a move from one location to another.  Responsible for providing information about that specific move
  * (i.e. the move's direction, the move's magnitude, etc)
+ * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
  */
 public class Move {
-
     //Attributes
     private Coordinate start;
     private Coordinate end;
 
+    /**
+     * Parameterized Constructor for the Move Class
+     * @param _start The starting coordinate of the Move
+     * @param _end The ending coordinate of the Move
+     */
     public Move(Coordinate _start, Coordinate _end) {
         this.start = _start;
         this.end = _end;
     }
 
+    /**
+     * Accessor for starting position
+     * @return start The Starting Coordinate (row, cell)
+     */
     public Coordinate getStart() {
         return start;
     }
 
+    /**
+     * Accessor for ending position
+     * @return end The Ending Coordinate (row, cell)
+     */
     public Coordinate getEnd() {
         return end;
     }
 
+    /**
+     * A method to calculate the number of rows moved by a piece in a Move
+     * @return The number of rows the ending Coordinate is away from the starting space
+     */
     public int getRowsMoved() {
         return Math.abs(start.getRow() - end.getRow());
+    }
+
+    /**
+     * A method to calculate the number of cells moved by a piece in a Move
+     * @return The number of cells the ending Coordinate is away from the starting space
+     */
+    public int getCellsMoved() {
+        return Math.abs(start.getCell() - end.getCell());
     }
 
     /**
@@ -47,6 +72,10 @@ public class Move {
         return new Coordinate(rowVal, cellVal);
     }
 
+    /**
+     * Method to return a string representation of the Move object
+     * @return A string conveying the data for a move
+     */
     public String toString() {
         return "Move: (Initial - R: " + start.getRow() + ", C: " + start.getCell() + ", Ending - R: " + end.getRow() + ", C: " + end.getCell() + ")";
     }

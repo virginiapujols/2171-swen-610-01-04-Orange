@@ -1,7 +1,5 @@
 package com.webcheckers.ui;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import com.webcheckers.appl.GameCenter;
@@ -22,10 +20,6 @@ public class GetEndGameRoute implements TemplateViewRoute {
     // Attributes
     private final GameCenter gameCenter;
     private Game game;
-
-    //
-    // Constructor
-    //
 
     /**
      * The constructor for the {@code GET /endGame} route handler.

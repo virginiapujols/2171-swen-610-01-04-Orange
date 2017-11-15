@@ -5,42 +5,33 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PlayerTest {
+    private static final String USERNAME1 = "Virgi";
+
+    Player CuT = new Player(USERNAME1);
+
     @Test
     public void testGetUsername() throws Exception {
-
-        String _username = "Messi";
-        Player test = new Player(_username);
-
-        assertEquals("Messi",test.getUsername());
+        assertEquals(USERNAME1, CuT.getUsername());
     }
 
     @Test
-    public void testUpdateGamesLost(){
-        String _username = "niharika";
-        Player test = new Player(_username);
+    public void testUpdateGamesLost() {
         int gamesLost = 0;
-        assertEquals(gamesLost, test.getGamesLost());
-        test.updateGamesLost();
-        assertEquals(gamesLost+1, test.getGamesLost());
+        assertEquals(gamesLost, CuT.getGamesLost());
+        CuT.updateGamesLost();
+        assertEquals(gamesLost+1, CuT.getGamesLost());
     }
 
     @Test
-    public void testUpdateGamesWon(){
-        String _username = "niharika";
-        Player test = new Player(_username);
+    public void testUpdateGamesWon() {
         int gamesWon = 0;
-        assertEquals(gamesWon, test.getGamesLost());
-        test.updateGamesLost();
-        assertEquals(gamesWon+1, test.getGamesLost());
+        assertEquals(gamesWon, CuT.getGamesWon());
+        CuT.updateGamesWon();
+        assertEquals(gamesWon+1, CuT.getGamesWon());
     }
 
     @Test
     public void testEquals() throws Exception {
-        String _username = "Messi";
-        String _username2 = "Messi";
-        Player test = new Player(_username);
-        Player test2 = new Player(_username2);
-
-        assertTrue(test.equals(test2));
+        assertNotEquals(CuT, new Object());
     }
 }

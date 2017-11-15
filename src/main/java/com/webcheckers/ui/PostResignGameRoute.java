@@ -13,11 +13,19 @@ import java.util.Objects;
 
 import static spark.Spark.halt;
 
+/**
+ * The Web Controller for Resigning a game.
+ *
+ * @author <a href='mailto:vp2532@rit.edu'>Virginia Pujols</a>
+ */
 public class PostResignGameRoute implements TemplateViewRoute {
-
     // Attributes
     private final GameCenter gameCenter;
 
+    /**
+     * The constructor for the {@code POST /resignGame} route handler
+     * @param gameCenter The {@link GameCenter} for the application.
+     */
     public PostResignGameRoute(GameCenter gameCenter) {
         // validation
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
@@ -32,9 +40,8 @@ public class PostResignGameRoute implements TemplateViewRoute {
         final String currentUsername = request.session().attribute(PostLoginRoute.USERNAME_PARAM);
         Game game = gameCenter.getGame(currentUsername);
         game.resign(currentUsername);
-        response.redirect("/game");
-
-        //halt();
+        response.redirect(WebServer.GAME_URL);
+        halt();
         return null;
     }
 }

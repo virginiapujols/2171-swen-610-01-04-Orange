@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class to represent a Game between 2 players.  Responsible for handling game creation, ending, and tracking the state of the gaem
+ * A class to represent a Game between 2 players.  Responsible for handling game creation, ending, and tracking the state of the game
+ * @author <a href='mailto:add5980@rit.edu'>Andrew DiStasi</a>
+ * @author <a href='mailto:ask5893@rit.edu'>Ashok Kesari</a>
  */
 public class Game{
     //Class Attributes
@@ -13,8 +15,8 @@ public class Game{
     private Player player2;
     private boolean isOver;
     private int turn;
-    private List<Move> moves = new ArrayList<Move>();
-    private List<Piece> capturedPieces = new ArrayList<Piece>();
+    private List<Move> moves = new ArrayList<>();
+    private List<Piece> capturedPieces = new ArrayList<>();
     private String resigningPlayer;
 
     /**
@@ -134,6 +136,14 @@ public class Game{
         this.turn = (this.turn == 0) ? 1 : 0; //If turn = 0 (i.e. Player 1's turn is finished), set it to 1 (player 2's turn), otherwise set it to 0
         this.board.setDidMove(false);
         this.board.setDidJump(false);
+
+        for(Move move : moves) { //Loop to ensure setJustKinged is false for any pieces that were kinged on that turn
+            Piece piece = board.getSpaceByCoordinate(move.getEnd()).getPiece();
+
+            if (piece != null)
+                piece.setJustKinged(false);
+        }
+
         moves.clear();
         return this.turn;
     }
@@ -199,9 +209,9 @@ public class Game{
                 movedPiece.setJustKinged(false);
             }
 
-            return new Message("Move has been undone!", "info");
+            return new Message("Move has been undone!", MessageStatus.info);
         } else {
-            return new Message("No moves have been made!", "error");
+            return new Message("No moves have been made!", MessageStatus.error);
         }
     }
 
@@ -227,10 +237,10 @@ public class Game{
      * 0 = Red Wins, 1 = White Wins, -1 = Game not Over
      */
     public int isGameOver() {
-        if(board.isGameOver("RED")) {
+        if(board.isGameOver(PieceColor.RED)) {
             isOver = true;
             return 1;
-        } else if(board.isGameOver("WHITE")) {
+        } else if(board.isGameOver(PieceColor.WHITE)) {
             isOver = true;
             return 0;
         } else {

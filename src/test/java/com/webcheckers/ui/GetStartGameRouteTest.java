@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.model.PieceColor;
 import com.webcheckers.ui.GetGameRoute;
 import com.webcheckers.ui.GetStartGameRoute;
 import org.junit.Before;
@@ -104,10 +105,10 @@ public class GetStartGameRouteTest {
         //Model contains all necessary View-Model data
         final Map<String, Object> vm = (Map<String, Object>) model;
         assertEquals(USERNAME1, vm.get(GetGameRoute.PLAYER_NAME));
-        assertEquals(GetGameRoute.RED, vm.get(GetGameRoute.PLAYER_COLOR));
+        assertEquals(PieceColor.RED, vm.get(GetGameRoute.PLAYER_COLOR));
         assertEquals(Boolean.TRUE, vm.get(GetGameRoute.MY_TURN));
         assertEquals(USERNAME2, vm.get(GetGameRoute.OPP_NAME));
-        assertEquals(GetGameRoute.WHITE, vm.get(GetGameRoute.OPP_COLOR));
+        assertEquals(PieceColor.WHITE, vm.get(GetGameRoute.OPP_COLOR));
         assertEquals(Boolean.TRUE, vm.get(GetGameRoute.CURR_PLAYER));
 
         //Test View Name
