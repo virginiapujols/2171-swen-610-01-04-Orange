@@ -4,6 +4,7 @@ import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
+import com.webcheckers.model.MessageStatus;
 import org.junit.Test;
 import spark.Request;
 import spark.Response;
