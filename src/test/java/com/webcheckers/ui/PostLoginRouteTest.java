@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.model.Game;
 import org.junit.Before;
 import org.junit.Test;
 import spark.ModelAndView;
@@ -14,10 +15,25 @@ import static org.mockito.Mockito.*;
 
 
 public class PostLoginRouteTest {
+    // Atributes
+    private GameCenter gameCenter = mock(GameCenter.class);
+    private Game game = mock(Game.class);
+    private String _username = "Niharika";
+    private Request request;
+    private Response response;
+    private Session session;
+
+    /**
+     * The component under test(CuT)
+     */
+    private PostLoginRoute CuT = new PostLoginRoute(gameCenter);
 
     @Before
-    public void beforeActions(){
-
+    public void setUp(){
+        game = mock(Game.class);
+        request = mock(Request.class);
+        response = mock(Response.class);
+        session = mock(Session.class);
     }
 
     @Test
@@ -38,17 +54,10 @@ public class PostLoginRouteTest {
 
     @Test
     public void testError(){
-        // Creating mock variables
-        GameCenter gameCenter = mock(GameCenter.class);
-        Request request = mock(Request.class);
-        Response response = mock(Response.class);
-        Session session = mock(Session.class);
-        String testName = "niharika";
-
         // Creating mock method calls
         when(request.session()).thenReturn(session);
-        when(request.queryParams(USERNAME_PARAM)).thenReturn(testName);
-        when(gameCenter.isUsernameTaken(testName)).thenReturn(true);
+        when(request.queryParams(USERNAME_PARAM)).thenReturn(_username);
+        when(gameCenter.isUsernameTaken(_username)).thenReturn(true);
 
         //Executing the error function
         PostLoginRoute CuT = new PostLoginRoute(gameCenter);
@@ -66,24 +75,16 @@ public class PostLoginRouteTest {
     @Test (expected = spark.HaltException.class)
     public void testHandle(){
         // Testing for error
-        GameCenter gameCenter = mock(GameCenter.class);
-        PostLoginRoute test = new PostLoginRoute(gameCenter);
-        String reqUsername = "niharika";
-
-        when(gameCenter.isUsernameTaken(reqUsername)).thenReturn(false);
-
-        Session session = mock(Session.class);
-        Request request = mock(Request.class);
-        Response response = mock(Response.class);
+        when(gameCenter.isUsernameTaken(_username)).thenReturn(false);
 
         when(request.session()).thenReturn(session);
-        when(request.queryParams(USERNAME_PARAM)).thenReturn(reqUsername);
+        when(request.queryParams(USERNAME_PARAM)).thenReturn(_username);
 
-        ModelAndView testModelAndView = test.handle(request, response);
+        ModelAndView testModelAndView = CuT.handle(request, response);
         String viewName = testModelAndView.getViewName();
         Map<String, Object> testVm = (HashMap)testModelAndView.getModel();
 
-        assertEquals(reqUsername, testVm.get(USERNAME_PARAM));
+        assertEquals(_username, testVm.get(USERNAME_PARAM));
         assertEquals(GetHomeRoute.VIEW_NAME, viewName);
     }
 }
